@@ -1,0 +1,9 @@
+{
+  "name": "heaven-coffee-mockup",
+  "version": "0.5.0",
+  "private": true,
+  "description": "Heaven Coffee pitch mockup — static single-file HTML (code.html), no build step",
+  "scripts": {
+    "dev": "npx --yes serve . -l 3000"
+  }
+}
