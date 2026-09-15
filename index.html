@@ -155,20 +155,25 @@
       <!-- Three-tile photo nav: Story / Menu / Find Us -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-outline-variant/30 mt-space-sm">
         <a href="#story" class="hero-tile aspect-[4/5] sm:aspect-[3/4] bg-surface-container">
-          <!-- PLACEHOLDER_IMG: replace with real interior/exterior photo from client -->
+          <!-- STILL PLACEHOLDER: round-3 photo batch didn't include a wide shot that shows
+               the stone arches + counter together — the thing this tile and most of the
+               copy describe. Round-2 findings flagged this gap explicitly. Replace when a
+               real wide interior shot is available; don't stretch another slot's photo to
+               cover it (images.jpg was considered and rejected for hero-tile use — too
+               tightly cropped on the sign itself). -->
           <img alt="Inside Heaven Coffee — stone arches of Central Methodist Mission" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-tile-story/700/900" loading="eager"/>
           <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
           <span class="absolute inset-0 flex items-center justify-center font-display text-headline-lg text-white uppercase" style="letter-spacing:-0.01em;">Story</span>
         </a>
         <a href="#menu" class="hero-tile aspect-[4/5] sm:aspect-[3/4] bg-surface-container">
-          <!-- PLACEHOLDER_IMG: replace with real coffee/espresso photo from client -->
-          <img alt="Espresso being poured at Heaven Coffee" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-tile-menu/700/900" loading="lazy"/>
+          <!-- REAL PHOTO (round 3): barista handing over a to-go cup, branded "heaven coffee" sleeve visible -->
+          <img alt="A Heaven Coffee barista handing over a to-go cup with the heaven coffee wordmark on the sleeve" class="w-full h-full object-cover" src="images/cup-handover.jpg" loading="lazy"/>
           <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
           <span class="absolute inset-0 flex items-center justify-center font-display text-headline-lg text-white uppercase" style="letter-spacing:-0.01em;">Menu</span>
         </a>
         <a href="#location" class="hero-tile aspect-[4/5] sm:aspect-[3/4] bg-surface-container">
-          <!-- PLACEHOLDER_IMG: replace with real exterior photo showing the navy awning -->
-          <img alt="Central Methodist Mission exterior, Burg Street entrance" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-tile-find/700/900" loading="lazy"/>
+          <!-- REAL PHOTO (round 3): storefront — Gothic arch entrance, navy "heaven coffee" umbrellas, dog on the steps -->
+          <img alt="Central Methodist Mission's Gothic arch entrance on Burg Street, with navy Heaven Coffee umbrellas and a dog on the steps" class="w-full h-full object-cover" src="images/storefront-entrance.webp" loading="lazy"/>
           <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
           <span class="absolute inset-0 flex items-center justify-center font-display text-headline-lg text-white uppercase" style="letter-spacing:-0.01em;">Find Us</span>
         </a>
@@ -232,7 +237,7 @@
             </blockquote>
 
             <!-- Stat row — structural reference: Caplatte's Est./Locations/Origin row -->
-            <div class="grid grid-cols-3 gap-gutter-sm mt-space-lg pt-space-lg border-t border-outline-variant/30 max-w-2xl">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter-sm mt-space-lg pt-space-lg border-t border-outline-variant/30 max-w-2xl">
               <div class="flex flex-col gap-1">
                 <span class="font-display text-title-lg text-espresso-deep" style="font-weight:800;">Est. 2017</span>
                 <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">Founded</span>
@@ -248,10 +253,24 @@
             </div>
           </div>
 
-          <div class="lg:col-span-5 relative">
+          <div class="lg:col-span-5 flex flex-col gap-gutter-sm">
+            <!-- REAL PHOTO (round 3): interior accent wall — signage + macramé + framed quotes.
+                 Not the stone-arch shot the section copy describes (that photo still doesn't
+                 exist — see the hero "Story" tile comment), but genuine interior content, so
+                 alt text was corrected to describe it honestly rather than promise arches. -->
             <div class="relative overflow-hidden bg-surface-container aspect-[3/4]">
-              <!-- PLACEHOLDER_IMG: replace with real interior/exterior photo from client -->
-              <img alt="Interior of Central Methodist Mission — stone arches and warm light, with the Heaven Coffee counter below" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-story/600/800" loading="lazy"/>
+              <img alt="Interior wall at Heaven Coffee — the heaven coffee sign board above framed quotes reading Touch the earth lightly and Love casts out fear, with a macramé hanging" class="w-full h-full object-cover" src="images/interior-signage.jpg" loading="lazy"/>
+            </div>
+            <!-- REAL PHOTO (round 3): founder portrait. Caption is name/role only — no
+                 biographical detail, per the policy on his personal history (design brief §3). -->
+            <div class="flex items-center gap-space-sm">
+              <div class="relative overflow-hidden rounded-full bg-surface-container w-16 h-16 flex-shrink-0">
+                <img alt="Mondli Mahamba, founder of Heaven Coffee, smiling at the counter" class="w-full h-full object-cover" src="images/founder-mondli.jpg" loading="lazy"/>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-title-md text-title-md text-espresso-deep">Mondli Mahamba</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">Founder</span>
+              </div>
             </div>
           </div>
 
