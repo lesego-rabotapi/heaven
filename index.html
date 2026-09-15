@@ -120,8 +120,12 @@
       .ig-wall-col-track { animation-name: ig-drift; animation-duration: var(--ig-duration, 34s); animation-timing-function: linear; animation-iteration-count: infinite; }
     }
     @keyframes ig-drift { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+    /* Alternate drift direction per column — free variance beyond just speed,
+       so the wall reads as several independent currents rather than one
+       mechanical belt. No second keyframe needed, just reversed playback. */
+    .ig-wall-col:nth-child(even) .ig-wall-col-track { animation-direction: reverse; }
     .ig-wall:hover .ig-wall-col-track, .ig-wall.is-paused .ig-wall-col-track { animation-play-state: paused; }
-    .ig-tile { display: block; position: relative; aspect-ratio: 1 / 1; overflow: hidden; flex-shrink: 0; }
+    .ig-tile { display: block; position: relative; aspect-ratio: 4 / 5; overflow: hidden; flex-shrink: 0; }
     .ig-tile-img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .ig-tile:focus-visible { outline: none; box-shadow: inset 0 0 0 3px #1D4ED8; z-index: 3; }
     @media (max-width: 1023px) { .ig-wall-col:nth-child(4) { display: none; } }
@@ -670,20 +674,27 @@ var HEAVEN_CONTENT = {
 
   // PLACEHOLDER: Instagram tiles are layout placeholders only.
   // Replace with real captions and images from @heavencoffeect.
-  // Do NOT invent realistic-looking captions — keep explicit placeholder strings.
+  // Do NOT invent realistic-looking captions — keep explicit placeholder strings,
+  // even in mock/demo data. A caption that reads as real (e.g. "Morning at
+  // Heaven") is exactly the kind of thing that gets mistaken for real later.
   // href falls back to the profile URL since no real per-post URLs exist —
   // never fabricate a specific post URL.
+  // id exists so a future real API-backed data source can key/replace entries
+  // without the drift-wall UI needing to change.
   // Note: build as a live Instagram Graph API feed only when:
   //   - client has a Meta Business account
   //   - app review is complete
   //   - token refresh handling is in place
   instagram: [
-    { image: 'images/storefront-entrance.webp', alt: 'Heaven Coffee storefront on Burg Street, navy umbrellas and a dog on the steps', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa', href: 'https://instagram.com/heavencoffeect' },
-    { image: 'images/cup-handover.jpg', alt: 'A Heaven Coffee barista handing over a to-go cup with the heaven coffee wordmark on the sleeve', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa', href: 'https://instagram.com/heavencoffeect' },
-    { image: 'images/interior-counter.webp', alt: "Heaven Coffee's wooden counter with the sign board and macramé on the wall, people gathered at the bar", caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa', href: 'https://instagram.com/heavencoffeect' },
-    { image: 'images/interior-signage.jpg', alt: 'The heaven coffee sign board mounted above framed quotes reading Touch the earth lightly and Love casts out fear, with a macramé hanging beside it', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa', href: 'https://instagram.com/heavencoffeect' },
-    { image: 'images/founder-mondli.jpg', alt: 'Mondli Mahamba, founder of Heaven Coffee, at the counter', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa', href: 'https://instagram.com/heavencoffeect' },
-    { image: 'https://picsum.photos/seed/hc-ig6/600/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa', href: 'https://instagram.com/heavencoffeect' }
+    { id: 'heaven-01', image: 'images/storefront-entrance.webp', alt: 'Heaven Coffee storefront on Burg Street, navy umbrellas and a dog on the steps', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-02', image: 'images/cup-handover.jpg', alt: 'A Heaven Coffee barista handing over a to-go cup with the heaven coffee wordmark on the sleeve', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-03', image: 'images/interior-counter.webp', alt: "Heaven Coffee's wooden counter with the sign board and macramé on the wall, people gathered at the bar", caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-04', image: 'images/interior-signage.jpg', alt: 'The heaven coffee sign board mounted above framed quotes reading Touch the earth lightly and Love casts out fear, with a macramé hanging beside it', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-05', image: 'images/founder-mondli.jpg', alt: 'Mondli Mahamba, founder of Heaven Coffee, at the counter', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-06', image: 'https://picsum.photos/seed/hc-ig6/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-07', image: 'https://picsum.photos/seed/hc-ig7/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-08', image: 'https://picsum.photos/seed/hc-ig8/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-09', image: 'https://picsum.photos/seed/hc-ig9/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' }
   ]
 };
 
@@ -739,7 +750,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var alt = hidden ? '' : (post.alt || 'Instagram post from @heavencoffeect — placeholder');
       var extra = hidden ? ' aria-hidden="true" tabindex="-1"' : ' title="' + post.caption + '"';
       return '<a class="ig-tile" href="' + href + '" target="_blank" rel="noopener noreferrer"' + extra + '>'
-        + '<img class="ig-tile-img" src="' + post.image + '" alt="' + alt + '" loading="lazy" decoding="async" width="300" height="300"/>'
+        + '<img class="ig-tile-img" src="' + post.image + '" alt="' + alt + '" loading="lazy" decoding="async" width="280" height="350"/>'
         + '</a>';
     };
 
