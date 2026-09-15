@@ -1,178 +1,644 @@
 <!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="description" content="Heaven Coffee Shop — a café inside Central Methodist Mission, 38 Burg Street, Greenmarket Square, Cape Town. Founded 2017 by Mondli Mahamba."/>
+  <!-- noindex: this is an unconfirmed pitch draft, not yet approved by the client -->
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <!-- Archivo: bold display face (structural reference: Caplatte). Plus Jakarta Sans: body.
+       Noto Serif kept only for the founder pull-quote — a small heritage accent, not the display face. -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500..900;1,500..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Noto+Serif:ital,wght@1,400..600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    #sticky-find-us {
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      pointer-events: none;
+    }
+    #sticky-find-us.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .ig-scroll { scroll-snap-type: x mandatory; }
+    .ig-scroll > * { scroll-snap-align: start; flex-shrink: 0; }
+    .hero-tile { position: relative; overflow: hidden; display: block; }
+    .hero-tile img { transition: transform 0.6s ease; }
+    .hero-tile:hover img { transform: scale(1.04); }
+    .menu-row { border-bottom: 1px solid rgba(29,19,16,0.1); }
+    .menu-row:last-child { border-bottom: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#9A5230","surface-container":"#f0ede9","secondary-fixed-dim":"#b0c6ff","surface-variant":"#e5e2dd","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#2B1E1A","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#fcf9f4","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#ebe8e3","wood-warm":"#5C3A21","oat-cream":"#F8F5F0","primary-fixed":"#f5ddd7","surface-container-low":"#f6f3ee","on-tertiary":"#ffffff","inverse-on-surface":"#f3f0eb","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#fcf9f4","surface-container-highest":"#e5e2dd","primary-container":"#2b1e1a","outline-variant":"#d2c3bf","on-primary-fixed":"#251915","espresso-deep":"#1D1310","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#6B5C4F","church-sapphire":"#1D4ED8","outline":"#807471","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#fcf9f4","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4f4542","tertiary":"#190500","surface-dim":"#dcdad5","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Archivo"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Archivo"],"display-mobile":["Archivo"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Archivo"],"headline-md":["Archivo"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Archivo"],"quote":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
+</head>
+<body class="bg-background font-body-md text-body-md text-on-surface antialiased">
 
-<html class="scroll-smooth" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#C26D43","surface-container":"#f0ede9","secondary-fixed-dim":"#b0c6ff","surface-variant":"#e5e2dd","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#2B1E1A","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#fcf9f4","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#ebe8e3","wood-warm":"#5C3A21","oat-cream":"#F8F5F0","primary-fixed":"#f5ddd7","surface-container-low":"#f6f3ee","on-tertiary":"#ffffff","inverse-on-surface":"#f3f0eb","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#fcf9f4","surface-container-highest":"#e5e2dd","primary-container":"#2b1e1a","outline-variant":"#d2c3bf","on-primary-fixed":"#251915","espresso-deep":"#1D1310","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#8C7A6B","church-sapphire":"#0D47A1","outline":"#807471","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#fcf9f4","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4f4542","tertiary":"#190500","surface-dim":"#dcdad5","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Noto Serif"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Noto Serif"],"display-mobile":["Noto Serif"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Noto Serif"],"headline-md":["Noto Serif"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["56px",{"lineHeight":"64px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.06em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"30px","fontWeight":"500"}],"display-mobile":["38px",{"lineHeight":"46px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["30px",{"lineHeight":"38px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["28px",{"lineHeight":"36px","fontWeight":"500"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["40px",{"lineHeight":"48px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-md shadow-[0_1px_8px_rgba(43,30,26,0.05)] border-b border-outline-variant/30"><div class="h-20 max-w-7xl mx-auto px-gutter lg:px-gutter-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm group" data-path="sanctuary-home" href="#"><img alt="Heaven Coffee Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WBLD_pg7opcPyEUgK-92bhyvHR_VRgpGjI9JCaD6EwqC1csCInrIJS1-e5C2JuI1k_xvKwDpti1z5ME2lCJjss8ueMSCbgOdpZ_JDoMWN5tcllc7ouChQKYOQXOqPW1UuKdbDQ9JIXYHTOb1LgirIzfrmP7FVK7zPcUM7wWL5gSBcVre3fugwpaW950Yu-38TbJ77ARqV2_I8rxvP05yj1MpvaDbZnytOTVLoPdIVQBt7_gnAre9IZATg"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-espresso-deep leading-none tracking-tight">Heaven Coffee</span><span class="font-label-sm text-label-sm text-stone-aged tracking-wider uppercase mt-0.5">Sanctuary · Cape Town</span></div></a></div><nav class="hidden xl:flex items-center gap-space-md" data-active-classes="bg-surface-container-high text-on-surface font-semibold rounded-lg"><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface px-3 py-1.5 rounded-lg transition-colors" data-path="location-and-hours" href="#location">Location &amp; Hours</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface px-3 py-1.5 rounded-lg transition-colors" data-path="what-to-expect" href="#about">What to Expect</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface px-3 py-1.5 rounded-lg transition-colors" data-path="contact" href="#contact">Contact</a></nav><div class="flex items-center gap-space-sm"><a aria-label="Instagram @heavencoffeect" class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-church-sapphire transition-all" href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a><a class="inline-flex items-center gap-space-xs bg-church-sapphire text-on-secondary px-4 py-2 rounded-lg font-label-lg text-label-lg hover:bg-on-secondary-container transition-all shadow-[0_2px_8px_-2px_rgba(13,71,161,0.25)]" href="#contact"><span class="material-symbols-outlined text-[18px]">chat</span><span class="hidden sm:inline">Contact</span><span class="sm:hidden">Contact</span></a></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full">
-<!-- SECTION 1: HERO -->
-<section class="relative w-full overflow-hidden bg-surface py-space-xl lg:py-space-2xl">
-<div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center">
-<!-- Hero Left Column: Narrative -->
-<div class="lg:col-span-7 flex flex-col gap-space-md lg:pr-space-md">
-<div class="flex flex-wrap items-center gap-2">
-<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-espresso-deep font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-church-sapphire text-[14px]" style="font-variation-settings: 'FILL' 1;">church</span>
-              Central Methodist Mission
-            </span>
-<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-parchment-subtle text-stone-aged font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-church-sapphire text-[14px]">verified</span>
-              Greenmarket Square, Cape Town
-            </span>
+<!-- =====================================================================
+     STICKY "FIND US" BAR — slides in after hero scrolls off screen.
+     No "order now" CTA — wayfinding only (see design brief §6).
+     ===================================================================== -->
+<div id="sticky-find-us" class="fixed bottom-0 left-0 right-0 z-40 bg-espresso-deep border-t border-outline/20" role="complementary" aria-label="Find Heaven Coffee">
+  <div class="max-w-7xl mx-auto px-gutter py-3 flex flex-wrap items-center justify-between gap-x-space-lg gap-y-space-xs">
+    <div class="flex flex-wrap items-center gap-x-space-lg gap-y-space-xs">
+      <span class="flex items-center gap-1.5 font-label-lg text-label-lg text-surface uppercase tracking-wide">
+        <span class="material-symbols-outlined text-terracotta-warm text-[18px]">pin_drop</span>
+        38 Burg St, Central Methodist Mission
+      </span>
+      <span class="hidden sm:flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;">
+        <span class="material-symbols-outlined text-[16px]">schedule</span>
+        <span data-hours>Hours to be confirmed</span>
+      </span>
+    </div>
+    <a href="tel:+27728842057" class="flex items-center gap-1.5 font-label-lg text-label-lg text-surface hover:text-terracotta-warm transition-colors uppercase tracking-wide">
+      <span class="material-symbols-outlined text-[18px]">call</span>
+      <span>072 884 2057</span>
+    </a>
+  </div>
 </div>
-<div class="flex flex-col gap-space-xs mt-1">
-<span class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold">Cape Town CBD</span>
-<h1 class="font-headline-lg text-headline-lg lg:font-display lg:text-display text-espresso-deep leading-tight tracking-tight">
-              Heaven Coffee
-            </h1>
-</div>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-            A coffee shop inside a working church — Gothic stone arches meet fresh espresso and warm bakes, right on Greenmarket Square.
+
+<!-- =====================================================================
+     TOP BAR — minimal three-zone strip (structural reference: Caplatte).
+     Address · Brand · Phone. Hamburger opens full nav (Heaven needs more
+     sections than Caplatte's three anchors).
+     ===================================================================== -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-outline-variant/30">
+  <div class="h-16 max-w-7xl mx-auto px-gutter lg:px-gutter-lg flex items-center justify-between gap-space-md">
+
+    <a href="https://maps.google.com/?q=38+Burg+Street,+Cape+Town" rel="noopener noreferrer" target="_blank" class="hidden sm:flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide text-on-surface-variant hover:text-espresso-deep transition-colors">
+      <span class="material-symbols-outlined text-[15px]">location_on</span>
+      38 Burg St, Cape Town
+    </a>
+
+    <!-- PLACEHOLDER LOGO — no real logo asset exists yet. Wordmark text stands in for now
+         (this also matches the Caplatte structural reference, which uses a text wordmark,
+         not an image). Do not derive brand colors from any interim asset. When a real logo
+         is supplied, self-host it — do not depend on a third-party or AI-generation CDN URL. -->
+    <a href="#" class="font-display text-title-lg sm:text-title-lg text-espresso-deep tracking-tight uppercase" style="font-weight:800;">Heaven Coffee</a>
+
+    <div class="flex items-center gap-space-sm">
+      <a href="tel:+27728842057" class="hidden sm:flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide text-on-surface-variant hover:text-espresso-deep transition-colors">
+        <span class="material-symbols-outlined text-[15px]">call</span>
+        072 884 2057
+      </a>
+      <button id="nav-toggle" class="w-10 h-10 rounded flex items-center justify-center text-espresso-deep hover:bg-surface-container transition-all" aria-label="Open navigation" aria-expanded="false">
+        <span class="material-symbols-outlined text-[24px]" id="nav-icon">menu</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Nav drawer — hidden by default -->
+  <div id="nav-drawer" class="hidden bg-background border-t border-outline-variant/30">
+    <nav class="max-w-7xl mx-auto px-gutter py-space-sm flex flex-col">
+      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#story">Story</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#menu">Menu</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#instagram">From the Feed</a>
+      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 hover:text-terracotta-warm transition-colors" href="#location">Find Us</a>
+    </nav>
+  </div>
+</header>
+
+<!-- =====================================================================
+     MAIN CONTENT
+     ===================================================================== -->
+<main class="w-full pt-16 bg-background" id="main-content">
+  <div class="flex flex-col w-full">
+
+    <!-- =================================================================
+         SECTION 1: HERO — giant headline + three-tile photo nav.
+         Structural reference: Caplatte's "Speciality coffee at your
+         doorstep" hero. Tiles double as primary navigation.
+         ================================================================= -->
+    <section id="hero" class="w-full bg-background pt-space-xl">
+      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+        <h1 class="font-display text-display-mobile lg:text-[88px] text-espresso-deep uppercase" style="letter-spacing:-0.02em;">
+          Sanctuary coffee<br/>at Greenmarket Square.
+        </h1>
+
+        <!-- Info badges -->
+        <div class="flex flex-wrap items-center gap-x-space-md gap-y-space-xs mt-space-md mb-space-lg font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">
+          <span class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-church-sapphire text-[15px]" style="font-variation-settings:'FILL' 1;">church</span>
+            Central Methodist Mission
+          </span>
+          <span class="text-outline-variant">·</span>
+          <span>Cape Town CBD</span>
+          <span class="text-outline-variant">·</span>
+          <span class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[15px]" style="color:#9A5230;font-variation-settings:'FILL' 1;">pets</span>
+            Dogs welcome
+          </span>
+        </div>
+      </div>
+
+      <!-- Three-tile photo nav: Story / Menu / Find Us -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-outline-variant/30 mt-space-sm">
+        <a href="#story" class="hero-tile aspect-[4/5] sm:aspect-[3/4] bg-surface-container">
+          <!-- PLACEHOLDER_IMG: replace with real interior/exterior photo from client -->
+          <img alt="Inside Heaven Coffee — stone arches of Central Methodist Mission" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-tile-story/700/900" loading="eager"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
+          <span class="absolute inset-0 flex items-center justify-center font-display text-headline-lg text-white uppercase" style="letter-spacing:-0.01em;">Story</span>
+        </a>
+        <a href="#menu" class="hero-tile aspect-[4/5] sm:aspect-[3/4] bg-surface-container">
+          <!-- PLACEHOLDER_IMG: replace with real coffee/espresso photo from client -->
+          <img alt="Espresso being poured at Heaven Coffee" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-tile-menu/700/900" loading="lazy"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
+          <span class="absolute inset-0 flex items-center justify-center font-display text-headline-lg text-white uppercase" style="letter-spacing:-0.01em;">Menu</span>
+        </a>
+        <a href="#location" class="hero-tile aspect-[4/5] sm:aspect-[3/4] bg-surface-container">
+          <!-- PLACEHOLDER_IMG: replace with real exterior photo showing the navy awning -->
+          <img alt="Central Methodist Mission exterior, Burg Street entrance" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-tile-find/700/900" loading="lazy"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
+          <span class="absolute inset-0 flex items-center justify-center font-display text-headline-lg text-white uppercase" style="letter-spacing:-0.01em;">Find Us</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SECTION 2: WAYFINDING CUE
+         Solves a real problem: the building looks like a church from
+         the street. First-time visitors walk past. Functional
+         information, not decoration. See design brief §3 item 2.
+         ================================================================= -->
+    <div class="w-full bg-church-sapphire">
+      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg py-3">
+        <div class="flex flex-wrap items-center gap-x-space-lg gap-y-space-xs">
+          <div class="flex items-center gap-space-sm">
+            <span class="material-symbols-outlined text-[20px] flex-shrink-0" style="color:#90CAF9;">navigation</span>
+            <span class="font-label-lg text-label-lg text-on-primary uppercase tracking-wide">Finding us for the first time?</span>
+          </div>
+          <p class="font-body-sm text-body-sm" style="color:#BBDEFB;">
+            From the street this reads as a church — that's because it is. Look for the <strong style="color:#fff;">navy awning at the Burg Street entrance</strong> and follow the coffee smell in.
           </p>
-</div>
-<!-- Hero Right Column: Single Photo -->
-<div class="lg:col-span-5 relative mt-space-md lg:mt-0">
-<div class="relative mx-auto max-w-md lg:max-w-none">
-<div class="relative overflow-hidden rounded-[120px_120px_16px_16px] shadow-xl bg-surface-container aspect-[4/5]">
-<img alt="Gothic arched church interior blended with a coffee counter and warm bakes" class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC16u_fGHOjYXeU5l_7iS_ELZGMApyBk50U7Lv-rPlzotPNivGT8GVDoUMFlbU8EmJDsHDei8YlSCxkO2gC00Z81eA4y3Nnz4-E1nsmeK6M1EWVfQmTcd5ahwJThWEvWUHzrZ3mb_5fXdV1o16Sp0rVpCT_5DyncmQ1U-2RUCzDFxXoE2400mJYpt_joRWB6LW6TdRztujtB3R4y0sdyrb6wI2SlObwswO3hiVhQWBUcklLAomKOgcZ9xJe93kDn41E43g"/>
-<div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/70 via-transparent to-transparent flex flex-col justify-end p-space-md text-on-primary">
-<span class="font-label-sm text-label-sm text-parchment-subtle uppercase tracking-widest">Inside the Sanctuary</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- SECTION 2: LOCATION & HOURS -->
-<section class="w-full bg-surface-container-low py-space-2xl" id="location">
-<div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start">
-<!-- Location Info -->
-<div class="lg:col-span-6 flex flex-col gap-space-md">
-<div class="flex flex-col gap-space-xs">
-<span class="font-label-sm text-label-sm uppercase tracking-widest text-church-sapphire font-semibold">Find Us</span>
-<h2 class="font-headline-lg text-headline-lg text-espresso-deep leading-tight">
-              Location &amp; Hours
+          <a href="https://maps.google.com/?q=38+Burg+Street,+Cape+Town" rel="noopener noreferrer" target="_blank" class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded font-label-sm text-label-sm uppercase tracking-wide transition-colors" style="background:rgba(255,255,255,0.15);color:#fff;">
+            <span class="material-symbols-outlined text-[16px]">directions</span>
+            Get Directions
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         SECTION 3: STORY
+         Confirmed facts only: founder name, April 2017 founding, church
+         and Greenmarket Square setting, "second chances and community"
+         values line. Structural reference: Caplatte's Story section
+         with a three-stat row (Est. / Locations / Origin).
+         The founder's personal history is confirmed real (Cape Town
+         CCID, August 2021) but is NOT included here — shared by him in
+         a different context, for a project he has not yet approved.
+         See design brief §3.
+         ================================================================= -->
+    <section id="story" class="w-full bg-background py-space-2xl">
+      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+        <span class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold">Story</span>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start mt-space-sm">
+
+          <div class="lg:col-span-7 flex flex-col gap-space-md">
+            <h2 class="font-display text-headline-lg-mobile lg:text-headline-lg text-espresso-deep uppercase" style="letter-spacing:-0.01em;">
+              A Second Chance,<br/>A Cup of Coffee.
             </h2>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant">
-            Heaven Coffee operates inside Central Methodist Mission on Greenmarket Square, Cape Town CBD.
-          </p>
-<!-- Address card -->
-<div class="bg-surface rounded-2xl p-space-md border border-outline-variant/40 shadow-sm flex flex-col gap-space-sm">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-church-sapphire text-[22px]">pin_drop</span>
-<span class="font-title-md text-title-md text-espresso-deep">Address</span>
-</div>
-<span class="font-body-md text-body-md text-espresso-deep">38 Burg Street (corner of Burg &amp; Longmarket St), Cape Town City Centre, 8000 — Central Methodist Mission</span>
-</div>
-<!-- Hours card -->
-<div class="bg-surface rounded-2xl p-space-md border border-outline-variant/40 shadow-sm flex flex-col gap-space-sm">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-terracotta-warm text-[22px]">schedule</span>
-<span class="font-title-md text-title-md text-espresso-deep">Hours</span>
-</div>
-<span class="font-body-md text-body-md text-espresso-deep">Monday – Sunday, 7am – 6pm</span>
-</div>
-</div>
-<!-- Right Side: Real Google Maps embed of the landmark -->
-<div class="lg:col-span-6 flex flex-col gap-space-sm">
-<div class="relative w-full rounded-2xl overflow-hidden shadow-lg border border-outline-variant/30 bg-surface">
-<iframe allowfullscreen="" class="w-full h-80 border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Central+Methodist+Mission,+Greenmarket+Square,+Cape+Town&amp;output=embed" title="Map showing Central Methodist Mission, Greenmarket Square, Cape Town"></iframe>
-</div>
-<div class="bg-surface rounded-xl p-space-sm border border-outline-variant/30 flex items-start gap-space-xs">
-<span class="material-symbols-outlined text-terracotta-warm text-[20px] mt-0.5">info</span>
-<div class="font-body-sm text-body-sm text-on-surface-variant">
-              Map is centered on Central Methodist Mission, the verified landmark.
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+              Mondli Mahamba opened Heaven Coffee in April 2017 inside the Central Methodist Mission on Greenmarket Square — one of Cape Town's most storied buildings, and one of the city's most recognisable church facades.
+            </p>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+              The café grew from a belief that community and coffee belong together. Inside Gothic stone arches, next to wooden pews, Heaven became a place of welcome for everyone who steps off the square — locals on a morning commute, tourists looking for somewhere quiet, and everyone in between.
+            </p>
+            <blockquote class="border-l-2 border-terracotta-warm pl-space-md mt-space-xs">
+              <p class="font-quote text-headline-sm italic text-roasted-bean leading-snug">
+                "Second chances and community — those are the foundations."
+              </p>
+            </blockquote>
+
+            <!-- Stat row — structural reference: Caplatte's Est./Locations/Origin row -->
+            <div class="grid grid-cols-3 gap-gutter-sm mt-space-lg pt-space-lg border-t border-outline-variant/30 max-w-2xl">
+              <div class="flex flex-col gap-1">
+                <span class="font-display text-title-lg text-espresso-deep" style="font-weight:800;">Est. 2017</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">Founded</span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="font-display text-title-lg text-espresso-deep" style="font-weight:800;">Greenmarket Sq.</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">Location</span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="font-display text-title-lg text-espresso-deep" style="font-weight:800;">Inside a Church</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">Setting</span>
+              </div>
             </div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- SECTION 3: WHAT TO EXPECT -->
-<section class="w-full bg-surface py-space-2xl" id="about">
-<div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
-<div class="flex flex-col items-center text-center gap-space-xs max-w-2xl mx-auto mb-space-lg">
-<span class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold">The Atmosphere</span>
-<h2 class="font-headline-lg text-headline-lg text-espresso-deep leading-tight">What to Expect</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">
-          A quiet coffee counter inside the Gothic stone arches of Central Methodist Mission, decorated with hand-painted words of encouragement. Step in from the bustle of Greenmarket Square for coffee and fresh bakes in an unhurried, sanctuary-like space.
-        </p>
-</div>
-<!-- Known For: photo-led strip, no prices, no descriptions -->
-<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter-sm lg:gap-gutter">
-<div class="flex flex-col gap-space-sm">
-<div class="relative rounded-2xl overflow-hidden shadow-sm bg-surface-container aspect-square">
-<img alt="Banana bread" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqKDpaVyPZEjWisxjlyegRJVi284orzmUF7d7ShiZo_8Iv7VRow9DT44neBI-7mFuq1ZeQfjSmEnvPJX6zBbf72faArzGZIZqUz0rZo8aXEvuvvxx0hcJFmOJMQanvxbTYiXZ1_qB9UzsLlg6sgct7mwBEp-l6-E6U47MXKMijmmIrb4XEv__3QbKkPcSKEm9d9BY_Ap2HCj-dF78dYg2-ntx3SK18tI7uKiqF2iNxEfMSGAIs9LgBIk2myGPpTRMjULY"/>
-</div>
-<span class="font-title-sm text-title-sm text-espresso-deep text-center">Banana Bread</span>
-</div>
-<div class="flex flex-col gap-space-sm">
-<div class="relative rounded-2xl overflow-hidden shadow-sm bg-surface-container aspect-square">
-<img alt="Choc chip cookies" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqKDpaVyPZEjWisxjlyegRJVi284orzmUF7d7ShiZo_8Iv7VRow9DT44neBI-7mFuq1ZeQfjSmEnvPJX6zBbf72faArzGZIZqUz0rZo8aXEvuvvxx0hcJFmOJMQanvxbTYiXZ1_qB9UzsLlg6sgct7mwBEp-l6-E6U47MXKMijmmIrb4XEv__3QbKkPcSKEm9d9BY_Ap2HCj-dF78dYg2-ntx3SK18tI7uKiqF2iNxEfMSGAIs9LgBIk2myGPpTRMjULY"/>
-</div>
-<span class="font-title-sm text-title-sm text-espresso-deep text-center">Choc Chip Cookies</span>
-</div>
-<div class="flex flex-col gap-space-sm">
-<div class="relative rounded-2xl overflow-hidden shadow-sm bg-surface-container aspect-square">
-<img alt="Coffee" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC16u_fGHOjYXeU5l_7iS_ELZGMApyBk50U7Lv-rPlzotPNivGT8GVDoUMFlbU8EmJDsHDei8YlSCxkO2gC00Z81eA4y3Nnz4-E1nsmeK6M1EWVfQmTcd5ahwJThWEvWUHzrZ3mb_5fXdV1o16Sp0rVpCT_5DyncmQ1U-2RUCzDFxXoE2400mJYpt_joRWB6LW6TdRztujtB3R4y0sdyrb6wI2SlObwswO3hiVhQWBUcklLAomKOgcZ9xJe93kDn41E43g"/>
-</div>
-<span class="font-title-sm text-title-sm text-espresso-deep text-center">Coffee</span>
-</div>
-<div class="flex flex-col gap-space-sm">
-<div class="relative rounded-2xl overflow-hidden shadow-sm bg-surface-container aspect-square">
-<img alt="Iced coffee" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPRI7tyAVD8czMAwB40GUSCOvdwurPvLhwm5UBTYzdq63y9l-0Ws5R1rUrvz1XMobIFrao9fP7Pp6DV5QQ2E0bzbrWj91oKwp4dBG-84WxWCuQLDNopiqx2_GJC4VPJ8nzfhp0HdlNAKVMic89asG2VjYojiDntVfKiy85qQawGVWfhTDDVVYTPa6Paxzk4FQQPdVjWbtaE0qE1OK9SADQ39p07jgTwAwvfGNFAj1D8FCuwLqaPQS11UQswUH9jFRj9I4"/>
-</div>
-<span class="font-title-sm text-title-sm text-espresso-deep text-center">Iced Coffee</span>
-</div>
-</div>
-</div>
-</section>
-<!-- SECTION 4: CONTACT -->
-<section class="w-full bg-espresso-deep text-surface py-space-2xl" id="contact">
-<div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
-<div class="rounded-3xl bg-primary-container p-space-lg lg:p-space-2xl border border-outline-variant/20 shadow-2xl relative overflow-hidden">
-<svg class="absolute -right-16 -bottom-16 w-96 h-96 opacity-5 pointer-events-none text-surface" fill="currentColor" viewbox="0 0 100 100">
-<path d="M 10 100 A 40 50 0 0 1 90 100 Z"></path>
-</svg>
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center relative z-10">
-<div class="lg:col-span-8 flex flex-col gap-space-sm">
-<span class="font-label-sm text-label-sm uppercase tracking-widest text-awning-sky font-semibold">Get in Touch</span>
-<h2 class="font-headline-lg text-headline-lg text-surface leading-tight">
-              Contact
-            </h2>
-<p class="font-body-lg text-body-lg text-surface-container-high max-w-xl">
-              Got a question? Reach out by phone or Instagram.
+          </div>
+
+          <div class="lg:col-span-5 relative">
+            <div class="relative overflow-hidden bg-surface-container aspect-[3/4]">
+              <!-- PLACEHOLDER_IMG: replace with real interior/exterior photo from client -->
+              <img alt="Interior of Central Methodist Mission — stone arches and warm light, with the Heaven Coffee counter below" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-story/600/800" loading="lazy"/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SECTION 4: MENU
+         Structural reference: Caplatte's category-grouped list rows.
+         Heaven deviates deliberately: NO pricing, NO kcal — a display
+         menu only. All items are PLACEHOLDER — confirm with client
+         before launch. See HEAVEN_CONTENT.menu below.
+         ================================================================= -->
+    <section id="menu" class="w-full bg-surface-container-low py-space-2xl">
+      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+
+        <span class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold">What We Serve</span>
+        <h2 class="font-display text-headline-lg-mobile lg:text-headline-lg text-espresso-deep uppercase mt-space-xs mb-space-lg" style="letter-spacing:-0.01em;">Menu</h2>
+
+        <!-- PLACEHOLDER SECTION: menu items below are illustrative only.
+             Update HEAVEN_CONTENT.menu in the script block before launch.
+             Client must confirm all items, categories, and any pricing. -->
+        <div class="mb-space-lg flex items-start gap-space-sm rounded p-space-sm border max-w-2xl" style="background:#fffbeb;border-color:#fcd34d;">
+          <span class="material-symbols-outlined text-[20px] mt-0.5 flex-shrink-0" style="color:#92400e;">info</span>
+          <p class="font-body-sm text-body-sm" style="color:#92400e;">
+            Menu items shown are illustrative placeholders only — we're waiting on the final menu from Heaven Coffee. No pricing is shown; items and categories will be updated when the client provides them.
+          </p>
+        </div>
+
+        <!-- Menu category list — rendered by JS from HEAVEN_CONTENT.menu -->
+        <div id="menu-cards" class="grid grid-cols-1 md:grid-cols-2 gap-x-gutter-lg gap-y-space-lg">
+          <!-- JS-rendered: see HEAVEN_CONTENT.menu in the script block below -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SECTION 5: FEATURED & FOUND (INSTAGRAM CAROUSEL)
+         Static card carousel — NOT a live Instagram Graph API feed.
+         Decision: live feed requires Meta Business account + app review
+         + token refresh handling. Not justified for a v0.2 pitch mockup;
+         the account posts infrequently enough that manual curation is
+         realistic for v1. See design brief §4.
+         ================================================================= -->
+    <section id="instagram" class="w-full bg-background py-space-2xl">
+      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-md mb-space-md">
+          <div class="flex flex-col gap-space-xs">
+            <span class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold">Featured &amp; Found</span>
+            <h2 class="font-display text-headline-lg-mobile lg:text-headline-lg text-espresso-deep uppercase" style="letter-spacing:-0.01em;">From the Feed</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Real moments from <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="text-church-sapphire hover:underline">@heavencoffeect</a>
             </p>
-<div class="flex flex-wrap items-center gap-space-sm pt-space-xs">
-<a class="inline-flex items-center gap-2 px-5 py-3.5 rounded-lg bg-surface/10 hover:bg-surface/20 text-surface font-label-lg text-label-lg border border-surface/20 transition-colors" href="tel:+27728842057">
-<span class="material-symbols-outlined text-[18px]">call</span>
-<span>072 884 2057 <span class="text-surface-container/80 font-body-sm text-body-sm">(per Google Business listing)</span></span>
-</a>
-<a class="inline-flex items-center gap-2 px-5 py-3.5 rounded-lg bg-surface/10 hover:bg-surface/20 text-surface font-label-lg text-label-lg border border-surface/20 transition-colors" href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank">
-<svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
-<span>@heavencoffeect</span>
-</a>
-</div>
-</div>
-<div class="lg:col-span-4 bg-surface/10 backdrop-blur-md rounded-2xl p-space-md border border-surface/10 flex flex-col gap-space-xs">
-<span class="font-label-sm text-label-sm uppercase tracking-wider text-terracotta-warm font-semibold">Location Reminder</span>
-<span class="font-title-md text-title-md text-surface">Inside Central Methodist Mission</span>
-<p class="font-body-sm text-body-sm text-surface-container">
-              38 Burg Street, Cape Town, 8000
-            </p>
-<div class="pt-2 mt-2 border-t border-surface/10 flex items-center justify-between text-surface-container">
-<span class="font-label-sm text-label-sm">Mon–Sun, 7am–6pm</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Pitch Note Footer -->
-<div class="mt-space-md text-center">
-<p class="font-body-sm text-body-sm text-outline-variant/80">
-          This digital sanctuary presentation was created as a bespoke design pitch draft for Heaven Coffee, Central Methodist Mission, Cape Town.
-        </p>
-</div>
-</div>
-</section>
-</div></main><footer class="w-full bg-surface-container-low border-t border-outline-variant/30 pt-space-2xl pb-space-xl"><div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg"><div class="grid grid-cols-1 md:grid-cols-12 gap-gutter-lg mb-space-2xl"><div class="md:col-span-5 flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm mb-space-xs"><img alt="Heaven Coffee Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WBLD_pg7opcPyEUgK-92bhyvHR_VRgpGjI9JCaD6EwqC1csCInrIJS1-e5C2JuI1k_xvKwDpti1z5ME2lCJjss8ueMSCbgOdpZ_JDoMWN5tcllc7ouChQKYOQXOqPW1UuKdbDQ9JIXYHTOb1LgirIzfrmP7FVK7zPcUM7wWL5gSBcVre3fugwpaW950Yu-38TbJ77ARqV2_I8rxvP05yj1MpvaDbZnytOTVLoPdIVQBt7_gnAre9IZATg"/><span class="font-headline-sm text-headline-sm text-espresso-deep tracking-tight">Heaven Coffee</span></div><p class="font-display text-headline-sm italic text-roasted-bean leading-snug">"A quiet sanctuary in the heart of the city."</p><p class="font-body-md text-body-md text-on-surface-variant max-w-md">A coffee shop inside Cape Town's Central Methodist Mission, Greenmarket Square.</p></div><div class="md:col-span-4 flex flex-col gap-space-sm"><div class="font-label-sm text-label-sm tracking-wider uppercase text-stone-aged">Location</div><div class="flex items-start gap-space-xs text-on-surface-variant"><span class="material-symbols-outlined text-church-sapphire text-[20px] mt-0.5">pin_drop</span><div class="font-body-md text-body-md"><span class="text-on-surface font-semibold block">Central Methodist Mission</span><span>38 Burg Street, Cape Town CBD, 8000</span></div></div><div class="mt-space-xs flex items-center gap-space-xs"><span class="material-symbols-outlined text-stone-aged text-[18px]">schedule</span><span class="inline-block px-2.5 py-1 rounded-full bg-parchment-subtle text-roasted-bean font-label-sm text-label-sm border border-outline-variant/40">Mon–Sun, 7am–6pm (per Google)</span></div></div><div class="md:col-span-3 flex flex-col gap-space-sm"><div class="font-label-sm text-label-sm tracking-wider uppercase text-stone-aged">Connect &amp; Inquire</div><ul class="flex flex-col gap-space-xs font-body-md text-body-md text-on-surface-variant"><li><a class="inline-flex items-center gap-space-xs hover:text-church-sapphire transition-colors" href="tel:+27728842057"><span class="material-symbols-outlined text-[18px]">call</span>072 884 2057</a></li><li><a class="inline-flex items-center gap-space-xs hover:text-church-sapphire transition-colors" href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>@heavencoffeect</a></li></ul></div></div><div class="pt-space-lg border-t border-outline-variant/20 flex flex-col sm:flex-row items-center justify-between gap-space-sm font-body-sm text-body-sm text-stone-aged"><p>Pitch draft — Heaven Coffee, Central Methodist Mission, Cape Town.</p><p class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Crafted with Reverence</p></div></div></footer></body></html>
+          </div>
+          <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2.5 border border-outline-variant text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wide hover:bg-surface-container transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+            Follow on Instagram
+          </a>
+        </div>
+
+        <!-- PLACEHOLDER SECTION: Instagram cards below are layout placeholders only.
+             Replace with real captions and images from @heavencoffeect.
+             See HEAVEN_CONTENT.instagram in the script block below. -->
+        <div class="mb-space-md flex items-start gap-space-sm rounded p-space-sm border" style="background:#fffbeb;border-color:#fcd34d;">
+          <span class="material-symbols-outlined text-[20px] mt-0.5 flex-shrink-0" style="color:#92400e;">info</span>
+          <p class="font-body-sm text-body-sm" style="color:#92400e;">
+            Cards below are layout placeholders — not a live feed. Real posts at <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" style="text-decoration:underline;">@heavencoffeect</a>. Update <code>HEAVEN_CONTENT.instagram</code> with real content before launch.
+          </p>
+        </div>
+
+        <div id="instagram-cards" class="ig-scroll flex gap-gutter-sm overflow-x-auto pb-2 scrollbar-hide md:grid md:grid-cols-4 md:overflow-x-visible">
+          <!-- JS-rendered: see HEAVEN_CONTENT.instagram in the script block below -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SECTION 6: PRESS / TRUST STRIP
+         Confirmed: Cape Town CCID feature (capetownccid.org, Aug 2021,
+         byline Simangele Mzizi). "5 Black-Owned Coffee Spots" outlet:
+         NOT YET CONFIRMED. Explicit placeholder string — do not replace
+         with an invented or guessed publication name. See brief §3.6.
+         ================================================================= -->
+    <div class="w-full bg-surface-container-low border-y border-outline-variant/30 py-space-md">
+      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+        <div class="flex flex-wrap items-center gap-x-space-lg gap-y-space-sm">
+          <span class="font-label-sm text-label-sm uppercase tracking-widest text-stone-aged flex-shrink-0">As Featured In</span>
+          <div class="flex flex-wrap items-center gap-space-sm">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-outline-variant/40 text-espresso-deep font-label-sm text-label-sm uppercase tracking-wide">
+              <span class="material-symbols-outlined text-church-sapphire text-[14px]" style="font-variation-settings:'FILL' 1;">verified</span>
+              Cape Town CCID (2021)
+            </span>
+            <!-- PLACEHOLDER: press outlet name — see HEAVEN_CONTENT.pressOutlet below.
+                 Do NOT replace [Press outlet — TBD] with an invented name. -->
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-outline-variant/30 font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;opacity:0.8;">
+              <span class="material-symbols-outlined text-[14px]" style="color:#6B5C4F;">article</span>
+              <span data-press-outlet>[Press outlet — TBD]</span>
+              <span class="normal-case font-body-sm text-body-sm" style="color:#6B5C4F;">· "5 Black-Owned Coffee Spots in Cape Town"</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         SECTION 8: LOCATION & HOURS
+         Address: confirmed (38 Burg St, Central Methodist Mission).
+         Hours: NOT confirmed — third-party directory sources conflict.
+         Do not pick one and present it as confirmed. See brief §5.
+         Structural reference: Caplatte's location card layout.
+         ================================================================= -->
+    <section id="location" class="w-full bg-background py-space-2xl">
+      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+        <span class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold">Find Us</span>
+        <h2 class="font-display text-headline-lg-mobile lg:text-headline-lg text-espresso-deep uppercase mt-space-xs mb-space-lg" style="letter-spacing:-0.01em;">Location &amp; Hours</h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg">
+
+          <!-- Map -->
+          <div class="lg:col-span-7">
+            <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-surface-container overflow-hidden">
+              <iframe allowfullscreen="" class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Central+Methodist+Mission,+Greenmarket+Square,+Cape+Town&output=embed" title="Map showing Central Methodist Mission, Greenmarket Square, Cape Town"></iframe>
+            </div>
+          </div>
+
+          <!-- Details -->
+          <div class="lg:col-span-5 flex flex-col justify-center gap-space-lg">
+
+            <div class="flex flex-col gap-space-xs">
+              <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-church-sapphire">pin_drop</span>
+                Address
+              </span>
+              <a href="https://maps.google.com/?q=38+Burg+Street,+Cape+Town" rel="noopener noreferrer" target="_blank" class="font-title-md text-title-md text-espresso-deep hover:text-church-sapphire transition-colors">
+                38 Burg Street (corner of Burg &amp; Longmarket), Cape Town City Centre, 8000
+              </a>
+              <span class="font-body-sm text-body-sm text-stone-aged">Inside Central Methodist Mission — look for the navy awning</span>
+            </div>
+
+            <!-- PLACEHOLDER: operating hours not confirmed — third-party directory
+                 sources conflict. Confirm directly with Heaven Coffee before
+                 launch. See HEAVEN_CONTENT.hours below. -->
+            <div class="flex flex-col gap-space-xs">
+              <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-terracotta-warm">schedule</span>
+                Hours
+              </span>
+              <span data-hours class="font-title-md text-title-md text-stone-aged italic">Hours to be confirmed with Heaven Coffee</span>
+              <div class="flex items-start gap-1.5 px-2.5 py-2 border mt-1" style="background:#fffbeb;border-color:#fcd34d;">
+                <span class="material-symbols-outlined text-[15px] mt-0.5 flex-shrink-0" style="color:#92400e;">warning</span>
+                <span class="font-body-sm text-body-sm" style="color:#92400e;">[Unconfirmed — please verify operating hours with Heaven Coffee before launch]</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-space-xs pt-space-sm border-t border-outline-variant/30">
+              <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-espresso-deep">call</span>
+                Contact
+              </span>
+              <div class="flex flex-wrap gap-space-sm">
+                <a href="tel:+27728842057" class="inline-flex items-center gap-2 font-title-md text-title-md text-espresso-deep hover:text-church-sapphire transition-colors">
+                  072 884 2057
+                </a>
+                <span class="text-outline-variant">·</span>
+                <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="inline-flex items-center gap-1.5 font-title-md text-title-md text-espresso-deep hover:text-church-sapphire transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                  @heavencoffeect
+                </a>
+              </div>
+              <span class="font-body-sm text-body-sm text-stone-aged mt-1">072 884 2057 is per Google Business listing.</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Pitch note -->
+        <div class="mt-space-2xl pt-space-lg border-t border-outline-variant/30 text-center">
+          <p class="font-body-sm text-body-sm text-stone-aged">
+            This presentation was created as a bespoke design pitch draft for Heaven Coffee, Central Methodist Mission, Cape Town.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- =====================================================================
+     FOOTER — structural reference: Caplatte's footer
+     (address · phone · socials · nav links · copyright).
+     Multilingual flags: 🇬🇧 EN · 🇩🇪 DE · 🇷🇺 RU — visual only, no i18n.
+     Grounded in real German/Russian captions observed on @heavencoffeect.
+     See design brief §3 item 10.
+     ===================================================================== -->
+<footer class="w-full bg-espresso-deep py-space-xl">
+  <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pb-space-lg border-b" style="border-color:rgba(252,249,244,0.15);">
+      <a href="https://maps.google.com/?q=38+Burg+Street,+Cape+Town" rel="noopener noreferrer" target="_blank" class="flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide hover:text-terracotta-warm transition-colors" style="color:#EFECE6;">
+        <span class="material-symbols-outlined text-[15px]">location_on</span>
+        38 Burg Street, Cape Town, 8000
+      </a>
+      <span class="font-display text-title-lg uppercase" style="color:#fcf9f4;font-weight:800;">Heaven Coffee</span>
+      <a href="tel:+27728842057" class="flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide hover:text-terracotta-warm transition-colors" style="color:#EFECE6;">
+        <span class="material-symbols-outlined text-[15px]">call</span>
+        072 884 2057
+      </a>
+    </div>
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pt-space-lg">
+
+      <!-- Social + flags -->
+      <div class="flex items-center gap-space-md">
+        <a aria-label="Instagram @heavencoffeect" class="w-9 h-9 rounded-full flex items-center justify-center transition-all" style="color:#EFECE6;border:1px solid rgba(252,249,244,0.2);" href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" onmouseover="this.style.borderColor='#9A5230';this.style.color='#9A5230'" onmouseout="this.style.borderColor='rgba(252,249,244,0.2)';this.style.color='#EFECE6'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+        </a>
+        <!-- Visual flag icons only — no functional i18n in v0.2.
+             Grounded in real German/Russian captions visible on @heavencoffeect. -->
+        <div class="flex items-center gap-1.5">
+          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇬🇧 EN</span>
+          <span style="color:#53433e;">·</span>
+          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇩🇪 DE</span>
+          <span style="color:#53433e;">·</span>
+          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇷🇺 RU</span>
+        </div>
+      </div>
+
+      <!-- Nav links -->
+      <nav class="flex flex-wrap items-center gap-space-md">
+        <a class="font-label-sm text-label-sm uppercase tracking-wide hover:text-terracotta-warm transition-colors" style="color:#EFECE6;" href="#story">Story</a>
+        <a class="font-label-sm text-label-sm uppercase tracking-wide hover:text-terracotta-warm transition-colors" style="color:#EFECE6;" href="#menu">Menu</a>
+        <a class="font-label-sm text-label-sm uppercase tracking-wide hover:text-terracotta-warm transition-colors" style="color:#EFECE6;" href="#instagram">From the Feed</a>
+        <a class="font-label-sm text-label-sm uppercase tracking-wide hover:text-terracotta-warm transition-colors" style="color:#EFECE6;" href="#location">Find Us</a>
+      </nav>
+
+      <span class="font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;">Heaven Coffee © · Pitch Draft</span>
+    </div>
+  </div>
+</footer>
+
+<!-- =====================================================================
+     JAVASCRIPT
+     PLACEHOLDER_CONFIG — search this file for PLACEHOLDER_CONFIG
+     to find the block containing all swappable content.
+     ===================================================================== -->
+<script>
+/* ============================================================
+   PLACEHOLDER_CONFIG
+   All placeholder/unconfirmed content lives here.
+   Grep for: PLACEHOLDER_CONFIG
+   ============================================================ */
+var HEAVEN_CONTENT = {
+
+  // PLACEHOLDER: operating hours not confirmed.
+  // Third-party directory sources conflict with each other.
+  // Confirm directly with Heaven Coffee (Mondli Mahamba) before launch.
+  hours: 'Hours — to be confirmed with Heaven Coffee',
+
+  // PLACEHOLDER: press outlet name for "5 Black-Owned Coffee Spots" not yet verified.
+  // Do NOT replace with an invented or guessed publication name.
+  pressOutlet: '[Press outlet — TBD]',
+
+  // PLACEHOLDER: all menu items are illustrative only.
+  // Client must confirm final categories, item names, and any pricing before launch.
+  // No prices should appear on the page — this is a menu display, not a shop.
+  menu: {
+    'Espresso': ['Espresso', 'Americano', 'Flat White', 'Cappuccino', 'Latte', 'Cortado'],
+    'Filter':   ['Filter Coffee', 'Pourover'],
+    'Cold':     ['Iced Coffee', 'Cold Brew'],
+    'Food':     ['Banana Bread', 'Choc Chip Cookies', 'Muffin of the Day', 'Toasted Sandwich']
+  },
+
+  // PLACEHOLDER: Instagram cards are layout placeholders only.
+  // Replace with real captions and images from @heavencoffeect.
+  // Do NOT invent realistic-looking captions — keep explicit placeholder strings.
+  // Note: build as a live Instagram Graph API feed only when:
+  //   - client has a Meta Business account
+  //   - app review is complete
+  //   - token refresh handling is in place
+  instagram: [
+    { image: 'https://picsum.photos/seed/hc-ig1/400/400', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa' },
+    { image: 'https://picsum.photos/seed/hc-ig2/400/400', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa' },
+    { image: 'https://picsum.photos/seed/hc-ig3/400/400', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa' },
+    { image: 'https://picsum.photos/seed/hc-ig4/400/400', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa' }
+  ]
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  // --- Propagate hours placeholder to all [data-hours] elements ---
+  document.querySelectorAll('[data-hours]').forEach(function (el) {
+    el.textContent = HEAVEN_CONTENT.hours;
+  });
+
+  // --- Propagate press outlet placeholder to all [data-press-outlet] elements ---
+  document.querySelectorAll('[data-press-outlet]').forEach(function (el) {
+    el.textContent = HEAVEN_CONTENT.pressOutlet;
+  });
+
+  // --- Render menu from HEAVEN_CONTENT.menu (clean divided list rows,
+  //     structural reference: Caplatte's menu — but no price/kcal column) ---
+  var menuContainer = document.getElementById('menu-cards');
+  if (menuContainer) {
+    var html = '';
+    Object.keys(HEAVEN_CONTENT.menu).forEach(function (category) {
+      var items = HEAVEN_CONTENT.menu[category];
+      html += '<div class="flex flex-col">';
+      html += '<h3 class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold pb-space-sm">' + category + '</h3>';
+      items.forEach(function (item) {
+        html += '<div class="menu-row flex items-center justify-between py-3">';
+        html += '<span class="font-title-md text-title-md text-espresso-deep">' + item + '</span>';
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+    menuContainer.innerHTML = html;
+  }
+
+  // --- Render Instagram cards from HEAVEN_CONTENT.instagram ---
+  var igContainer = document.getElementById('instagram-cards');
+  if (igContainer) {
+    igContainer.innerHTML = HEAVEN_CONTENT.instagram.map(function (card) {
+      return '<div class="bg-surface overflow-hidden flex-shrink-0 w-64 md:w-auto" style="border:1px solid rgba(210,195,191,0.3);">'
+        + '<div class="aspect-square overflow-hidden bg-surface-container">'
+          + '<img src="' + card.image + '" alt="Instagram post from @heavencoffeect — placeholder" class="w-full h-full object-cover" loading="lazy"/>'
+        + '</div>'
+        + '<div class="p-3 flex flex-col gap-2">'
+          + '<div class="flex items-center gap-2">'
+            + '<div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:#1D4ED8;font-size:10px;font-weight:700;color:#fff;">HC</div>'
+            + '<div class="flex flex-col" style="line-height:1.3;">'
+              + '<span class="font-label-md text-label-md text-espresso-deep">@heavencoffeect</span>'
+              + '<span class="font-body-sm text-body-sm text-stone-aged">' + card.location + '</span>'
+            + '</div>'
+          + '</div>'
+          + '<p class="font-body-sm text-body-sm text-on-surface-variant" style="overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;">' + card.caption + '</p>'
+          + '<span class="font-label-sm text-label-sm text-stone-aged">♥ ' + card.likes + '</span>'
+        + '</div>'
+      + '</div>';
+    }).join('');
+  }
+
+  // --- Nav drawer toggle ---
+  var navToggle = document.getElementById('nav-toggle');
+  var navDrawer = document.getElementById('nav-drawer');
+  var navIcon = document.getElementById('nav-icon');
+
+  if (navToggle && navDrawer) {
+    navToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = !navDrawer.classList.contains('hidden');
+      navDrawer.classList.toggle('hidden', isOpen);
+      navToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      if (navIcon) navIcon.textContent = isOpen ? 'menu' : 'close';
+    });
+
+    navDrawer.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navDrawer.classList.add('hidden');
+        navToggle.setAttribute('aria-expanded', 'false');
+        if (navIcon) navIcon.textContent = 'menu';
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!navToggle.contains(e.target) && !navDrawer.contains(e.target)) {
+        navDrawer.classList.add('hidden');
+        navToggle.setAttribute('aria-expanded', 'false');
+        if (navIcon) navIcon.textContent = 'menu';
+      }
+    });
+  }
+
+  // --- Sticky "Find Us" bar ---
+  // Slides in after hero section scrolls off screen.
+  // Replaces the "order now" sticky pattern used by reference templates.
+  var heroSection = document.getElementById('hero');
+  var stickyBar = document.getElementById('sticky-find-us');
+  var mainEl = document.getElementById('main-content');
+
+  if (heroSection && stickyBar) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) {
+          stickyBar.classList.add('visible');
+          if (mainEl) mainEl.style.paddingBottom = stickyBar.offsetHeight + 'px';
+        } else {
+          stickyBar.classList.remove('visible');
+          if (mainEl) mainEl.style.paddingBottom = '';
+        }
+      });
+    }, { threshold: 0 });
+
+    observer.observe(heroSection);
+  }
+
+});
+</script>
+
+</body>
+</html>
