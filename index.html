@@ -39,46 +39,54 @@
     .menu-row { border-bottom: 1px solid rgba(29,19,16,0.1); }
     .menu-row:last-child { border-bottom: none; }
 
-    /* "Dog friendly" wave-marquee ribbon — adapted from a React TextLoop component spec
-       (shape="wave", speed, curviness, separator, ribbon props) into vanilla CSS, since
-       this is a static site with no React runtime. Two duplicate tracks scroll together
-       for a seamless loop; each repeated unit bobs on its own staggered delay to read as
-       a wave rippling through the line rather than a flat scroll. */
-    .dog-ribbon-track {
-      display: flex;
-      align-items: center;
-      width: max-content;
-      animation: dog-ribbon-scroll 24s linear infinite;
-    }
-    .dog-ribbon-unit {
+    /* "Dog friendly" fixed corner badge — adapted from a React TextLoop component spec
+       (shape="wave", speed, curviness, separator, ribbon/ribbonColor props) into vanilla
+       CSS, since this is a static site with no React runtime. Originally built as a
+       full-width scrolling ribbon; scoped down to a small fixed tag per feedback (the
+       ribbon was too disruptive). Color corrected to the design.md blue system —
+       awning-navy (#455174, measured from the real umbrella fabric) rather than the
+       spec's indigo or the terracotta used in the first pass; the real storefront photo
+       (hero "Find Us" tile) shows the dog sitting right by that navy umbrella. Only the
+       paw emoji keeps a small bob, retaining a little of the original "wave" character
+       without a marquee that wouldn't fit at badge size. Respects prefers-reduced-motion. */
+    .dog-badge {
+      position: fixed;
+      z-index: 30;
+      right: 1rem;
+      bottom: 5.5rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.6em;
-      margin: 0 1.25em;
+      gap: 0.5rem;
+      padding: 0.6rem 1.1rem;
+      border-radius: 9999px;
+      background: #455174;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      text-decoration: none;
+    }
+    .dog-badge-label {
       font-family: 'Archivo', sans-serif;
       font-weight: 600;
-      font-size: clamp(16px, 2.6vw, 26px);
-      letter-spacing: 2px;
+      font-size: 13px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #ffffff;
       white-space: nowrap;
-      animation: dog-ribbon-bob 2.4s ease-in-out infinite;
     }
-    .dog-ribbon-unit:nth-child(2n) { animation-delay: 0.3s; }
-    .dog-ribbon-unit:nth-child(3n) { animation-delay: 0.6s; }
-    .dog-ribbon-unit:nth-child(4n) { animation-delay: 0.9s; }
-    .dog-ribbon-unit:nth-child(5n) { animation-delay: 1.2s; }
-    .dog-ribbon-unit .dog-ribbon-paw { font-size: 0.8em; }
-    @keyframes dog-ribbon-scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    .dog-badge-paw {
+      display: inline-block;
+      font-size: 15px;
+      animation: dog-badge-bob 1.8s ease-in-out infinite;
     }
-    @keyframes dog-ribbon-bob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-30%); }
+    @keyframes dog-badge-bob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-3px) rotate(-10deg); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .dog-ribbon-track, .dog-ribbon-unit { animation: none !important; }
+      .dog-badge-paw { animation: none !important; }
+    }
+    @media (max-width: 480px) {
+      .dog-badge { right: 0.75rem; bottom: 5rem; padding: 0.5rem 0.9rem; }
+      .dog-badge-label { font-size: 11px; }
     }
   </style>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -108,6 +116,25 @@
     </a>
   </div>
 </div>
+
+<!-- =====================================================================
+     DOG-FRIENDLY BADGE — fixed corner tag, always visible.
+     Grounded in repeated dog photos across @heavencoffeect and the real
+     storefront photo (see hero "Find Us" tile — the dog sits right by
+     the navy umbrella). Adapted from a supplied React TextLoop component
+     spec (shape="wave", speed, curviness, separator="🐾", ribbon props)
+     into vanilla CSS — this is a static site with no React runtime, so
+     the component itself can't be imported. First pass was a full-width
+     scrolling ribbon in terracotta; scoped down to this small fixed tag
+     per feedback (the ribbon was too disruptive), and recolored to the
+     design.md blue system (awning-navy, not the spec's indigo or the
+     terracotta from the first pass). Positioned to clear the sticky
+     "Find Us" bar above at all times. See <style> block for CSS.
+     ===================================================================== -->
+<a href="#location" class="dog-badge" title="Pavement seating available outside" aria-label="Dog friendly — pavement seating available outside">
+  <span class="dog-badge-paw" aria-hidden="true">🐾</span>
+  <span class="dog-badge-label">Dog Friendly</span>
+</a>
 
 <!-- =====================================================================
      TOP BAR — minimal three-zone strip (structural reference: Caplatte).
@@ -197,13 +224,11 @@
       <!-- Three-tile photo nav: Story / Menu / Find Us -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-outline-variant/30 mt-space-sm">
         <a href="#story" class="hero-tile aspect-[4/5] sm:aspect-[3/4] bg-surface-container">
-          <!-- STILL PLACEHOLDER: round-3 photo batch didn't include a wide shot that shows
-               the stone arches + counter together — the thing this tile and most of the
-               copy describe. Round-2 findings flagged this gap explicitly. Replace when a
-               real wide interior shot is available; don't stretch another slot's photo to
-               cover it (images.jpg was considered and rejected for hero-tile use — too
-               tightly cropped on the sign itself). -->
-          <img alt="Inside Heaven Coffee — stone arches of Central Methodist Mission" class="w-full h-full object-cover" src="https://picsum.photos/seed/heaven-tile-story/700/900" loading="eager"/>
+          <!-- REAL PHOTO (round 4): the wide interior shot the round-2 findings flagged as
+               missing — wooden counter, the heaven coffee sign board + macramé on the wall,
+               chalkboard menu, and people gathered at the bar. Not a stone-arch shot, but a
+               genuine, welcoming wide interior view; alt text describes what's actually shown. -->
+          <img alt="Heaven Coffee's wooden counter with the heaven coffee sign board and macramé on the wall behind, chalkboard menu, and people gathered at the bar" class="w-full h-full object-cover" src="images/interior-counter.webp" loading="eager"/>
           <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
           <span class="absolute inset-0 flex items-center justify-center font-display text-headline-lg text-white uppercase" style="letter-spacing:-0.01em;">Story</span>
         </a>
@@ -421,43 +446,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- =================================================================
-         SECTION 7: DOG-FRIENDLY RIBBON
-         Grounded in repeated dog photos across @heavencoffeect and the real
-         storefront photo (see hero "Find Us" tile). Animated wave-marquee,
-         adapted from a supplied React TextLoop component spec (shape="wave",
-         speed, curviness, separator="🐾", ribbon/ribbonColor props) into
-         vanilla CSS — this is a static site with no React runtime, so the
-         component itself can't be imported; the visual effect is recreated
-         with plain keyframe animations instead, and the ribbon color/type
-         matched to the existing palette rather than the spec's indigo
-         (terracotta-warm already marks "dog" mentions elsewhere on the page).
-         Respects prefers-reduced-motion (see <style> block in <head>).
-         ================================================================= -->
-    <div class="w-full overflow-hidden" style="background:#9A5230;" role="img" aria-label="Dog friendly">
-      <div class="flex py-5 sm:py-6">
-        <div class="dog-ribbon-track" aria-hidden="true">
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-        </div>
-        <div class="dog-ribbon-track" aria-hidden="true">
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
-        </div>
-      </div>
-    </div>
-    <div class="w-full bg-background py-2 text-center">
-      <span class="font-body-sm text-body-sm text-stone-aged">Pavement seating available outside</span>
     </div>
 
     <!-- =================================================================
