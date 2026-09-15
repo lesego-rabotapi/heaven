@@ -38,6 +38,48 @@
     .hero-tile:hover img { transform: scale(1.04); }
     .menu-row { border-bottom: 1px solid rgba(29,19,16,0.1); }
     .menu-row:last-child { border-bottom: none; }
+
+    /* "Dog friendly" wave-marquee ribbon — adapted from a React TextLoop component spec
+       (shape="wave", speed, curviness, separator, ribbon props) into vanilla CSS, since
+       this is a static site with no React runtime. Two duplicate tracks scroll together
+       for a seamless loop; each repeated unit bobs on its own staggered delay to read as
+       a wave rippling through the line rather than a flat scroll. */
+    .dog-ribbon-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: dog-ribbon-scroll 24s linear infinite;
+    }
+    .dog-ribbon-unit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6em;
+      margin: 0 1.25em;
+      font-family: 'Archivo', sans-serif;
+      font-weight: 600;
+      font-size: clamp(16px, 2.6vw, 26px);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      white-space: nowrap;
+      animation: dog-ribbon-bob 2.4s ease-in-out infinite;
+    }
+    .dog-ribbon-unit:nth-child(2n) { animation-delay: 0.3s; }
+    .dog-ribbon-unit:nth-child(3n) { animation-delay: 0.6s; }
+    .dog-ribbon-unit:nth-child(4n) { animation-delay: 0.9s; }
+    .dog-ribbon-unit:nth-child(5n) { animation-delay: 1.2s; }
+    .dog-ribbon-unit .dog-ribbon-paw { font-size: 0.8em; }
+    @keyframes dog-ribbon-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @keyframes dog-ribbon-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .dog-ribbon-track, .dog-ribbon-unit { animation: none !important; }
+    }
   </style>
   <script src="https://cdn.tailwindcss.com"></script>
   <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#9A5230","awning-navy":"#455174","surface-container":"#f0ede9","secondary-fixed-dim":"#b0c6ff","surface-variant":"#e5e2dd","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#2B1E1A","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#fcf9f4","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#ebe8e3","wood-warm":"#5C3A21","oat-cream":"#F8F5F0","primary-fixed":"#f5ddd7","surface-container-low":"#f6f3ee","on-tertiary":"#ffffff","inverse-on-surface":"#f3f0eb","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#fcf9f4","surface-container-highest":"#e5e2dd","primary-container":"#2b1e1a","outline-variant":"#d2c3bf","on-primary-fixed":"#251915","espresso-deep":"#1D1310","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#6B5C4F","church-sapphire":"#1D4ED8","outline":"#807471","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#fcf9f4","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4f4542","tertiary":"#190500","surface-dim":"#dcdad5","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Archivo"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Archivo"],"display-mobile":["Archivo"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Archivo"],"headline-md":["Archivo"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Archivo"],"quote":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
@@ -253,23 +295,20 @@
             </div>
           </div>
 
-          <div class="lg:col-span-5 flex flex-col gap-gutter-sm">
-            <!-- REAL PHOTO (round 3): interior accent wall — signage + macramé + framed quotes.
-                 Not the stone-arch shot the section copy describes (that photo still doesn't
-                 exist — see the hero "Story" tile comment), but genuine interior content, so
-                 alt text was corrected to describe it honestly rather than promise arches. -->
+          <div class="lg:col-span-5 relative">
+            <!-- REAL PHOTO (round 4): founder portrait, now the section's single large image
+                 (previously a small circular avatar beside a separate name/role block — that
+                 "tag" was removed per feedback and the portrait promoted to the main photo).
+                 Caption is overlaid directly on the photo: name/role only, no biographical
+                 detail, per the policy on his personal history (design brief §3).
+                 interior-signage.jpg (the sign-board + macramé wall shot previously here)
+                 is still in images/ if a future section wants it. -->
             <div class="relative overflow-hidden bg-surface-container aspect-[3/4]">
-              <img alt="Interior wall at Heaven Coffee — the heaven coffee sign board above framed quotes reading Touch the earth lightly and Love casts out fear, with a macramé hanging" class="w-full h-full object-cover" src="images/interior-signage.jpg" loading="lazy"/>
-            </div>
-            <!-- REAL PHOTO (round 3): founder portrait. Caption is name/role only — no
-                 biographical detail, per the policy on his personal history (design brief §3). -->
-            <div class="flex items-center gap-space-sm">
-              <div class="relative overflow-hidden rounded-full bg-surface-container w-16 h-16 flex-shrink-0">
-                <img alt="Mondli Mahamba, founder of Heaven Coffee, smiling at the counter" class="w-full h-full object-cover" src="images/founder-mondli.jpg" loading="lazy"/>
-              </div>
-              <div class="flex flex-col">
-                <span class="font-title-md text-title-md text-espresso-deep">Mondli Mahamba</span>
-                <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">Founder</span>
+              <img alt="Mondli Mahamba, founder of Heaven Coffee, smiling at the counter" class="w-full h-full object-cover" src="images/founder-mondli.jpg" loading="lazy"/>
+              <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/70 via-transparent to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-space-md">
+                <span class="font-title-md text-title-md block" style="color:#fcf9f4;">Mondli Mahamba</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wide" style="color:#EFECE6;">Founder</span>
               </div>
             </div>
           </div>
@@ -382,6 +421,43 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- =================================================================
+         SECTION 7: DOG-FRIENDLY RIBBON
+         Grounded in repeated dog photos across @heavencoffeect and the real
+         storefront photo (see hero "Find Us" tile). Animated wave-marquee,
+         adapted from a supplied React TextLoop component spec (shape="wave",
+         speed, curviness, separator="🐾", ribbon/ribbonColor props) into
+         vanilla CSS — this is a static site with no React runtime, so the
+         component itself can't be imported; the visual effect is recreated
+         with plain keyframe animations instead, and the ribbon color/type
+         matched to the existing palette rather than the spec's indigo
+         (terracotta-warm already marks "dog" mentions elsewhere on the page).
+         Respects prefers-reduced-motion (see <style> block in <head>).
+         ================================================================= -->
+    <div class="w-full overflow-hidden" style="background:#9A5230;" role="img" aria-label="Dog friendly">
+      <div class="flex py-5 sm:py-6">
+        <div class="dog-ribbon-track" aria-hidden="true">
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+        </div>
+        <div class="dog-ribbon-track" aria-hidden="true">
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+          <span class="dog-ribbon-unit">Dog Friendly <span class="dog-ribbon-paw">🐾</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="w-full bg-background py-2 text-center">
+      <span class="font-body-sm text-body-sm text-stone-aged">Pavement seating available outside</span>
     </div>
 
     <!-- =================================================================
