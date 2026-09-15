@@ -31,8 +31,6 @@
       pointer-events: none;
     }
     #sticky-find-us.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
-    .ig-scroll { scroll-snap-type: x mandatory; }
-    .ig-scroll > * { scroll-snap-align: start; flex-shrink: 0; }
     .hero-tile { position: relative; overflow: hidden; display: block; }
     .hero-tile img { transition: transform 0.6s ease; }
     .hero-tile:hover img { transform: scale(1.04); }
@@ -87,6 +85,55 @@
     @media (max-width: 480px) {
       .dog-badge { right: 0.75rem; bottom: 5rem; padding: 0.5rem 0.9rem; }
       .dog-badge-label { font-size: 11px; }
+    }
+
+    /* "From the Feed" drift-wall — corrected brief: vanilla CSS/JS only, no
+       React/DriftWall component, no build step (confirmed via repo inspection
+       that neither exists here). Several columns of tiles drift upward
+       continuously, each at a slightly different duration/delay so they
+       don't move in lockstep — this variance is what reads as organic
+       rather than a mechanical carousel. No carousel chrome (arrows/dots/
+       IG-logo badges) — the drift itself is the visual feature. Pauses on
+       hover, when the section scrolls off-screen (IntersectionObserver,
+       same pattern as the sticky "Find Us" bar), and when the tab is
+       backgrounded (visibilitychange) — battery/perf. The animation rule
+       lives inside prefers-reduced-motion:no-preference so reduced-motion
+       visitors get a static wall, not a jump-cut of a disabled animation. */
+    .ig-wall {
+      --ig-fade-h: 72px;
+      position: relative;
+      height: 560px;
+      overflow: hidden;
+      border-radius: 4px;
+      perspective: 900px;
+    }
+    .ig-wall::before, .ig-wall::after {
+      content: ''; position: absolute; left: 0; right: 0; height: var(--ig-fade-h);
+      pointer-events: none; z-index: 2;
+    }
+    .ig-wall::before { top: 0;    background: linear-gradient(to bottom, #fcf9f4 0%, rgba(252,249,244,0) 100%); }
+    .ig-wall::after  { bottom: 0; background: linear-gradient(to top,    #fcf9f4 0%, rgba(252,249,244,0) 100%); }
+    .ig-wall-columns { display: flex; gap: 12px; height: 100%; transform: rotateX(3deg); transform-style: preserve-3d; }
+    .ig-wall-col { flex: 1 1 0; min-width: 0; height: 100%; overflow: hidden; }
+    .ig-wall-col-track { display: flex; flex-direction: column; gap: 12px; will-change: transform; }
+    @media (prefers-reduced-motion: no-preference) {
+      .ig-wall-col-track { animation-name: ig-drift; animation-duration: var(--ig-duration, 34s); animation-timing-function: linear; animation-iteration-count: infinite; }
+    }
+    @keyframes ig-drift { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+    /* Alternate drift direction per column — free variance beyond just speed,
+       so the wall reads as several independent currents rather than one
+       mechanical belt. No second keyframe needed, just reversed playback. */
+    .ig-wall-col:nth-child(even) .ig-wall-col-track { animation-direction: reverse; }
+    .ig-wall:hover .ig-wall-col-track, .ig-wall.is-paused .ig-wall-col-track { animation-play-state: paused; }
+    .ig-tile { display: block; position: relative; aspect-ratio: 4 / 5; overflow: hidden; flex-shrink: 0; }
+    .ig-tile-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ig-tile:focus-visible { outline: none; box-shadow: inset 0 0 0 3px #1D4ED8; z-index: 3; }
+    @media (max-width: 1023px) { .ig-wall-col:nth-child(4) { display: none; } }
+    @media (max-width: 639px) {
+      .ig-wall-col:nth-child(3) { display: none; }
+      .ig-wall { height: 420px; }
+      .ig-wall-columns { transform: none; }
+      .ig-wall-col-track { animation-duration: calc(var(--ig-duration, 34s) * 0.65) !important; }
     }
   </style>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -171,14 +218,44 @@
         <span class="material-symbols-outlined text-[15px]">call</span>
         072 884 2057
       </a>
-      <button id="nav-toggle" class="w-10 h-10 rounded flex items-center justify-center text-espresso-deep hover:bg-surface-container transition-all" aria-label="Open navigation" aria-expanded="false">
-        <span class="material-symbols-outlined text-[24px]" id="nav-icon">menu</span>
+      <!-- Mobile menu trigger — md:hidden since the persistent nav row below
+           covers desktop. Animated 3-line-to-X morph via Tailwind's
+           group-aria-expanded variant (supported by the Tailwind CDN's full
+           JIT engine) rather than a JS icon-swap — the button toggles
+           aria-expanded, these paths do the rest in pure CSS. Adapted from a
+           supplied shadcn/ui nav bar component (NavigationMenu/Popover/Button
+           from "@/components/ui/*") — this is a static site with no React,
+           no build step, no shadcn, so the component itself can't be
+           imported; only the animated-icon and underline-hover-nav visual
+           patterns were translated into plain HTML/CSS/JS. Its generic
+           "Home/Features/Pricing/About" links and "Sign In"/"Get Started"
+           buttons were a SaaS-template placeholder, not real Heaven content
+           or a wayfinding CTA, so neither was carried over — this project's
+           CTA policy is location/map/hours only, no transactional buttons. -->
+      <button id="nav-toggle" class="group md:hidden w-10 h-10 rounded flex items-center justify-center text-espresso-deep hover:bg-surface-container transition-all" aria-label="Open navigation" aria-expanded="false">
+        <svg class="pointer-events-none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 7H20" class="origin-center -translate-y-[6px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"/>
+          <path d="M4 12H20" class="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"/>
+          <path d="M4 17H20" class="origin-center translate-y-[6px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"/>
+        </svg>
       </button>
     </div>
   </div>
 
-  <!-- Nav drawer — hidden by default -->
-  <div id="nav-drawer" class="hidden bg-background border-t border-outline-variant/30">
+  <!-- Persistent desktop nav row — underline-on-hover, adapted from the
+       shadcn nav bar's NavigationMenu styling. Hidden below md; the
+       hamburger drawer covers mobile instead. -->
+  <nav class="hidden md:flex items-center justify-center gap-space-lg h-12 border-t border-outline-variant/20">
+    <a href="#story" class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant hover:text-espresso-deep border-b-2 border-transparent hover:border-terracotta-warm px-1 py-1 transition-colors">Story</a>
+    <a href="#menu" class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant hover:text-espresso-deep border-b-2 border-transparent hover:border-terracotta-warm px-1 py-1 transition-colors">Menu</a>
+    <a href="#instagram" class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant hover:text-espresso-deep border-b-2 border-transparent hover:border-terracotta-warm px-1 py-1 transition-colors">From the Feed</a>
+    <a href="#location" class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant hover:text-espresso-deep border-b-2 border-transparent hover:border-terracotta-warm px-1 py-1 transition-colors">Find Us</a>
+  </nav>
+
+  <!-- Mobile nav drawer — hidden by default, and md:hidden permanently so a
+       drawer left open on mobile doesn't persist if the viewport is resized
+       to desktop width (the persistent nav row above takes over instead). -->
+  <div id="nav-drawer" class="hidden md:hidden bg-background border-t border-outline-variant/30">
     <nav class="max-w-7xl mx-auto px-gutter py-space-sm flex flex-col">
       <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#story">Story</a>
       <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#menu">Menu</a>
@@ -191,7 +268,7 @@
 <!-- =====================================================================
      MAIN CONTENT
      ===================================================================== -->
-<main class="w-full pt-16 bg-background" id="main-content">
+<main class="w-full pt-16 md:pt-28 bg-background" id="main-content">
   <div class="flex flex-col w-full">
 
     <!-- =================================================================
@@ -404,12 +481,14 @@
         <div class="mb-space-md flex items-start gap-space-sm rounded p-space-sm border" style="background:#fffbeb;border-color:#fcd34d;">
           <span class="material-symbols-outlined text-[20px] mt-0.5 flex-shrink-0" style="color:#92400e;">info</span>
           <p class="font-body-sm text-body-sm" style="color:#92400e;">
-            Cards below are layout placeholders — not a live feed. Real posts at <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" style="text-decoration:underline;">@heavencoffeect</a>. Update <code>HEAVEN_CONTENT.instagram</code> with real content before launch.
+            Tiles below are layout placeholders — not a live feed. Real posts at <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" style="text-decoration:underline;">@heavencoffeect</a>. Update <code>HEAVEN_CONTENT.instagram</code> with real content before launch.
           </p>
         </div>
 
-        <div id="instagram-cards" class="ig-scroll flex gap-gutter-sm overflow-x-auto pb-2 scrollbar-hide md:grid md:grid-cols-4 md:overflow-x-visible">
-          <!-- JS-rendered: see HEAVEN_CONTENT.instagram in the script block below -->
+        <div id="ig-wall" class="ig-wall" aria-label="Instagram posts from @heavencoffeect — decorative, auto-scrolling">
+          <div id="ig-wall-columns" class="ig-wall-columns">
+            <!-- JS-rendered: see HEAVEN_CONTENT.instagram in the script block below -->
+          </div>
         </div>
 
       </div>
@@ -623,18 +702,29 @@ var HEAVEN_CONTENT = {
     'Food':     ['Banana Bread', 'Choc Chip Cookies', 'Muffin of the Day', 'Toasted Sandwich']
   },
 
-  // PLACEHOLDER: Instagram cards are layout placeholders only.
+  // PLACEHOLDER: Instagram tiles are layout placeholders only.
   // Replace with real captions and images from @heavencoffeect.
-  // Do NOT invent realistic-looking captions — keep explicit placeholder strings.
+  // Do NOT invent realistic-looking captions — keep explicit placeholder strings,
+  // even in mock/demo data. A caption that reads as real (e.g. "Morning at
+  // Heaven") is exactly the kind of thing that gets mistaken for real later.
+  // href falls back to the profile URL since no real per-post URLs exist —
+  // never fabricate a specific post URL.
+  // id exists so a future real API-backed data source can key/replace entries
+  // without the drift-wall UI needing to change.
   // Note: build as a live Instagram Graph API feed only when:
   //   - client has a Meta Business account
   //   - app review is complete
   //   - token refresh handling is in place
   instagram: [
-    { image: 'https://picsum.photos/seed/hc-ig1/400/400', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa' },
-    { image: 'https://picsum.photos/seed/hc-ig2/400/400', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa' },
-    { image: 'https://picsum.photos/seed/hc-ig3/400/400', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa' },
-    { image: 'https://picsum.photos/seed/hc-ig4/400/400', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', likes: '—', location: 'Cape Town, South Africa' }
+    { id: 'heaven-01', image: 'images/storefront-entrance.webp', alt: 'Heaven Coffee storefront on Burg Street, navy umbrellas and a dog on the steps', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-02', image: 'images/cup-handover.jpg', alt: 'A Heaven Coffee barista handing over a to-go cup with the heaven coffee wordmark on the sleeve', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-03', image: 'images/interior-counter.webp', alt: "Heaven Coffee's wooden counter with the sign board and macramé on the wall, people gathered at the bar", caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-04', image: 'images/interior-signage.jpg', alt: 'The heaven coffee sign board mounted above framed quotes reading Touch the earth lightly and Love casts out fear, with a macramé hanging beside it', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-05', image: 'images/founder-mondli.jpg', alt: 'Mondli Mahamba, founder of Heaven Coffee, at the counter', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-06', image: 'https://picsum.photos/seed/hc-ig6/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-07', image: 'https://picsum.photos/seed/hc-ig7/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-08', image: 'https://picsum.photos/seed/hc-ig8/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-09', image: 'https://picsum.photos/seed/hc-ig9/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' }
   ]
 };
 
@@ -669,33 +759,74 @@ document.addEventListener('DOMContentLoaded', function () {
     menuContainer.innerHTML = html;
   }
 
-  // --- Render Instagram cards from HEAVEN_CONTENT.instagram ---
-  var igContainer = document.getElementById('instagram-cards');
-  if (igContainer) {
-    igContainer.innerHTML = HEAVEN_CONTENT.instagram.map(function (card) {
-      return '<div class="bg-surface overflow-hidden flex-shrink-0 w-64 md:w-auto" style="border:1px solid rgba(210,195,191,0.3);">'
-        + '<div class="aspect-square overflow-hidden bg-surface-container">'
-          + '<img src="' + card.image + '" alt="Instagram post from @heavencoffeect — placeholder" class="w-full h-full object-cover" loading="lazy"/>'
-        + '</div>'
-        + '<div class="p-3 flex flex-col gap-2">'
-          + '<div class="flex items-center gap-2">'
-            + '<div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background:#1D4ED8;font-size:10px;font-weight:700;color:#fff;">HC</div>'
-            + '<div class="flex flex-col" style="line-height:1.3;">'
-              + '<span class="font-label-md text-label-md text-espresso-deep">@heavencoffeect</span>'
-              + '<span class="font-body-sm text-body-sm text-stone-aged">' + card.location + '</span>'
-            + '</div>'
-          + '</div>'
-          + '<p class="font-body-sm text-body-sm text-on-surface-variant" style="overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;">' + card.caption + '</p>'
-          + '<span class="font-label-sm text-label-sm text-stone-aged">♥ ' + card.likes + '</span>'
-        + '</div>'
-      + '</div>';
+  // --- Render Instagram drift-wall from HEAVEN_CONTENT.instagram ---
+  // Vanilla CSS/JS "drift wall": columns of tiles drift upward continuously
+  // at varied speed/delay. Each column's tile set is rendered twice — a
+  // real, focusable/announced copy and a duplicate marked aria-hidden +
+  // tabindex="-1" — so the CSS loop (0 -> -50%) is visually seamless while
+  // keyboard/screen-reader users only ever reach one copy of each photo.
+  var igWall = document.getElementById('ig-wall');
+  var igColumnsEl = document.getElementById('ig-wall-columns');
+
+  if (igWall && igColumnsEl && HEAVEN_CONTENT.instagram.length) {
+    var igPosts = HEAVEN_CONTENT.instagram;
+    var IG_COLUMNS = 4;
+    var IG_MIN_TILES_PER_COLUMN = 4;
+    var IG_DURATIONS = [30, 38, 34, 42]; // seconds — deliberately non-uniform per column
+    var IG_DELAYS = [0, -6, -3, -9];     // seconds — negative delay desyncs each column's phase
+
+    var renderIgTile = function (post, hidden) {
+      var href = post.href || 'https://instagram.com/heavencoffeect';
+      var alt = hidden ? '' : (post.alt || 'Instagram post from @heavencoffeect — placeholder');
+      var extra = hidden ? ' aria-hidden="true" tabindex="-1"' : ' title="' + post.caption + '"';
+      return '<a class="ig-tile" href="' + href + '" target="_blank" rel="noopener noreferrer"' + extra + '>'
+        + '<img class="ig-tile-img" src="' + post.image + '" alt="' + alt + '" loading="lazy" decoding="async" width="280" height="350"/>'
+        + '</a>';
+    };
+
+    // Distribute posts round-robin across columns, then pad any short
+    // column by cycling back through igPosts, so the wall never looks
+    // sparse regardless of how many real posts exist.
+    var igColumns = [];
+    var c;
+    for (c = 0; c < IG_COLUMNS; c++) { igColumns.push([]); }
+    igPosts.forEach(function (post, i) { igColumns[i % IG_COLUMNS].push(post); });
+    igColumns.forEach(function (colArr) {
+      var i = 0;
+      while (colArr.length < IG_MIN_TILES_PER_COLUMN) { colArr.push(igPosts[i % igPosts.length]); i++; }
+    });
+
+    igColumnsEl.innerHTML = igColumns.map(function (colArr, idx) {
+      var visibleHtml = colArr.map(function (p) { return renderIgTile(p, false); }).join('');
+      var hiddenHtml = colArr.map(function (p) { return renderIgTile(p, true); }).join('');
+      var duration = IG_DURATIONS[idx % IG_DURATIONS.length];
+      var delay = IG_DELAYS[idx % IG_DELAYS.length];
+      return '<div class="ig-wall-col"><div class="ig-wall-col-track" style="--ig-duration:' + duration + 's; animation-delay:' + delay + 's;">'
+        + visibleHtml + hiddenHtml
+        + '</div></div>';
     }).join('');
   }
 
+  // --- Pause Instagram drift-wall when off-screen or tab hidden (battery/perf) ---
+  // Same IntersectionObserver shape as the sticky "Find Us" bar below, just
+  // toggling .is-paused on #ig-wall instead of .visible on the sticky bar.
+  if (igWall) {
+    var igOffScreen = false;
+    var igTabHidden = document.hidden;
+    var igUpdatePauseState = function () { igWall.classList.toggle('is-paused', igOffScreen || igTabHidden); };
+    var igObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { igOffScreen = !entry.isIntersecting; igUpdatePauseState(); });
+    }, { threshold: 0 });
+    igObserver.observe(igWall);
+    document.addEventListener('visibilitychange', function () { igTabHidden = document.hidden; igUpdatePauseState(); });
+  }
+
   // --- Nav drawer toggle ---
+  // Icon animation is pure CSS now (group-aria-expanded variants on the SVG
+  // paths in the header) — this just flips aria-expanded and the drawer's
+  // visibility, no icon-swap logic needed.
   var navToggle = document.getElementById('nav-toggle');
   var navDrawer = document.getElementById('nav-drawer');
-  var navIcon = document.getElementById('nav-icon');
 
   if (navToggle && navDrawer) {
     navToggle.addEventListener('click', function (e) {
@@ -703,14 +834,12 @@ document.addEventListener('DOMContentLoaded', function () {
       var isOpen = !navDrawer.classList.contains('hidden');
       navDrawer.classList.toggle('hidden', isOpen);
       navToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-      if (navIcon) navIcon.textContent = isOpen ? 'menu' : 'close';
     });
 
     navDrawer.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         navDrawer.classList.add('hidden');
         navToggle.setAttribute('aria-expanded', 'false');
-        if (navIcon) navIcon.textContent = 'menu';
       });
     });
 
@@ -718,7 +847,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!navToggle.contains(e.target) && !navDrawer.contains(e.target)) {
         navDrawer.classList.add('hidden');
         navToggle.setAttribute('aria-expanded', 'false');
-        if (navIcon) navIcon.textContent = 'menu';
       }
     });
   }
