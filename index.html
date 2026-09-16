@@ -44,21 +44,36 @@
        a wide stroke) instead of a filled disc — a filled circle isn't a
        "ribbon", and it forced a static paw glyph into the middle just to
        fill empty space, which fought the spinning motion instead of
-       reading as part of it; dropped, the badge is smaller, and it sits
-       tighter to the corner (less bleed) per feedback. Sized down from
-       the spec's fontSize:46 (meant for a large showcase loop) to fit a
-       small fixed corner tag. Angled at a fixed tilt for the "angled"
-       look; the spin animation runs on the inner ring so the tilt itself
-       stays put while the text loops. Per the spec's pauseOnHover:false,
-       this deliberately keeps spinning on hover — unlike the drift-wall
-       below, which does pause on hover. */
+       reading as part of it; dropped. Angled at a fixed tilt for the
+       "angled" look; the spin animation runs on the inner ring so the
+       tilt itself stays put while the text loops (a rotated circle's
+       silhouette doesn't change, so the tilt doesn't affect how much of
+       it the corner clips — only the text's orientation). Per the spec's
+       pauseOnHover:false, this deliberately keeps spinning on hover —
+       unlike the drift-wall below, which does pause on hover.
+       Round 8: two real fixes plus a resize. The illegible text turned
+       out to be a viewBox/box-size mismatch, not just a small font —
+       the SVG had viewBox="0 0 160 160" rendered into a 104/86px box, so
+       every unit (including font-size:12) was actually rendering at
+       roughly 65% of its stated size once the browser scaled the SVG
+       down to fit. viewBox and the CSS box are now the same number
+       (220), so 1 SVG unit = 1 real pixel and font-size means what it
+       says. Text is also centered on the ring now via
+       dominant-baseline="central" — textPath only follows the path
+       horizontally; without it, the text's alphabetic baseline (not its
+       vertical center) sat on the path, so it read as hugging the top of
+       the band. And per feedback the ring is bigger overall but shows
+       much less of itself — right/bottom now equal the ring's own
+       radius, which puts its center exactly on the viewport corner, so
+       only the inward quarter is visible and it reads as emerging from
+       both edges at once, not sitting mostly on-screen. */
     .dog-loop {
       position: fixed;
       z-index: 30;
-      right: -14px;
-      bottom: -14px;
-      width: 104px;
-      height: 104px;
+      right: -110px;
+      bottom: -110px;
+      width: 220px;
+      height: 220px;
       transform: rotate(-10deg);
       text-decoration: none;
       filter: drop-shadow(0 4px 14px rgba(0,0,0,0.3));
@@ -77,7 +92,7 @@
       .dog-loop-ring { animation: none !important; }
     }
     @media (max-width: 480px) {
-      .dog-loop { width: 86px; height: 86px; right: -11px; bottom: -11px; }
+      .dog-loop { width: 160px; height: 160px; right: -80px; bottom: -80px; }
     }
 
     /* Staggered mobile nav drawer — see the HTML comment above #nav-drawer
@@ -202,25 +217,26 @@
 <!-- =====================================================================
      DOG-FRIENDLY BADGE — fixed corner tag, always visible, a spinning
      arched-text ring (Round 6, restyled as a genuine thin ribbon in
-     Round 7 — see <style> block for why the disc + center paw were
-     dropped). Grounded in repeated dog photos across @heavencoffeect and
-     the real storefront photo (see hero "Find Us" tile — the dog sits
-     right by the navy umbrella). Adapted from a supplied React TextLoop
-     component spec (shape="arch", speed, direction, curviness,
-     separator="🐶", ribbon/ribbonColor props) into an SVG stroked-ring
-     <textPath> plus a CSS spin — this is a static site with no React
-     runtime, so the component itself can't be imported. Same claim as
-     the previous pill/disc versions (pavement seating outside), just a
-     new visual treatment; see <style> block for the full translation
-     notes and prior-round history. -->
+     Round 7, resized/recentered/legibility-fixed in Round 8 — see
+     <style> block for the full history, including a real viewBox-vs-box
+     scaling bug that was the actual cause of the illegible text).
+     Grounded in repeated dog photos across @heavencoffeect and the real
+     storefront photo (see hero "Find Us" tile — the dog sits right by
+     the navy umbrella). Adapted from a supplied React TextLoop component
+     spec (shape="arch", speed, direction, curviness, separator="🐶",
+     ribbon/ribbonColor props) into an SVG stroked-ring <textPath> plus a
+     CSS spin — this is a static site with no React runtime, so the
+     component itself can't be imported. Same claim as the previous
+     pill/disc versions (pavement seating outside), just a new visual
+     treatment. -->
 <a href="#location" class="dog-loop" title="Pavement seating available outside" aria-label="Dog friendly — pavement seating available outside">
-  <svg class="dog-loop-ring" viewBox="0 0 160 160" aria-hidden="true">
+  <svg class="dog-loop-ring" viewBox="0 0 220 220" aria-hidden="true">
     <defs>
-      <path id="dog-loop-path" d="M80,80 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"/>
+      <path id="dog-loop-path" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/>
     </defs>
-    <circle cx="80" cy="80" r="64" fill="none" stroke="#1D4ED8" stroke-width="24"/>
-    <text font-family="Archivo, sans-serif" font-weight="800" font-size="12" letter-spacing="2" fill="#ffffff">
-      <textPath href="#dog-loop-path" startOffset="0%">DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 </textPath>
+    <circle cx="110" cy="110" r="80" fill="none" stroke="#1D4ED8" stroke-width="32"/>
+    <text font-family="Archivo, sans-serif" font-weight="800" font-size="22" letter-spacing="2" fill="#ffffff" dominant-baseline="central">
+      <textPath href="#dog-loop-path" startOffset="0%">DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 </textPath>
     </text>
   </svg>
 </a>
