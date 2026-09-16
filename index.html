@@ -27,8 +27,24 @@
     .hero-tile { position: relative; overflow: hidden; display: block; }
     .hero-tile img { transition: transform 0.6s ease; }
     .hero-tile:hover img { transform: scale(1.04); }
-    .menu-row { border-bottom: 1px solid rgba(29,19,16,0.1); }
+    .menu-row { border-bottom: 1px solid rgba(203,203,210,0.5); }
     .menu-row:last-child { border-bottom: none; }
+
+    /* Hero scroll-expand hint (Round 10 polish pass) — a static chevron
+       read as inert on a moment the whole site is asking the visitor to
+       scroll into; a slow bob gives it the same "this responds to you"
+       quality as the dog badge's spin and the drift-wall's motion,
+       without competing for attention (small amplitude, long duration).
+       Gated at the CSS level too, not just by the JS early-return for
+       prefers-reduced-motion, matching the .dog-loop-ring/.ig-wall-col-track
+       pattern elsewhere in this file. */
+    @keyframes scroll-expand-hint-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      #scroll-expand-hint .material-symbols-outlined { animation: scroll-expand-hint-bob 1.8s ease-in-out infinite; }
+    }
 
     /* "Dog friendly" spinning corner badge — Round 6, replacing the earlier
        static pill (see the HTML comment above the badge markup for the full
@@ -112,7 +128,7 @@
     #nav-drawer.is-open .staggered-menu-layer { transform: translateX(0); }
     .staggered-menu-panel {
       position: relative; height: 100%; overflow-y: auto;
-      background: #fcf9f4; transform: translateX(100%);
+      background: #F7F7F9; transform: translateX(100%);
       transition: transform 0.5s cubic-bezier(.4,0,.2,1); transition-delay: 0.12s;
     }
     #nav-drawer.is-open .staggered-menu-panel { transform: translateX(0); }
@@ -169,8 +185,8 @@
       content: ''; position: absolute; left: 0; right: 0; height: var(--ig-fade-h);
       pointer-events: none; z-index: 2;
     }
-    .ig-wall::before { top: 0;    background: linear-gradient(to bottom, #fcf9f4 0%, rgba(252,249,244,0) 100%); }
-    .ig-wall::after  { bottom: 0; background: linear-gradient(to top,    #fcf9f4 0%, rgba(252,249,244,0) 100%); }
+    .ig-wall::before { top: 0;    background: linear-gradient(to bottom, #F7F7F9 0%, rgba(247,247,249,0) 100%); }
+    .ig-wall::after  { bottom: 0; background: linear-gradient(to top,    #F7F7F9 0%, rgba(247,247,249,0) 100%); }
     .ig-wall-columns { display: flex; gap: 12px; height: 100%; transform: rotateX(3deg); transform-style: preserve-3d; }
     .ig-wall-col { flex: 1 1 0; min-width: 0; height: 100%; overflow: hidden; }
     .ig-wall-col-track { display: flex; flex-direction: column; gap: 12px; will-change: transform; }
@@ -200,12 +216,17 @@
        with cool blue/black/grey equivalents, per design.md §7. terracotta-warm
        now reuses church-sapphire's exact hex rather than getting its own new
        color (one fewer distinct hue to maintain). awning-navy was left alone —
-       already fits this cool direction. surface/background (#fcf9f4, the warm
-       cream page canvas) was deliberately NOT touched — design.md §7 flags this
-       as an explicit open question it chose not to bundle into this pass ("a
-       bigger, more visible change... needs an explicit decision"), not an
-       oversight. -->
-  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#1D4ED8","awning-navy":"#455174","surface-container":"#f0ede9","secondary-fixed-dim":"#b0c6ff","surface-variant":"#e5e2dd","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#1E1F24","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#fcf9f4","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#ebe8e3","wood-warm":"#3A3B42","oat-cream":"#F3F3F5","primary-fixed":"#f5ddd7","surface-container-low":"#f6f3ee","on-tertiary":"#ffffff","inverse-on-surface":"#f3f0eb","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#fcf9f4","surface-container-highest":"#e5e2dd","primary-container":"#2b1e1a","outline-variant":"#d2c3bf","on-primary-fixed":"#251915","espresso-deep":"#16181D","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#5B5B60","church-sapphire":"#1D4ED8","outline":"#807471","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#fcf9f4","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4f4542","tertiary":"#190500","surface-dim":"#dcdad5","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Archivo"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Archivo"],"display-mobile":["Archivo"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Archivo"],"headline-md":["Archivo"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Archivo"],"quote":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
+       already fits this cool direction. Round 5 (design.md §8): a fuller audit
+       found the base canvas and several other widely-rendered neutral tokens
+       (surface/background/outline/etc., not just the named "warm" ones) were
+       still on warm Material-3-generator values — those are now cooled too,
+       so the whole rendered palette is consistent. The three remaining
+       #fcf9f4 occurrences elsewhere in this file (founder-photo caption text,
+       footer wordmark text/stroke) are intentionally untouched — they're
+       white-ish foreground text/strokes sitting on dark photo-overlay/footer
+       backgrounds, not stand-ins for the page canvas, so recoloring them
+       would only reduce their contrast for no reason. -->
+  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#1D4ED8","awning-navy":"#455174","surface-container":"#EDEDF0","secondary-fixed-dim":"#b0c6ff","surface-variant":"#E1E1E6","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#1E1F24","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#F7F7F9","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#E7E7EB","wood-warm":"#3A3B42","oat-cream":"#F3F3F5","primary-fixed":"#f5ddd7","surface-container-low":"#F5F5F8","on-tertiary":"#ffffff","inverse-on-surface":"#F1F1F4","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#F7F7F9","surface-container-highest":"#E1E1E6","primary-container":"#2b1e1a","outline-variant":"#CBCBD2","on-primary-fixed":"#251915","espresso-deep":"#16181D","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#5B5B60","church-sapphire":"#1D4ED8","outline":"#75757C","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#F7F7F9","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4A4A50","tertiary":"#190500","surface-dim":"#D8D8DC","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Archivo"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Archivo"],"display-mobile":["Archivo"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Archivo"],"headline-md":["Archivo"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Archivo"],"quote":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
 </head>
 <body class="bg-background font-body-md text-body-md text-on-surface antialiased">
 
@@ -356,17 +377,55 @@
   <div class="flex flex-col w-full">
 
     <!-- =================================================================
-         SECTION 1: HERO — giant headline + three-tile photo nav.
-         Structural reference: Caplatte's "Speciality coffee at your
-         doorstep" hero. Tiles double as primary navigation.
+         SECTION 1: HERO — scroll-expand frame (Round 10, replacing Round
+         6's static full-bleed photo). Adapted from a supplied React
+         ScrollExpand component spec into vanilla JS/CSS (window-scroll-
+         driven, no React runtime here) — see the JS block below for the
+         full translation notes. The frame starts as a small centered
+         card and grows to full-bleed as the page scrolls, revealing the
+         rest of the page; default (pre-JS / prefers-reduced-motion) markup
+         renders it already full-bleed, identical to Round 6's static
+         hero, so a broken/disabled JS path never strands visitors with a
+         tiny, half-formed hero. stone-arch-interior.png is portrait
+         (662x823) — object-position is tuned to keep the arches/stained
+         glass in frame; re-check that tuning if the source photo ever
+         changes. Structural reference: Caplatte's "Speciality coffee at
+         your doorstep" hero. Tiles double as primary navigation.
          ================================================================= -->
-    <section id="hero" class="w-full bg-background pt-space-xl">
-      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
-        <!-- Round 5: info badges row (Central Methodist Mission / Cape Town CBD /
-             Dogs welcome) removed from directly under the hero headline per feedback. -->
-        <h1 class="font-display text-display-mobile lg:text-[88px] text-espresso-deep uppercase mb-space-lg" style="letter-spacing:-0.02em;">
-          Sanctuary coffee<br/>at Greenmarket Square.
-        </h1>
+    <section id="hero" class="w-full">
+      <div id="scroll-expand" class="relative" style="height: 100vh;">
+        <div class="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden">
+          <div id="scroll-expand-frame" class="relative overflow-hidden w-full h-full">
+            <img id="scroll-expand-media" src="images/stone-arch-interior.png" alt="Inside Central Methodist Mission — Gothic stone arches, wooden pews and stained glass" class="absolute inset-0 w-full h-full object-cover" style="object-position: 50% 20%;" loading="eager"/>
+            <!-- Permanent baseline-legibility gradient (Round 6) — kept
+                 regardless of JS/scroll state, so the headline stays
+                 readable even if the JS-driven scrim below never runs. -->
+            <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
+            <!-- JS-driven scrim (the spec's overlayScrim prop): extra
+                 darkening only while the frame is small, faded out as it
+                 expands. Starts at 0 so the pre-JS/reduced-motion default
+                 relies solely on the gradient above, already proven
+                 legible in Round 6. -->
+            <div id="scroll-expand-scrim" class="absolute inset-0 bg-espresso-deep" style="opacity: 0;"></div>
+            <!-- "Scroll to explore" hint (the spec's scrollHint prop) —
+                 only shown while the frame is small; hidden by default. -->
+            <div id="scroll-expand-hint" class="absolute inset-0 flex flex-col items-center justify-center text-center px-gutter pointer-events-none" style="opacity: 0;">
+              <span class="material-symbols-outlined text-white text-[28px] mb-space-xs" aria-hidden="true">expand_more</span>
+              <span class="font-label-sm text-label-sm uppercase tracking-widest text-white">Scroll to explore</span>
+            </div>
+            <div id="scroll-expand-content" class="absolute inset-x-0 bottom-0 max-w-7xl mx-auto px-gutter lg:px-gutter-lg pb-space-xl w-full">
+              <!-- Round 5: info badges row (Central Methodist Mission / Cape Town CBD /
+                   Dogs welcome) removed from directly under the hero headline per feedback. -->
+              <h1 class="font-display text-display-mobile lg:text-[88px] text-white uppercase mb-space-sm" style="letter-spacing:-0.02em;">
+                Sanctuary coffee<br/>at Greenmarket Square.
+              </h1>
+              <!-- Tourist-facing hook line: grounded in facts already established
+                   in this project (Central Methodist Mission, Gothic Revival
+                   architecture, Greenmarket Square). -->
+              <p class="font-body-md text-body-lg text-white/90 max-w-xl">One of Cape Town's few cafés inside a working 19th-century church.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Three-tile photo nav: Story / Menu / Find Us -->
@@ -493,11 +552,14 @@
     </section>
 
     <!-- =================================================================
-         SECTION 4: MENU
-         Structural reference: Caplatte's category-grouped list rows.
-         Heaven deviates deliberately: NO pricing, NO kcal — a display
-         menu only. All items are PLACEHOLDER — confirm with client
-         before launch. See HEAVEN_CONTENT.menu below.
+         SECTION 4: MENU — "chapel board" treatment (Round 6): category
+         columns split by a Gothic-arch divider echoing the real arched
+         windows/doorway, plus a real photo anchor (cup-handover.jpg). Item
+         name/price now supports an optional dotted leader-line + price,
+         but every item currently ships with price:null, so no leader line
+         renders anywhere yet — the client hasn't supplied real pricing.
+         All items and categories are still PLACEHOLDER — confirm with
+         client before launch. See HEAVEN_CONTENT.menu below.
          ================================================================= -->
     <section id="menu" class="w-full bg-surface-container-low py-space-2xl">
       <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
@@ -507,13 +569,16 @@
 
         <!-- PLACEHOLDER: menu items below are illustrative only. Update
              HEAVEN_CONTENT.menu in the script block before launch. Client
-             must confirm all items, categories, and any pricing. Visible
-             on-page disclaimer banner removed per feedback (round 5) —
-             this comment is the only remaining flag; the data itself is
-             still bracketed nowhere near "confirmed" in the config below. -->
+             must confirm all items, categories, descriptors, and any
+             pricing. Visible on-page disclaimer banner removed per
+             feedback (round 5) — this comment is the only remaining flag;
+             the data itself is still bracketed nowhere near "confirmed"
+             in the config below. -->
 
-        <!-- Menu category list — rendered by JS from HEAVEN_CONTENT.menu -->
-        <div id="menu-cards" class="grid grid-cols-1 md:grid-cols-2 gap-x-gutter-lg gap-y-space-lg">
+        <!-- Menu content — rendered by JS from HEAVEN_CONTENT.menu. Photo
+             anchor + two category columns + arch divider, built in JS
+             since the divider needs to sit between two JS-rendered groups. -->
+        <div id="menu-cards" class="flex flex-col lg:flex-row gap-gutter-lg items-start">
           <!-- JS-rendered: see HEAVEN_CONTENT.menu in the script block below -->
         </div>
 
@@ -754,13 +819,36 @@ var HEAVEN_CONTENT = {
   pressOutlet: '[Press outlet — TBD]',
 
   // PLACEHOLDER: all menu items are illustrative only.
-  // Client must confirm final categories, item names, and any pricing before launch.
-  // No prices should appear on the page — this is a menu display, not a shop.
+  // Client must confirm final categories, item names, descriptors, and any
+  // pricing before launch. `descriptor` below is generic, dictionary-style
+  // text describing what each drink/food item generically IS — not a claim
+  // about Heaven's actual recipe or brand voice, same discipline as every
+  // other placeholder in this file. `price` stays null until real pricing
+  // exists; the render function only draws a leader line + price when a
+  // price is set, so as shipped no leader line renders anywhere.
   menu: {
-    'Espresso': ['Espresso', 'Americano', 'Flat White', 'Cappuccino', 'Latte', 'Cortado'],
-    'Filter':   ['Filter Coffee', 'Pourover'],
-    'Cold':     ['Iced Coffee', 'Cold Brew'],
-    'Food':     ['Banana Bread', 'Choc Chip Cookies', 'Muffin of the Day', 'Toasted Sandwich']
+    'Espresso': [
+      { name: 'Espresso', descriptor: 'A concentrated shot of coffee, no water added', price: null },
+      { name: 'Americano', descriptor: 'Espresso lengthened with hot water', price: null },
+      { name: 'Flat White', descriptor: 'Espresso with steamed milk and thin microfoam', price: null },
+      { name: 'Cappuccino', descriptor: 'Espresso, steamed milk, and a deep layer of foam', price: null },
+      { name: 'Latte', descriptor: 'Espresso with steamed milk and a thin layer of foam', price: null },
+      { name: 'Cortado', descriptor: 'Espresso cut with a small amount of steamed milk', price: null }
+    ],
+    'Filter': [
+      { name: 'Filter Coffee', descriptor: 'Coffee brewed by pouring hot water through grounds', price: null },
+      { name: 'Pourover', descriptor: 'Coffee brewed by hand, one pour at a time', price: null }
+    ],
+    'Cold': [
+      { name: 'Iced Coffee', descriptor: 'Chilled brewed coffee served over ice', price: null },
+      { name: 'Cold Brew', descriptor: 'Coffee steeped in cold water for several hours', price: null }
+    ],
+    'Food': [
+      { name: 'Banana Bread', descriptor: 'Moist loaf cake made with ripe bananas', price: null },
+      { name: 'Choc Chip Cookies', descriptor: 'Baked cookies studded with chocolate chips', price: null },
+      { name: 'Muffin of the Day', descriptor: 'A daily-changing baked muffin', price: null },
+      { name: 'Toasted Sandwich', descriptor: 'A grilled sandwich, filling varies', price: null }
+    ]
   },
 
   // PLACEHOLDER: Instagram tiles are layout placeholders only.
@@ -804,23 +892,175 @@ document.addEventListener('DOMContentLoaded', function () {
     el.textContent = HEAVEN_CONTENT.pressOutlet;
   });
 
-  // --- Render menu from HEAVEN_CONTENT.menu (clean divided list rows,
-  //     structural reference: Caplatte's menu — but no price/kcal column) ---
+  // --- Hero scroll-expand (Round 10) ---
+  // Adapted from a supplied React ScrollExpand component spec (src/alt/
+  // title/scrollHint/useWindowScroll props, plus a second, fully-tuned
+  // usage giving startWidth/startHeight/startRadius/endRadius/mediaZoom/
+  // scrollDistance/holdDistance/smoothing/overlayScrim) into vanilla
+  // window-scroll-driven JS/CSS — this is a static site with no React
+  // runtime, so the component itself can't be imported. The numbers below
+  // are taken directly from that second, fully-configured usage, not
+  // invented. useWindowScroll is the only viable mode here (no scrollable
+  // sub-container exists). The spec's own example copy ("Product hero",
+  // "Built to scale", "Every pixel, everywhere"...) was generic template
+  // filler, not real Heaven content, so it wasn't carried over — title/
+  // hook-line text reuse the real established hero copy already in the
+  // HTML; "Scroll to explore" is the only new string, and it's plain UI
+  // microcopy, not a factual or brand claim.
+  //
+  // Mechanism: #scroll-expand is a spacer sized to
+  // 100vh * (1 + scrollDistance + holdDistance) so there's room to scroll
+  // through; a sticky viewport-height box inside it holds the frame,
+  // which unsticks naturally once the spacer scrolls past — no manual
+  // fixed/static position-swapping needed. Scroll position maps to a
+  // 0-1 target progress over the first `scrollDistance` viewport-heights
+  // (the remaining `holdDistance` just keeps the spacer tall enough to
+  // hold the fully-expanded frame in place a little longer before normal
+  // scrolling continues). `smoothing` lerps the rendered progress toward
+  // that target each frame for a trailing/eased feel, rather than
+  // snapping straight to the scroll position. The render loop stops
+  // requesting frames once it settles at the target (matching this
+  // file's existing battery/perf discipline on the drift-wall below) and
+  // only restarts on the next scroll event.
+  (function () {
+    var spacer = document.getElementById('scroll-expand');
+    var frame = document.getElementById('scroll-expand-frame');
+    var media = document.getElementById('scroll-expand-media');
+    var scrim = document.getElementById('scroll-expand-scrim');
+    var hint = document.getElementById('scroll-expand-hint');
+    var content = document.getElementById('scroll-expand-content');
+    if (!spacer || !frame || !media || !scrim || !hint || !content) return;
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return; // leave the default markup: already full-bleed, static, legible
+
+    var START_WIDTH = 42, START_HEIGHT = 58, START_RADIUS = 24, END_RADIUS = 0;
+    var MEDIA_ZOOM = 1.35, SCROLL_DISTANCE = 1.2, HOLD_DISTANCE = 0.35, SMOOTHING = 0.1, OVERLAY_SCRIM = 0.45;
+
+    var targetProgress = 0;
+    var currentProgress = 0;
+    var rafId = null;
+
+    var setSpacerHeight = function () {
+      spacer.style.height = (window.innerHeight * (1 + SCROLL_DISTANCE + HOLD_DISTANCE)) + 'px';
+    };
+
+    var updateTarget = function () {
+      var rect = spacer.getBoundingClientRect();
+      var scrolled = -rect.top;
+      var distance = window.innerHeight * SCROLL_DISTANCE;
+      targetProgress = Math.min(Math.max(distance > 0 ? scrolled / distance : 0, 0), 1);
+    };
+
+    var applyProgress = function (p) {
+      var width = START_WIDTH + (100 - START_WIDTH) * p;
+      var height = START_HEIGHT + (100 - START_HEIGHT) * p;
+      var radius = START_RADIUS + (END_RADIUS - START_RADIUS) * p;
+      var zoom = MEDIA_ZOOM + (1 - MEDIA_ZOOM) * p;
+
+      frame.style.width = width + '%';
+      frame.style.height = height + '%';
+      frame.style.borderRadius = radius + 'px';
+      media.style.transform = 'scale(' + zoom + ')';
+      scrim.style.opacity = OVERLAY_SCRIM * (1 - p);
+      hint.style.opacity = Math.max(1 - p * 3, 0);
+      content.style.opacity = Math.max((p - 0.4) / 0.6, 0);
+      // Floating-card shadow while small, fading out as the frame becomes
+      // full-bleed — an edge-to-edge photo shouldn't cast a shadow, only
+      // the "card sitting above the page" state should.
+      frame.style.boxShadow = '0 ' + Math.round(30 * (1 - p)) + 'px ' + Math.round(60 * (1 - p)) + 'px rgba(22,24,29,' + (0.35 * (1 - p)).toFixed(2) + ')';
+    };
+
+    var loop = function () {
+      currentProgress += (targetProgress - currentProgress) * SMOOTHING;
+      if (Math.abs(targetProgress - currentProgress) < 0.001) {
+        currentProgress = targetProgress;
+      }
+      applyProgress(currentProgress);
+      if (currentProgress !== targetProgress) {
+        rafId = requestAnimationFrame(loop);
+      } else {
+        rafId = null;
+      }
+    };
+    var requestRender = function () {
+      if (rafId === null) { rafId = requestAnimationFrame(loop); }
+    };
+
+    setSpacerHeight();
+    updateTarget();
+    applyProgress(currentProgress); // paint the small start state immediately, before any scroll
+    requestRender(); // in case the page loaded already scrolled past the hero (e.g. anchor jump)
+
+    // One-time entrance fade for the small card, so it settles into place
+    // rather than snapping in fully-formed on load. Scoped to opacity only
+    // (frame's own property, untouched by applyProgress above) so it can't
+    // fight the per-frame lerp driving width/height/radius. Base HTML
+    // default is opacity:1 (the safe, fully-visible state) — only this
+    // non-reduced-motion path ever sets it to 0 first, so a reduced-motion
+    // visitor never sees an invisible frame waiting on a fade that won't run.
+    frame.style.opacity = '0';
+    frame.style.transition = 'opacity 0.6s ease';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { frame.style.opacity = '1'; });
+    });
+
+    window.addEventListener('resize', function () { setSpacerHeight(); updateTarget(); requestRender(); });
+    window.addEventListener('scroll', function () { updateTarget(); requestRender(); }, { passive: true });
+  })();
+
+  // --- Render menu from HEAVEN_CONTENT.menu ("chapel board" treatment:
+  //     a photo anchor, two category columns split by a Gothic-arch
+  //     divider echoing the church's real arched windows/doorway. Split
+  //     into two explicit groups (not CSS grid auto-flow) since the
+  //     divider has to sit as a real sibling between them. Leader-line +
+  //     price only render when item.price is truthy — every item ships
+  //     with price:null for now, so none render yet; that's correct. ---
   var menuContainer = document.getElementById('menu-cards');
   if (menuContainer) {
-    var html = '';
-    Object.keys(HEAVEN_CONTENT.menu).forEach(function (category) {
-      var items = HEAVEN_CONTENT.menu[category];
-      html += '<div class="flex flex-col">';
-      html += '<h3 class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold pb-space-sm">' + category + '</h3>';
-      items.forEach(function (item) {
-        html += '<div class="menu-row flex items-center justify-between py-3">';
-        html += '<span class="font-title-md text-title-md text-espresso-deep">' + item + '</span>';
-        html += '</div>';
+    var renderCategoryGroup = function (categoryNames) {
+      var groupHtml = '';
+      categoryNames.forEach(function (category) {
+        var items = HEAVEN_CONTENT.menu[category];
+        groupHtml += '<div class="flex flex-col mb-space-lg">';
+        groupHtml += '<h3 class="font-display text-title-sm uppercase tracking-widest text-espresso-deep inline-block border-b-2 border-church-sapphire pb-1 mb-space-sm">' + category + '</h3>';
+        items.forEach(function (item) {
+          groupHtml += '<div class="menu-row py-3">';
+          groupHtml += '<div class="flex items-baseline">';
+          groupHtml += '<span class="font-title-md text-title-md text-espresso-deep">' + item.name + '</span>';
+          if (item.price) {
+            groupHtml += '<span class="flex-grow border-b border-dotted border-outline-variant mx-2"></span>';
+            groupHtml += '<span class="font-title-md text-title-md text-espresso-deep">' + item.price + '</span>';
+          }
+          groupHtml += '</div>';
+          if (item.descriptor) {
+            groupHtml += '<p class="font-body-sm text-body-sm text-stone-aged mt-0.5">' + item.descriptor + '</p>';
+          }
+          groupHtml += '</div>';
+        });
+        groupHtml += '</div>';
       });
-      html += '</div>';
-    });
-    menuContainer.innerHTML = html;
+      return groupHtml;
+    };
+
+    var archDivider = '<div class="hidden lg:flex items-stretch justify-center px-space-md" aria-hidden="true">' +
+      '<svg viewBox="0 0 60 400" preserveAspectRatio="none" class="h-full w-auto stroke-outline-variant" fill="none" stroke-width="1.5">' +
+      '<line x1="6" y1="60" x2="6" y2="400"/><line x1="54" y1="60" x2="54" y2="400"/>' +
+      '<path d="M6,60 C6,25 22,4 30,4 C38,4 54,25 54,60"/>' +
+      '</svg></div>';
+
+    var categories = Object.keys(HEAVEN_CONTENT.menu);
+    var splitAt = Math.ceil(categories.length / 2);
+
+    menuContainer.innerHTML =
+      '<div class="w-full lg:w-1/3 flex-shrink-0">' +
+        '<img src="images/cup-handover.jpg" alt="A Heaven Coffee barista handing over a to-go cup with the heaven coffee wordmark on the sleeve" class="w-full aspect-[3/4] object-cover rounded" loading="lazy"/>' +
+      '</div>' +
+      '<div class="w-full lg:w-2/3 lg:grid lg:grid-cols-[1fr_auto_1fr] gap-x-gutter-lg">' +
+        '<div>' + renderCategoryGroup(categories.slice(0, splitAt)) + '</div>' +
+        archDivider +
+        '<div>' + renderCategoryGroup(categories.slice(splitAt)) + '</div>' +
+      '</div>';
   }
 
   // --- Render Instagram drift-wall from HEAVEN_CONTENT.instagram ---
