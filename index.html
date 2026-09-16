@@ -53,9 +53,13 @@
        colored "ribbon" backing, and a repeating separator emoji —
        translated into an SVG <textPath> ring (the correct primitive for
        genuine curved text) plus a CSS rotation animation, since there's no
-       React/TextLoop runtime here. Ribbon uses church-sapphire (#1D4ED8),
-       the site's established primary blue, per an earlier round's explicit
-       "use the blue colour" instruction — not the spec's indigo (#5227FF).
+       React/TextLoop runtime here. Ribbon was church-sapphire (#1D4ED8)
+       per an earlier round's explicit "use the blue colour" instruction;
+       Round 12 moved it to awning-navy — a persistent, always-visible
+       floating badge is exactly the kind of large, constant-presence
+       surface a critique pass flagged as competing with sapphire's actual
+       job (marking links and the one real CTA). awning-navy keeps the
+       badge in the established blue family without adding to that load.
        Round 7: the ribbon is now a genuine thin stroked ring (fill:none,
        a wide stroke) instead of a filled disc — a filled circle isn't a
        "ribbon", and it forced a static paw glyph into the middle just to
@@ -255,7 +259,7 @@
     <defs>
       <path id="dog-loop-path" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/>
     </defs>
-    <circle cx="110" cy="110" r="80" fill="none" stroke="#1D4ED8" stroke-width="32"/>
+    <circle cx="110" cy="110" r="80" fill="none" stroke="#455174" stroke-width="32"/>
     <text font-family="Archivo, sans-serif" font-weight="800" font-size="22" letter-spacing="2" fill="#ffffff" dominant-baseline="central">
       <textPath href="#dog-loop-path" startOffset="0%">DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 </textPath>
     </text>
@@ -339,8 +343,9 @@
        the viewport is resized to desktop — the persistent nav row above
        takes over instead), per feedback ("for the hamburger in mobile
        orientation only"). Colors use the site's own cathedral palette
-       (church-sapphire/espresso-deep) rather than the spec's purple
-       (#B497CF/#5227FF) — same substitution pattern as the dog badge.
+       (awning-navy/espresso-deep — moved off church-sapphire in Round 12,
+       same reasoning as the dog badge below) rather than the spec's
+       purple (#B497CF/#5227FF).
        socialItems in the spec were placeholder Twitter/GitHub/LinkedIn
        links; the only real, confirmed account for this business is
        Instagram (used elsewhere in this file), so that's the only social
@@ -354,7 +359,7 @@
        already has enough contrast throughout — there's no state where it
        needs to change. -->
   <div id="nav-drawer" class="hidden md:hidden fixed inset-x-0 bottom-0 z-40 overflow-hidden" style="top:4rem; height:calc(100vh - 4rem);">
-    <div class="staggered-menu-layer" style="background:#1D4ED8;"></div>
+    <div class="staggered-menu-layer" style="background:#455174;"></div>
     <div class="staggered-menu-layer" style="background:#16181D; transition-delay:80ms;"></div>
     <div class="staggered-menu-panel">
       <nav class="flex flex-col px-gutter pt-space-xl">
@@ -468,8 +473,19 @@
          Solves a real problem: the building looks like a church from
          the street. First-time visitors walk past. Functional
          information, not decoration. See design brief §3 item 2.
-         ================================================================= -->
-    <div class="w-full bg-church-sapphire">
+         Round 12: background moved from church-sapphire to awning-navy.
+         A full-bleed, edge-to-edge band is one of the highest-visibility
+         surfaces on the page — running it in the same vivid blue as
+         every link, hover state and small accent meant sapphire was
+         competing with espresso-deep for "the brand colour" by sheer
+         screen area. awning-navy (already established elsewhere, measured
+         from the real umbrella fabric) now carries that large surface
+         instead, so sapphire is free to mean one specific thing: an
+         interactive/actionable moment. The Get Directions button — the
+         one real CTA in this block — is the one element here that keeps
+         solid sapphire, now popping against the darker navy background
+         instead of blending into a same-color band. -->
+    <div class="w-full bg-awning-navy">
       <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg py-3">
         <div class="flex flex-wrap items-center gap-x-space-lg gap-y-space-xs">
           <div class="flex items-center gap-space-sm">
@@ -477,9 +493,9 @@
             <span class="font-label-lg text-label-lg text-on-primary uppercase tracking-wide">Finding us for the first time?</span>
           </div>
           <p class="font-body-sm text-body-sm" style="color:#BBDEFB;">
-            From the street this reads as a church — that's because it is. Look for the <strong style="color:#fff;"><span class="inline-block w-2.5 h-2.5 rounded-sm align-middle mr-1 bg-awning-navy" aria-hidden="true" title="Measured from the real umbrella fabric"></span>navy awning at the Burg Street entrance</strong> and follow the coffee smell in.
+            From the street this reads as a church — that's because it is. Look for the <strong style="color:#fff;"><span class="inline-block w-2.5 h-2.5 rounded-sm align-middle mr-1 bg-awning-navy" style="border:1px solid rgba(255,255,255,0.5);" aria-hidden="true" title="Measured from the real umbrella fabric"></span>navy awning at the Burg Street entrance</strong> and follow the coffee smell in.
           </p>
-          <a href="https://maps.google.com/?q=38+Burg+Street,+Cape+Town" rel="noopener noreferrer" target="_blank" class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded font-label-sm text-label-sm uppercase tracking-wide transition-colors" style="background:rgba(255,255,255,0.15);color:#fff;">
+          <a href="https://maps.google.com/?q=38+Burg+Street,+Cape+Town" rel="noopener noreferrer" target="_blank" class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded font-label-sm text-label-sm uppercase tracking-wide transition-colors bg-church-sapphire hover:brightness-110" style="color:#fff;">
             <span class="material-symbols-outlined text-[16px]">directions</span>
             Get Directions
           </a>
