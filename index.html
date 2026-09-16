@@ -30,56 +30,113 @@
     .menu-row { border-bottom: 1px solid rgba(29,19,16,0.1); }
     .menu-row:last-child { border-bottom: none; }
 
-    /* "Dog friendly" fixed corner badge — adapted from a React TextLoop component spec
-       (shape="wave", speed, curviness, separator, ribbon/ribbonColor props) into vanilla
-       CSS, since this is a static site with no React runtime. Originally built as a
-       full-width scrolling ribbon; scoped down to a small fixed tag per feedback (the
-       ribbon was too disruptive). Color corrected to the design.md blue system —
-       awning-navy (#455174, measured from the real umbrella fabric) rather than the
-       spec's indigo or the terracotta used in the first pass; the real storefront photo
-       (hero "Find Us" tile) shows the dog sitting right by that navy umbrella. Only the
-       paw emoji keeps a small bob, retaining a little of the original "wave" character
-       without a marquee that wouldn't fit at badge size. Respects prefers-reduced-motion.
-       Round 5: bottom offset reduced from 5.5rem to 1.25rem — no longer needs to clear
-       the sticky "Find Us" bar, which was removed this round. */
-    .dog-badge {
+    /* "Dog friendly" spinning corner badge — Round 6, replacing the earlier
+       static pill (see the HTML comment above the badge markup for the full
+       component-translation history). New spec: a React TextLoop with
+       shape="arch" (circular text), a continuous spin (speed/direction), a
+       colored "ribbon" backing, and a repeating separator emoji —
+       translated into an SVG <textPath> circle (the correct primitive for
+       genuine curved text) plus a CSS rotation animation, since there's no
+       React/TextLoop runtime here. Ribbon uses church-sapphire (#1D4ED8),
+       the site's established primary blue, per this round's explicit "use
+       the blue colour" instruction — not the spec's indigo (#5227FF) or
+       the previous round's awning-navy. Sized down from the spec's
+       fontSize:46 (meant for a large showcase loop) to fit a small fixed
+       corner tag. Positioned so the circle bleeds off both the right and
+       bottom viewport edges, with a fixed tilt for the "angled" look — the
+       spin animation runs on an inner wrapper so the tilt itself stays put
+       while the text loops inside it. The center paw is a sibling of the
+       spinning ring, not part of it, so it stays upright (counter-rotated
+       to cancel the outer tilt). Per the spec's pauseOnHover:false, this
+       deliberately keeps spinning on hover — unlike the drift-wall below,
+       which does pause on hover. */
+    .dog-loop {
       position: fixed;
       z-index: 30;
-      right: 1rem;
-      bottom: 1.25rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.1rem;
-      border-radius: 9999px;
-      background: #455174;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      right: -34px;
+      bottom: -34px;
+      width: 160px;
+      height: 160px;
+      transform: rotate(-10deg);
       text-decoration: none;
+      filter: drop-shadow(0 4px 14px rgba(0,0,0,0.3));
     }
-    .dog-badge-label {
-      font-family: 'Archivo', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #ffffff;
-      white-space: nowrap;
+    .dog-loop-ring {
+      display: block;
+      width: 100%;
+      height: 100%;
+      animation: dog-loop-spin 11s linear infinite;
     }
-    .dog-badge-paw {
-      display: inline-block;
-      font-size: 15px;
-      animation: dog-badge-bob 1.8s ease-in-out infinite;
+    @keyframes dog-loop-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
-    @keyframes dog-badge-bob {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-3px) rotate(-10deg); }
+    .dog-loop-paw {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      transform: rotate(10deg);
+      pointer-events: none;
     }
     @media (prefers-reduced-motion: reduce) {
-      .dog-badge-paw { animation: none !important; }
+      .dog-loop-ring { animation: none !important; }
     }
     @media (max-width: 480px) {
-      .dog-badge { right: 0.75rem; bottom: 1rem; padding: 0.5rem 0.9rem; }
-      .dog-badge-label { font-size: 11px; }
+      .dog-loop { width: 128px; height: 128px; right: -28px; bottom: -28px; }
+      .dog-loop-paw { font-size: 21px; }
+    }
+
+    /* Staggered mobile nav drawer — see the HTML comment above #nav-drawer
+       for the React StaggeredMenu-spec translation notes. Two full-bleed
+       color layers slide in first (the spec's "colors" array), then the
+       cream panel and its links stagger in behind them via per-item
+       transition-delay (set inline on each element, same convention as
+       the drift-wall's per-column duration variables below). Opening adds
+       .is-open one frame after `hidden` is removed (see JS) so the browser
+       paints the off-canvas state first — without that frame, the elements
+       would start and end in the same place and nothing would visibly
+       transition. */
+    .staggered-menu-layer {
+      position: absolute; inset: 0; transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    #nav-drawer.is-open .staggered-menu-layer { transform: translateX(0); }
+    .staggered-menu-panel {
+      position: relative; height: 100%; overflow-y: auto;
+      background: #fcf9f4; transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(.4,0,.2,1); transition-delay: 0.12s;
+    }
+    #nav-drawer.is-open .staggered-menu-panel { transform: translateX(0); }
+    .staggered-menu-item {
+      display: flex; align-items: baseline; gap: 0.75rem;
+      font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 28px;
+      text-transform: uppercase; letter-spacing: -0.01em; color: #16181D;
+      padding: 0.7rem 0; border-bottom: 1px solid rgba(22,24,29,0.08);
+      text-decoration: none;
+      opacity: 0; transform: translateX(28px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .staggered-menu-num {
+      font-size: 13px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.08em;
+    }
+    .staggered-menu-socials {
+      opacity: 0; transform: translateX(28px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .staggered-menu-socials a {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em; color: #5B5B60; text-decoration: none;
+    }
+    .staggered-menu-socials a:hover { color: #1D4ED8; }
+    #nav-drawer.is-open .staggered-menu-item,
+    #nav-drawer.is-open .staggered-menu-socials { opacity: 1; transform: translateX(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .staggered-menu-layer, .staggered-menu-panel, .staggered-menu-item, .staggered-menu-socials {
+        transition: none !important;
+      }
     }
 
     /* "From the Feed" drift-wall — corrected brief: vanilla CSS/JS only, no
@@ -152,21 +209,28 @@
      Hours section, just not persistently pinned while scrolling. -->
 
 <!-- =====================================================================
-     DOG-FRIENDLY BADGE — fixed corner tag, always visible.
-     Grounded in repeated dog photos across @heavencoffeect and the real
-     storefront photo (see hero "Find Us" tile — the dog sits right by
-     the navy umbrella). Adapted from a supplied React TextLoop component
-     spec (shape="wave", speed, curviness, separator="🐾", ribbon props)
-     into vanilla CSS — this is a static site with no React runtime, so
-     the component itself can't be imported. First pass was a full-width
-     scrolling ribbon in terracotta; scoped down to this small fixed tag
-     per feedback (the ribbon was too disruptive), and recolored to the
-     design.md blue system (awning-navy, not the spec's indigo or the
-     terracotta from the first pass). See <style> block for CSS.
-     ===================================================================== -->
-<a href="#location" class="dog-badge" title="Pavement seating available outside" aria-label="Dog friendly — pavement seating available outside">
-  <span class="dog-badge-paw" aria-hidden="true">🐾</span>
-  <span class="dog-badge-label">Dog Friendly</span>
+     DOG-FRIENDLY BADGE — fixed corner tag, always visible, now a spinning
+     arched-text ring (Round 6). Grounded in repeated dog photos across
+     @heavencoffeect and the real storefront photo (see hero "Find Us"
+     tile — the dog sits right by the navy umbrella). Adapted from a
+     supplied React TextLoop component spec (shape="arch", speed,
+     direction, curviness, separator="🐶", ribbon/ribbonColor props) into
+     an SVG circular-text ring plus a CSS spin — this is a static site
+     with no React runtime, so the component itself can't be imported.
+     Same claim as the previous static-pill version (pavement seating
+     outside), just a new visual treatment; see <style> block for the
+     full translation notes and prior-round history. -->
+<a href="#location" class="dog-loop" title="Pavement seating available outside" aria-label="Dog friendly — pavement seating available outside">
+  <svg class="dog-loop-ring" viewBox="0 0 160 160" aria-hidden="true">
+    <defs>
+      <path id="dog-loop-path" d="M80,80 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/>
+    </defs>
+    <circle cx="80" cy="80" r="80" fill="#1D4ED8"/>
+    <text font-family="Archivo, sans-serif" font-weight="800" font-size="12" letter-spacing="2" fill="#ffffff">
+      <textPath href="#dog-loop-path" startOffset="0%">DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 </textPath>
+    </text>
+  </svg>
+  <span class="dog-loop-paw" aria-hidden="true">🐾</span>
 </a>
 
 <!-- =====================================================================
@@ -238,16 +302,42 @@
     <a href="#location" class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant hover:text-espresso-deep border-b-2 border-transparent hover:border-terracotta-warm px-1 py-1 transition-colors">Find Us</a>
   </nav>
 
-  <!-- Mobile nav drawer — hidden by default, and md:hidden permanently so a
-       drawer left open on mobile doesn't persist if the viewport is resized
-       to desktop width (the persistent nav row above takes over instead). -->
-  <div id="nav-drawer" class="hidden md:hidden bg-background border-t border-outline-variant/30">
-    <nav class="max-w-7xl mx-auto px-gutter py-space-sm flex flex-col">
-      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#story">Story</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#menu">Menu</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#instagram">From the Feed</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 hover:text-terracotta-warm transition-colors" href="#location">Find Us</a>
-    </nav>
+  <!-- Mobile nav drawer — "staggered menu" pattern adapted from a supplied
+       React StaggeredMenu component spec (position/items/socialItems/
+       displayItemNumbering/colors/accentColor/logoUrl props) into vanilla
+       CSS/JS — no React runtime here. Ported for mobile only (md:hidden,
+       and permanently so a drawer left open on mobile doesn't persist if
+       the viewport is resized to desktop — the persistent nav row above
+       takes over instead), per feedback ("for the hamburger in mobile
+       orientation only"). Colors use the site's own cathedral palette
+       (church-sapphire/espresso-deep) rather than the spec's purple
+       (#B497CF/#5227FF) — same substitution pattern as the dog badge.
+       socialItems in the spec were placeholder Twitter/GitHub/LinkedIn
+       links; the only real, confirmed account for this business is
+       Instagram (used elsewhere in this file), so that's the only social
+       link listed — inventing accounts on platforms nobody confirmed
+       would be the same fabrication problem flagged throughout this
+       project. logoUrl has no real asset yet (see the header logo
+       comment above), so the panel doesn't repeat a logo mark.
+       changeMenuColorOnOpen wasn't ported: the header strip stays fully
+       visible above this drawer in both states (the panel opens below
+       it, not behind it), so the hamburger icon's existing dark color
+       already has enough contrast throughout — there's no state where it
+       needs to change. -->
+  <div id="nav-drawer" class="hidden md:hidden fixed inset-x-0 bottom-0 z-40 overflow-hidden" style="top:4rem; height:calc(100vh - 4rem);">
+    <div class="staggered-menu-layer" style="background:#1D4ED8;"></div>
+    <div class="staggered-menu-layer" style="background:#16181D; transition-delay:80ms;"></div>
+    <div class="staggered-menu-panel">
+      <nav class="flex flex-col px-gutter pt-space-xl">
+        <a class="staggered-menu-item" style="transition-delay:160ms" href="#story"><span class="staggered-menu-num">01</span>Story</a>
+        <a class="staggered-menu-item" style="transition-delay:220ms" href="#menu"><span class="staggered-menu-num">02</span>Menu</a>
+        <a class="staggered-menu-item" style="transition-delay:280ms" href="#instagram"><span class="staggered-menu-num">03</span>From the Feed</a>
+        <a class="staggered-menu-item" style="transition-delay:340ms" href="#location"><span class="staggered-menu-num">04</span>Find Us</a>
+      </nav>
+      <div class="staggered-menu-socials px-gutter pt-space-lg mt-space-xs" style="transition-delay:400ms">
+        <a href="https://instagram.com/heavencoffeect" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -793,32 +883,48 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('visibilitychange', function () { igTabHidden = document.hidden; igUpdatePauseState(); });
   }
 
-  // --- Nav drawer toggle ---
-  // Icon animation is pure CSS now (group-aria-expanded variants on the SVG
-  // paths in the header) — this just flips aria-expanded and the drawer's
-  // visibility, no icon-swap logic needed.
+  // --- Staggered nav drawer toggle ---
+  // Icon animation is pure CSS (group-aria-expanded variants on the SVG
+  // paths in the header). The drawer itself needs one extra step beyond a
+  // plain `hidden` flip: removing `hidden` and adding `.is-open` in the
+  // same tick would skip the CSS transition entirely (the color layers,
+  // panel and items would just appear in their final positions, since the
+  // browser never paints the off-canvas state in between). Two nested
+  // requestAnimationFrame calls force that paint first, so the stagger-in
+  // transitions defined in <style> actually run. Closing skips the reverse
+  // animation and re-hides instantly — same behavior the drawer had before
+  // this round, just applied to a taller panel now.
   var navToggle = document.getElementById('nav-toggle');
   var navDrawer = document.getElementById('nav-drawer');
 
   if (navToggle && navDrawer) {
+    var closeDrawer = function () {
+      navDrawer.classList.remove('is-open');
+      navDrawer.classList.add('hidden');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    };
+    var openDrawer = function () {
+      navDrawer.classList.remove('hidden');
+      navToggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('overflow-hidden');
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { navDrawer.classList.add('is-open'); });
+      });
+    };
+
     navToggle.addEventListener('click', function (e) {
       e.stopPropagation();
-      var isOpen = !navDrawer.classList.contains('hidden');
-      navDrawer.classList.toggle('hidden', isOpen);
-      navToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      if (navDrawer.classList.contains('hidden')) { openDrawer(); } else { closeDrawer(); }
     });
 
     navDrawer.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        navDrawer.classList.add('hidden');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', closeDrawer);
     });
 
     document.addEventListener('click', function (e) {
-      if (!navToggle.contains(e.target) && !navDrawer.contains(e.target)) {
-        navDrawer.classList.add('hidden');
-        navToggle.setAttribute('aria-expanded', 'false');
+      if (!navDrawer.classList.contains('hidden') && !navToggle.contains(e.target) && !navDrawer.contains(e.target)) {
+        closeDrawer();
       }
     });
   }
