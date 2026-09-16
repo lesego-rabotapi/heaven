@@ -35,28 +35,30 @@
        component-translation history). New spec: a React TextLoop with
        shape="arch" (circular text), a continuous spin (speed/direction), a
        colored "ribbon" backing, and a repeating separator emoji —
-       translated into an SVG <textPath> circle (the correct primitive for
+       translated into an SVG <textPath> ring (the correct primitive for
        genuine curved text) plus a CSS rotation animation, since there's no
        React/TextLoop runtime here. Ribbon uses church-sapphire (#1D4ED8),
-       the site's established primary blue, per this round's explicit "use
-       the blue colour" instruction — not the spec's indigo (#5227FF) or
-       the previous round's awning-navy. Sized down from the spec's
-       fontSize:46 (meant for a large showcase loop) to fit a small fixed
-       corner tag. Positioned so the circle bleeds off both the right and
-       bottom viewport edges, with a fixed tilt for the "angled" look — the
-       spin animation runs on an inner wrapper so the tilt itself stays put
-       while the text loops inside it. The center paw is a sibling of the
-       spinning ring, not part of it, so it stays upright (counter-rotated
-       to cancel the outer tilt). Per the spec's pauseOnHover:false, this
-       deliberately keeps spinning on hover — unlike the drift-wall below,
-       which does pause on hover. */
+       the site's established primary blue, per an earlier round's explicit
+       "use the blue colour" instruction — not the spec's indigo (#5227FF).
+       Round 7: the ribbon is now a genuine thin stroked ring (fill:none,
+       a wide stroke) instead of a filled disc — a filled circle isn't a
+       "ribbon", and it forced a static paw glyph into the middle just to
+       fill empty space, which fought the spinning motion instead of
+       reading as part of it; dropped, the badge is smaller, and it sits
+       tighter to the corner (less bleed) per feedback. Sized down from
+       the spec's fontSize:46 (meant for a large showcase loop) to fit a
+       small fixed corner tag. Angled at a fixed tilt for the "angled"
+       look; the spin animation runs on the inner ring so the tilt itself
+       stays put while the text loops. Per the spec's pauseOnHover:false,
+       this deliberately keeps spinning on hover — unlike the drift-wall
+       below, which does pause on hover. */
     .dog-loop {
       position: fixed;
       z-index: 30;
-      right: -34px;
-      bottom: -34px;
-      width: 160px;
-      height: 160px;
+      right: -14px;
+      bottom: -14px;
+      width: 104px;
+      height: 104px;
       transform: rotate(-10deg);
       text-decoration: none;
       filter: drop-shadow(0 4px 14px rgba(0,0,0,0.3));
@@ -71,22 +73,11 @@
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    .dog-loop-paw {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      transform: rotate(10deg);
-      pointer-events: none;
-    }
     @media (prefers-reduced-motion: reduce) {
       .dog-loop-ring { animation: none !important; }
     }
     @media (max-width: 480px) {
-      .dog-loop { width: 128px; height: 128px; right: -28px; bottom: -28px; }
-      .dog-loop-paw { font-size: 21px; }
+      .dog-loop { width: 86px; height: 86px; right: -11px; bottom: -11px; }
     }
 
     /* Staggered mobile nav drawer — see the HTML comment above #nav-drawer
@@ -209,28 +200,29 @@
      Hours section, just not persistently pinned while scrolling. -->
 
 <!-- =====================================================================
-     DOG-FRIENDLY BADGE — fixed corner tag, always visible, now a spinning
-     arched-text ring (Round 6). Grounded in repeated dog photos across
-     @heavencoffeect and the real storefront photo (see hero "Find Us"
-     tile — the dog sits right by the navy umbrella). Adapted from a
-     supplied React TextLoop component spec (shape="arch", speed,
-     direction, curviness, separator="🐶", ribbon/ribbonColor props) into
-     an SVG circular-text ring plus a CSS spin — this is a static site
-     with no React runtime, so the component itself can't be imported.
-     Same claim as the previous static-pill version (pavement seating
-     outside), just a new visual treatment; see <style> block for the
-     full translation notes and prior-round history. -->
+     DOG-FRIENDLY BADGE — fixed corner tag, always visible, a spinning
+     arched-text ring (Round 6, restyled as a genuine thin ribbon in
+     Round 7 — see <style> block for why the disc + center paw were
+     dropped). Grounded in repeated dog photos across @heavencoffeect and
+     the real storefront photo (see hero "Find Us" tile — the dog sits
+     right by the navy umbrella). Adapted from a supplied React TextLoop
+     component spec (shape="arch", speed, direction, curviness,
+     separator="🐶", ribbon/ribbonColor props) into an SVG stroked-ring
+     <textPath> plus a CSS spin — this is a static site with no React
+     runtime, so the component itself can't be imported. Same claim as
+     the previous pill/disc versions (pavement seating outside), just a
+     new visual treatment; see <style> block for the full translation
+     notes and prior-round history. -->
 <a href="#location" class="dog-loop" title="Pavement seating available outside" aria-label="Dog friendly — pavement seating available outside">
   <svg class="dog-loop-ring" viewBox="0 0 160 160" aria-hidden="true">
     <defs>
-      <path id="dog-loop-path" d="M80,80 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/>
+      <path id="dog-loop-path" d="M80,80 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"/>
     </defs>
-    <circle cx="80" cy="80" r="80" fill="#1D4ED8"/>
+    <circle cx="80" cy="80" r="64" fill="none" stroke="#1D4ED8" stroke-width="24"/>
     <text font-family="Archivo, sans-serif" font-weight="800" font-size="12" letter-spacing="2" fill="#ffffff">
       <textPath href="#dog-loop-path" startOffset="0%">DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 </textPath>
     </text>
   </svg>
-  <span class="dog-loop-paw" aria-hidden="true">🐾</span>
 </a>
 
 <!-- =====================================================================
