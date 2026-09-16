@@ -24,13 +24,6 @@
     ::-webkit-scrollbar { display: none; }
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-    #sticky-find-us {
-      transform: translateY(100%);
-      opacity: 0;
-      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-      pointer-events: none;
-    }
-    #sticky-find-us.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
     .hero-tile { position: relative; overflow: hidden; display: block; }
     .hero-tile img { transition: transform 0.6s ease; }
     .hero-tile:hover img { transform: scale(1.04); }
@@ -46,12 +39,14 @@
        spec's indigo or the terracotta used in the first pass; the real storefront photo
        (hero "Find Us" tile) shows the dog sitting right by that navy umbrella. Only the
        paw emoji keeps a small bob, retaining a little of the original "wave" character
-       without a marquee that wouldn't fit at badge size. Respects prefers-reduced-motion. */
+       without a marquee that wouldn't fit at badge size. Respects prefers-reduced-motion.
+       Round 5: bottom offset reduced from 5.5rem to 1.25rem — no longer needs to clear
+       the sticky "Find Us" bar, which was removed this round. */
     .dog-badge {
       position: fixed;
       z-index: 30;
       right: 1rem;
-      bottom: 5.5rem;
+      bottom: 1.25rem;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -83,7 +78,7 @@
       .dog-badge-paw { animation: none !important; }
     }
     @media (max-width: 480px) {
-      .dog-badge { right: 0.75rem; bottom: 5rem; padding: 0.5rem 0.9rem; }
+      .dog-badge { right: 0.75rem; bottom: 1rem; padding: 0.5rem 0.9rem; }
       .dog-badge-label { font-size: 11px; }
     }
 
@@ -151,28 +146,10 @@
 </head>
 <body class="bg-background font-body-md text-body-md text-on-surface antialiased">
 
-<!-- =====================================================================
-     STICKY "FIND US" BAR — slides in after hero scrolls off screen.
-     No "order now" CTA — wayfinding only (see design brief §6).
-     ===================================================================== -->
-<div id="sticky-find-us" class="fixed bottom-0 left-0 right-0 z-40 bg-espresso-deep border-t border-outline/20" role="complementary" aria-label="Find Heaven Coffee">
-  <div class="max-w-7xl mx-auto px-gutter py-3 flex flex-wrap items-center justify-between gap-x-space-lg gap-y-space-xs">
-    <div class="flex flex-wrap items-center gap-x-space-lg gap-y-space-xs">
-      <span class="flex items-center gap-1.5 font-label-lg text-label-lg text-surface uppercase tracking-wide">
-        <span class="material-symbols-outlined text-terracotta-warm text-[18px]">pin_drop</span>
-        38 Burg St, Central Methodist Mission
-      </span>
-      <span class="hidden sm:flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide" style="color:#5B5B60;">
-        <span class="material-symbols-outlined text-[16px]">schedule</span>
-        <span data-hours>7am – 6pm, daily</span>
-      </span>
-    </div>
-    <a href="tel:+27728842057" class="flex items-center gap-1.5 font-label-lg text-label-lg text-surface hover:text-terracotta-warm transition-colors uppercase tracking-wide">
-      <span class="material-symbols-outlined text-[18px]">call</span>
-      <span>072 884 2057</span>
-    </a>
-  </div>
-</div>
+<!-- Round 5: the fixed sticky "Find Us" bar (address/hours/phone, slid in
+     after scrolling past the hero) was removed entirely per feedback.
+     Wayfinding info stays reachable via the header and the Location &
+     Hours section, just not persistently pinned while scrolling. -->
 
 <!-- =====================================================================
      DOG-FRIENDLY BADGE — fixed corner tag, always visible.
@@ -185,8 +162,7 @@
      scrolling ribbon in terracotta; scoped down to this small fixed tag
      per feedback (the ribbon was too disruptive), and recolored to the
      design.md blue system (awning-navy, not the spec's indigo or the
-     terracotta from the first pass). Positioned to clear the sticky
-     "Find Us" bar above at all times. See <style> block for CSS.
+     terracotta from the first pass). See <style> block for CSS.
      ===================================================================== -->
 <a href="#location" class="dog-badge" title="Pavement seating available outside" aria-label="Dog friendly — pavement seating available outside">
   <span class="dog-badge-paw" aria-hidden="true">🐾</span>
@@ -847,28 +823,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // --- Sticky "Find Us" bar ---
-  // Slides in after hero section scrolls off screen.
-  // Replaces the "order now" sticky pattern used by reference templates.
-  var heroSection = document.getElementById('hero');
-  var stickyBar = document.getElementById('sticky-find-us');
-  var mainEl = document.getElementById('main-content');
-
-  if (heroSection && stickyBar) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) {
-          stickyBar.classList.add('visible');
-          if (mainEl) mainEl.style.paddingBottom = stickyBar.offsetHeight + 'px';
-        } else {
-          stickyBar.classList.remove('visible');
-          if (mainEl) mainEl.style.paddingBottom = '';
-        }
-      });
-    }, { threshold: 0 });
-
-    observer.observe(heroSection);
-  }
+  // Round 5: the sticky "Find Us" bar and its IntersectionObserver were
+  // removed entirely per feedback -- no code left to maintain here.
 
 });
 </script>
