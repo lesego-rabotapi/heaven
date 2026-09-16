@@ -137,7 +137,17 @@
     }
   </style>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#9A5230","awning-navy":"#455174","surface-container":"#f0ede9","secondary-fixed-dim":"#b0c6ff","surface-variant":"#e5e2dd","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#2B1E1A","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#fcf9f4","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#ebe8e3","wood-warm":"#5C3A21","oat-cream":"#F8F5F0","primary-fixed":"#f5ddd7","surface-container-low":"#f6f3ee","on-tertiary":"#ffffff","inverse-on-surface":"#f3f0eb","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#fcf9f4","surface-container-highest":"#e5e2dd","primary-container":"#2b1e1a","outline-variant":"#d2c3bf","on-primary-fixed":"#251915","espresso-deep":"#1D1310","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#6B5C4F","church-sapphire":"#1D4ED8","outline":"#807471","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#fcf9f4","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4f4542","tertiary":"#190500","surface-dim":"#dcdad5","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Archivo"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Archivo"],"display-mobile":["Archivo"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Archivo"],"headline-md":["Archivo"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Archivo"],"quote":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
+  <!-- Round 4: "cathedral" palette pivot — warm/brown family (terracotta-warm,
+       espresso-deep, stone-aged, roasted-bean, wood-warm, oat-cream) replaced
+       with cool blue/black/grey equivalents, per design.md §7. terracotta-warm
+       now reuses church-sapphire's exact hex rather than getting its own new
+       color (one fewer distinct hue to maintain). awning-navy was left alone —
+       already fits this cool direction. surface/background (#fcf9f4, the warm
+       cream page canvas) was deliberately NOT touched — design.md §7 flags this
+       as an explicit open question it chose not to bundle into this pass ("a
+       bigger, more visible change... needs an explicit decision"), not an
+       oversight. -->
+  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#1D4ED8","awning-navy":"#455174","surface-container":"#f0ede9","secondary-fixed-dim":"#b0c6ff","surface-variant":"#e5e2dd","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#1E1F24","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#fcf9f4","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#ebe8e3","wood-warm":"#3A3B42","oat-cream":"#F3F3F5","primary-fixed":"#f5ddd7","surface-container-low":"#f6f3ee","on-tertiary":"#ffffff","inverse-on-surface":"#f3f0eb","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#fcf9f4","surface-container-highest":"#e5e2dd","primary-container":"#2b1e1a","outline-variant":"#d2c3bf","on-primary-fixed":"#251915","espresso-deep":"#16181D","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#5B5B60","church-sapphire":"#1D4ED8","outline":"#807471","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#fcf9f4","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4f4542","tertiary":"#190500","surface-dim":"#dcdad5","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Archivo"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Archivo"],"display-mobile":["Archivo"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Archivo"],"headline-md":["Archivo"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Archivo"],"quote":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
 </head>
 <body class="bg-background font-body-md text-body-md text-on-surface antialiased">
 
@@ -152,9 +162,9 @@
         <span class="material-symbols-outlined text-terracotta-warm text-[18px]">pin_drop</span>
         38 Burg St, Central Methodist Mission
       </span>
-      <span class="hidden sm:flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;">
+      <span class="hidden sm:flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide" style="color:#5B5B60;">
         <span class="material-symbols-outlined text-[16px]">schedule</span>
-        <span data-hours>Hours to be confirmed</span>
+        <span data-hours>7am – 6pm, daily</span>
       </span>
     </div>
     <a href="tel:+27728842057" class="flex items-center gap-1.5 font-label-lg text-label-lg text-surface hover:text-terracotta-warm transition-colors uppercase tracking-wide">
@@ -206,11 +216,11 @@
          Do not derive brand colors from this or any interim asset. When a real logo file
          exists, self-host it — do not depend on a third-party or AI-generation CDN URL. -->
     <a href="#" class="inline-flex flex-col items-center" style="line-height:1;" aria-label="Heaven Coffee — home">
-      <span style="font-family:'Poppins',sans-serif;font-weight:400;font-size:22px;letter-spacing:0.02em;color:#1D1310;">heaven</span>
+      <span style="font-family:'Poppins',sans-serif;font-weight:400;font-size:22px;letter-spacing:0.02em;color:#16181D;">heaven</span>
       <svg viewBox="0 0 120 16" style="width:74px;height:10px;margin-top:1px;" aria-hidden="true">
-        <path d="M4 3 C 30 13, 90 13, 116 3" stroke="#1D1310" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M4 3 C 30 13, 90 13, 116 3" stroke="#16181D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       </svg>
-      <span style="font-family:'Poppins',sans-serif;font-weight:400;font-size:10px;letter-spacing:0.08em;color:#6B5C4F;margin-top:1px;">coffee</span>
+      <span style="font-family:'Poppins',sans-serif;font-weight:400;font-size:10px;letter-spacing:0.08em;color:#5B5B60;margin-top:1px;">coffee</span>
     </a>
 
     <div class="flex items-center gap-space-sm">
@@ -292,7 +302,7 @@
           <span>Cape Town CBD</span>
           <span class="text-outline-variant">·</span>
           <span class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[15px]" style="color:#9A5230;font-variation-settings:'FILL' 1;">pets</span>
+            <span class="material-symbols-outlined text-[15px]" style="color:#1D4ED8;font-variation-settings:'FILL' 1;">pets</span>
             Dogs welcome
           </span>
         </div>
@@ -366,7 +376,7 @@
 
           <div class="lg:col-span-7 flex flex-col gap-space-md">
             <h2 class="font-display text-headline-lg-mobile lg:text-headline-lg text-espresso-deep uppercase" style="letter-spacing:-0.01em;">
-              A Second Chance,<br/>A Cup of Coffee.
+              Open to Everyone<br/>Who Finds the Door.
             </h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
               Mondli Mahamba opened Heaven Coffee in April 2017 inside the Central Methodist Mission on Greenmarket Square — one of Cape Town's most storied buildings, and one of the city's most recognisable church facades.
@@ -374,11 +384,14 @@
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
               The café grew from a belief that community and coffee belong together. Inside Gothic stone arches, next to wooden pews, Heaven became a place of welcome for everyone who steps off the square — locals on a morning commute, tourists looking for somewhere quiet, and everyone in between.
             </p>
-            <blockquote class="border-l-2 border-terracotta-warm pl-space-md mt-space-xs">
-              <p class="font-quote text-headline-sm italic text-roasted-bean leading-snug">
-                "Second chances and community — those are the foundations."
-              </p>
-            </blockquote>
+            <!-- Round 4: dropped the blockquote/quotation-mark treatment. The
+                 previous line presented invented copy in quotation marks as if
+                 Mondli said it -- a fabricated-attribution problem, not just an
+                 unconfirmed fact. This is now plain editorial text: a values
+                 statement the site makes, not a claim about what he said. -->
+            <p class="font-quote text-headline-sm italic text-roasted-bean leading-snug mt-space-xs">
+              Community and coffee belong together here.
+            </p>
 
             <!-- Stat row — structural reference: Caplatte's Est./Locations/Origin row -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter-sm mt-space-lg pt-space-lg border-t border-outline-variant/30 max-w-2xl">
@@ -398,19 +411,29 @@
           </div>
 
           <div class="lg:col-span-5 relative">
-            <!-- REAL PHOTO (round 4): founder portrait, now the section's single large image
-                 (previously a small circular avatar beside a separate name/role block — that
-                 "tag" was removed per feedback and the portrait promoted to the main photo).
-                 Caption is overlaid directly on the photo: name/role only, no biographical
-                 detail, per the policy on his personal history (design brief §3).
-                 interior-signage.jpg (the sign-board + macramé wall shot previously here)
-                 is still in images/ if a future section wants it. -->
+            <!-- REAL PHOTO (round 4): main image is now the stone-arch interior —
+                 pews, stained glass, a dog, a latte — a direct, accurate match to
+                 the copy above ("Inside Gothic stone arches, next to wooden pews"),
+                 the exact shot flagged as missing since round 2.
+                 Founder portrait (previously the section's single large image) is
+                 kept as a real, valuable asset rather than dropped — demoted to a
+                 small inset card, bottom-left, editorial "one big atmospheric
+                 photo, one small portrait card" pattern. Name/role only on the
+                 caption, no biographical detail, per the policy on his personal
+                 history (design brief §3). -->
             <div class="relative overflow-hidden bg-surface-container aspect-[3/4]">
-              <img alt="Mondli Mahamba, founder of Heaven Coffee, smiling at the counter" class="w-full h-full object-cover" src="images/founder-mondli.jpg" loading="lazy"/>
-              <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/70 via-transparent to-transparent"></div>
-              <div class="absolute bottom-0 left-0 right-0 p-space-md">
-                <span class="font-title-md text-title-md block" style="color:#fcf9f4;">Mondli Mahamba</span>
-                <span class="font-label-sm text-label-sm uppercase tracking-wide" style="color:#EFECE6;">Founder</span>
+              <img alt="Inside Central Methodist Mission — Gothic stone arches, wooden pews and stained glass, with a small dog on a chair and a latte on the table" class="w-full h-full object-cover" src="images/stone-arch-interior.png" loading="lazy"/>
+
+              <!-- Founder inset card -->
+              <div class="absolute bottom-4 left-4 w-24 sm:w-28 rounded-lg overflow-hidden shadow-lg border-2" style="border-color:#fcf9f4;">
+                <div class="relative aspect-[3/4] bg-surface-container">
+                  <img alt="Mondli Mahamba, founder of Heaven Coffee, smiling at the counter" class="w-full h-full object-cover" src="images/founder-mondli.jpg" loading="lazy"/>
+                  <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/85 via-transparent to-transparent"></div>
+                  <div class="absolute bottom-0 left-0 right-0 p-1.5">
+                    <span class="block leading-tight" style="color:#fcf9f4;font-size:10px;">Mondli Mahamba</span>
+                    <span class="block uppercase tracking-wide" style="color:#EFECE6;font-size:8px;">Founder</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -517,10 +540,10 @@
             </span>
             <!-- PLACEHOLDER: press outlet name — see HEAVEN_CONTENT.pressOutlet below.
                  Do NOT replace [Press outlet — TBD] with an invented name. -->
-            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-outline-variant/30 font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;opacity:0.8;">
-              <span class="material-symbols-outlined text-[14px]" style="color:#6B5C4F;">article</span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-outline-variant/30 font-label-sm text-label-sm uppercase tracking-wide" style="color:#5B5B60;opacity:0.8;">
+              <span class="material-symbols-outlined text-[14px]" style="color:#5B5B60;">article</span>
               <span data-press-outlet>[Press outlet — TBD]</span>
-              <span class="normal-case font-body-sm text-body-sm" style="color:#6B5C4F;">· "5 Black-Owned Coffee Spots in Cape Town"</span>
+              <span class="normal-case font-body-sm text-body-sm" style="color:#5B5B60;">· "5 Black-Owned Coffee Spots in Cape Town"</span>
             </span>
           </div>
         </div>
@@ -562,19 +585,15 @@
               <span class="font-body-sm text-body-sm text-stone-aged"><span class="inline-block w-2 h-2 rounded-sm align-middle mr-1 bg-awning-navy" aria-hidden="true" title="Measured from the real umbrella fabric"></span>Inside Central Methodist Mission — look for the navy awning</span>
             </div>
 
-            <!-- PLACEHOLDER: operating hours not confirmed — third-party directory
-                 sources conflict. Confirm directly with Heaven Coffee before
-                 launch. See HEAVEN_CONTENT.hours below. -->
+            <!-- Round 4: hours confirmed (7am-6pm). No specific days were named
+                 in the confirmation -- taken as daily; a one-word edit to
+                 HEAVEN_CONTENT.hours below if that's later found wrong. -->
             <div class="flex flex-col gap-space-xs">
               <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged flex items-center gap-1.5">
                 <span class="material-symbols-outlined text-[16px] text-terracotta-warm">schedule</span>
                 Hours
               </span>
-              <span data-hours class="font-title-md text-title-md text-stone-aged italic">Hours to be confirmed with Heaven Coffee</span>
-              <div class="flex items-start gap-1.5 px-2.5 py-2 border mt-1" style="background:#fffbeb;border-color:#fcd34d;">
-                <span class="material-symbols-outlined text-[15px] mt-0.5 flex-shrink-0" style="color:#92400e;">warning</span>
-                <span class="font-body-sm text-body-sm" style="color:#92400e;">[Unconfirmed — please verify operating hours with Heaven Coffee before launch]</span>
-              </div>
+              <span data-hours class="font-title-md text-title-md text-espresso-deep">7am – 6pm, daily</span>
             </div>
 
             <div class="flex flex-col gap-space-xs pt-space-sm border-t border-outline-variant/30">
@@ -643,17 +662,17 @@
 
       <!-- Social + flags -->
       <div class="flex items-center gap-space-md">
-        <a aria-label="Instagram @heavencoffeect" class="w-9 h-9 rounded-full flex items-center justify-center transition-all" style="color:#EFECE6;border:1px solid rgba(252,249,244,0.2);" href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" onmouseover="this.style.borderColor='#9A5230';this.style.color='#9A5230'" onmouseout="this.style.borderColor='rgba(252,249,244,0.2)';this.style.color='#EFECE6'">
+        <a aria-label="Instagram @heavencoffeect" class="w-9 h-9 rounded-full flex items-center justify-center transition-all" style="color:#EFECE6;border:1px solid rgba(252,249,244,0.2);" href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" onmouseover="this.style.borderColor='#1D4ED8';this.style.color='#1D4ED8'" onmouseout="this.style.borderColor='rgba(252,249,244,0.2)';this.style.color='#EFECE6'">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
         </a>
         <!-- Visual flag icons only — no functional i18n in v0.2.
              Grounded in real German/Russian captions visible on @heavencoffeect. -->
         <div class="flex items-center gap-1.5">
-          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇬🇧 EN</span>
+          <span class="font-label-sm text-label-sm" style="color:#5B5B60;">🇬🇧 EN</span>
           <span style="color:#53433e;">·</span>
-          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇩🇪 DE</span>
+          <span class="font-label-sm text-label-sm" style="color:#5B5B60;">🇩🇪 DE</span>
           <span style="color:#53433e;">·</span>
-          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇷🇺 RU</span>
+          <span class="font-label-sm text-label-sm" style="color:#5B5B60;">🇷🇺 RU</span>
         </div>
       </div>
 
@@ -665,7 +684,7 @@
         <a class="font-label-sm text-label-sm uppercase tracking-wide hover:text-terracotta-warm transition-colors" style="color:#EFECE6;" href="#location">Find Us</a>
       </nav>
 
-      <span class="font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;">Heaven Coffee © · Pitch Draft</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-wide" style="color:#5B5B60;">Heaven Coffee © · Pitch Draft</span>
     </div>
   </div>
 </footer>
@@ -683,10 +702,10 @@
    ============================================================ */
 var HEAVEN_CONTENT = {
 
-  // PLACEHOLDER: operating hours not confirmed.
-  // Third-party directory sources conflict with each other.
-  // Confirm directly with Heaven Coffee (Mondli Mahamba) before launch.
-  hours: 'Hours — to be confirmed with Heaven Coffee',
+  // CONFIRMED round 4: 7am-6pm. No specific days were named in the
+  // confirmation -- taken as daily since nothing suggested otherwise.
+  // If that assumption turns out wrong, this is a one-word edit.
+  hours: '7am – 6pm, daily',
 
   // PLACEHOLDER: press outlet name for "5 Black-Owned Coffee Spots" not yet verified.
   // Do NOT replace with an invented or guessed publication name.
@@ -721,10 +740,10 @@ var HEAVEN_CONTENT = {
     { id: 'heaven-03', image: 'images/interior-counter.webp', alt: "Heaven Coffee's wooden counter with the sign board and macramé on the wall, people gathered at the bar", caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
     { id: 'heaven-04', image: 'images/interior-signage.jpg', alt: 'The heaven coffee sign board mounted above framed quotes reading Touch the earth lightly and Love casts out fear, with a macramé hanging beside it', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
     { id: 'heaven-05', image: 'images/founder-mondli.jpg', alt: 'Mondli Mahamba, founder of Heaven Coffee, at the counter', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-06', image: 'https://picsum.photos/seed/hc-ig6/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-07', image: 'https://picsum.photos/seed/hc-ig7/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-08', image: 'https://picsum.photos/seed/hc-ig8/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-09', image: 'https://picsum.photos/seed/hc-ig9/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' }
+    { id: 'heaven-06', image: 'images/tourist-pastry-umbrella.png', alt: 'A visitor enjoying a pastry and coffee under a navy Heaven Coffee umbrella, with the Greenmarket Square market visible behind', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-07', image: 'images/dog-petting-outdoor.png', alt: 'Two customers petting a dog at the outdoor tables under Heaven Coffee umbrellas', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-08', image: 'images/puppy-entrance-door.png', alt: 'A couple holding a puppy at the Gothic entrance, with the heaven coffee door signage visible behind them', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-09', image: 'images/three-friends-coffee.png', alt: 'Three customers sharing coffee and tea together under the umbrellas outside Heaven Coffee', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' }
   ]
 };
 
@@ -775,10 +794,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var IG_DURATIONS = [30, 38, 34, 42]; // seconds — deliberately non-uniform per column
     var IG_DELAYS = [0, -6, -3, -9];     // seconds — negative delay desyncs each column's phase
 
+    // Round 4: the tile's hover title used to be post.caption, which is still
+    // a bracketed placeholder for every entry -- exposing that as a tooltip
+    // was the single most likely thing to make an otherwise-real-looking card
+    // read as unfinished. caption stays in the data (useful once real captions
+    // exist), just no longer surfaced in the UI. A neutral, always-true string
+    // is used instead.
     var renderIgTile = function (post, hidden) {
       var href = post.href || 'https://instagram.com/heavencoffeect';
       var alt = hidden ? '' : (post.alt || 'Instagram post from @heavencoffeect — placeholder');
-      var extra = hidden ? ' aria-hidden="true" tabindex="-1"' : ' title="' + post.caption + '"';
+      var extra = hidden ? ' aria-hidden="true" tabindex="-1"' : ' title="View on Instagram"';
       return '<a class="ig-tile" href="' + href + '" target="_blank" rel="noopener noreferrer"' + extra + '>'
         + '<img class="ig-tile-img" src="' + post.image + '" alt="' + alt + '" loading="lazy" decoding="async" width="280" height="350"/>'
         + '</a>';
