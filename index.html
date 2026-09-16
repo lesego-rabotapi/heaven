@@ -288,24 +288,11 @@
          ================================================================= -->
     <section id="hero" class="w-full bg-background pt-space-xl">
       <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
-        <h1 class="font-display text-display-mobile lg:text-[88px] text-espresso-deep uppercase" style="letter-spacing:-0.02em;">
+        <!-- Round 5: info badges row (Central Methodist Mission / Cape Town CBD /
+             Dogs welcome) removed from directly under the hero headline per feedback. -->
+        <h1 class="font-display text-display-mobile lg:text-[88px] text-espresso-deep uppercase mb-space-lg" style="letter-spacing:-0.02em;">
           Sanctuary coffee<br/>at Greenmarket Square.
         </h1>
-
-        <!-- Info badges -->
-        <div class="flex flex-wrap items-center gap-x-space-md gap-y-space-xs mt-space-md mb-space-lg font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">
-          <span class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-church-sapphire text-[15px]" style="font-variation-settings:'FILL' 1;">church</span>
-            Central Methodist Mission
-          </span>
-          <span class="text-outline-variant">·</span>
-          <span>Cape Town CBD</span>
-          <span class="text-outline-variant">·</span>
-          <span class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[15px]" style="color:#1D4ED8;font-variation-settings:'FILL' 1;">pets</span>
-            Dogs welcome
-          </span>
-        </div>
       </div>
 
       <!-- Three-tile photo nav: Story / Menu / Find Us -->
@@ -411,29 +398,18 @@
           </div>
 
           <div class="lg:col-span-5 relative">
-            <!-- REAL PHOTO (round 4): main image is now the stone-arch interior —
-                 pews, stained glass, a dog, a latte — a direct, accurate match to
-                 the copy above ("Inside Gothic stone arches, next to wooden pews"),
-                 the exact shot flagged as missing since round 2.
-                 Founder portrait (previously the section's single large image) is
-                 kept as a real, valuable asset rather than dropped — demoted to a
-                 small inset card, bottom-left, editorial "one big atmospheric
-                 photo, one small portrait card" pattern. Name/role only on the
-                 caption, no biographical detail, per the policy on his personal
-                 history (design brief §3). -->
+            <!-- REAL PHOTO (round 5): reverted to Mondli's portrait as the section's
+                 single, only image, per feedback. The stone-arch interior (with the
+                 dog and latte) moved to the Instagram "From the Feed" wall instead —
+                 see HEAVEN_CONTENT.instagram (heaven-10) below. Caption is name/role
+                 only, no biographical detail, per the policy on his personal history
+                 (design brief §3). -->
             <div class="relative overflow-hidden bg-surface-container aspect-[3/4]">
-              <img alt="Inside Central Methodist Mission — Gothic stone arches, wooden pews and stained glass, with a small dog on a chair and a latte on the table" class="w-full h-full object-cover" src="images/stone-arch-interior.png" loading="lazy"/>
-
-              <!-- Founder inset card -->
-              <div class="absolute bottom-4 left-4 w-24 sm:w-28 rounded-lg overflow-hidden shadow-lg border-2" style="border-color:#fcf9f4;">
-                <div class="relative aspect-[3/4] bg-surface-container">
-                  <img alt="Mondli Mahamba, founder of Heaven Coffee, smiling at the counter" class="w-full h-full object-cover" src="images/founder-mondli.jpg" loading="lazy"/>
-                  <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/85 via-transparent to-transparent"></div>
-                  <div class="absolute bottom-0 left-0 right-0 p-1.5">
-                    <span class="block leading-tight" style="color:#fcf9f4;font-size:10px;">Mondli Mahamba</span>
-                    <span class="block uppercase tracking-wide" style="color:#EFECE6;font-size:8px;">Founder</span>
-                  </div>
-                </div>
+              <img alt="Mondli Mahamba, founder of Heaven Coffee, smiling at the counter" class="w-full h-full object-cover" src="images/founder-mondli.jpg" loading="lazy"/>
+              <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/70 via-transparent to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-space-md">
+                <span class="font-title-md text-title-md block" style="color:#fcf9f4;">Mondli Mahamba</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wide" style="color:#EFECE6;">Founder</span>
               </div>
             </div>
           </div>
@@ -455,15 +431,12 @@
         <span class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold">What We Serve</span>
         <h2 class="font-display text-headline-lg-mobile lg:text-headline-lg text-espresso-deep uppercase mt-space-xs mb-space-lg" style="letter-spacing:-0.01em;">Menu</h2>
 
-        <!-- PLACEHOLDER SECTION: menu items below are illustrative only.
-             Update HEAVEN_CONTENT.menu in the script block before launch.
-             Client must confirm all items, categories, and any pricing. -->
-        <div class="mb-space-lg flex items-start gap-space-sm rounded p-space-sm border max-w-2xl" style="background:#fffbeb;border-color:#fcd34d;">
-          <span class="material-symbols-outlined text-[20px] mt-0.5 flex-shrink-0" style="color:#92400e;">info</span>
-          <p class="font-body-sm text-body-sm" style="color:#92400e;">
-            Menu items shown are illustrative placeholders only — we're waiting on the final menu from Heaven Coffee. No pricing is shown; items and categories will be updated when the client provides them.
-          </p>
-        </div>
+        <!-- PLACEHOLDER: menu items below are illustrative only. Update
+             HEAVEN_CONTENT.menu in the script block before launch. Client
+             must confirm all items, categories, and any pricing. Visible
+             on-page disclaimer banner removed per feedback (round 5) —
+             this comment is the only remaining flag; the data itself is
+             still bracketed nowhere near "confirmed" in the config below. -->
 
         <!-- Menu category list — rendered by JS from HEAVEN_CONTENT.menu -->
         <div id="menu-cards" class="grid grid-cols-1 md:grid-cols-2 gap-x-gutter-lg gap-y-space-lg">
@@ -498,16 +471,11 @@
           </a>
         </div>
 
-        <!-- PLACEHOLDER SECTION: Instagram cards below are layout placeholders only.
-             Replace with real captions and images from @heavencoffeect.
-             See HEAVEN_CONTENT.instagram in the script block below. -->
-        <div class="mb-space-md flex items-start gap-space-sm rounded p-space-sm border" style="background:#fffbeb;border-color:#fcd34d;">
-          <span class="material-symbols-outlined text-[20px] mt-0.5 flex-shrink-0" style="color:#92400e;">info</span>
-          <p class="font-body-sm text-body-sm" style="color:#92400e;">
-            Tiles below are layout placeholders — not a live feed. Real posts at <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" style="text-decoration:underline;">@heavencoffeect</a>. Update <code>HEAVEN_CONTENT.instagram</code> with real content before launch.
-          </p>
-        </div>
-
+        <!-- PLACEHOLDER: tiles below are layout placeholders only, not a live
+             feed. Replace with real captions and images from @heavencoffeect.
+             See HEAVEN_CONTENT.instagram in the script block below. Visible
+             on-page disclaimer banner removed per feedback (round 5) — this
+             comment is the only remaining flag. -->
         <div id="ig-wall" class="ig-wall" aria-label="Instagram posts from @heavencoffeect — decorative, auto-scrolling">
           <div id="ig-wall-columns" class="ig-wall-columns">
             <!-- JS-rendered: see HEAVEN_CONTENT.instagram in the script block below -->
@@ -743,7 +711,10 @@ var HEAVEN_CONTENT = {
     { id: 'heaven-06', image: 'images/tourist-pastry-umbrella.png', alt: 'A visitor enjoying a pastry and coffee under a navy Heaven Coffee umbrella, with the Greenmarket Square market visible behind', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
     { id: 'heaven-07', image: 'images/dog-petting-outdoor.png', alt: 'Two customers petting a dog at the outdoor tables under Heaven Coffee umbrellas', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
     { id: 'heaven-08', image: 'images/puppy-entrance-door.png', alt: 'A couple holding a puppy at the Gothic entrance, with the heaven coffee door signage visible behind them', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-09', image: 'images/three-friends-coffee.png', alt: 'Three customers sharing coffee and tea together under the umbrellas outside Heaven Coffee', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' }
+    { id: 'heaven-09', image: 'images/three-friends-coffee.png', alt: 'Three customers sharing coffee and tea together under the umbrellas outside Heaven Coffee', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    // Round 5: moved here from the Story section per feedback (Mondli's portrait
+    // is that section's only image now).
+    { id: 'heaven-10', image: 'images/stone-arch-interior.png', alt: 'Inside Central Methodist Mission — Gothic stone arches, wooden pews and stained glass, with a small dog on a chair and a latte on the table', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' }
   ]
 };
 
