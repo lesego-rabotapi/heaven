@@ -24,67 +24,125 @@
     ::-webkit-scrollbar { display: none; }
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-    #sticky-find-us {
-      transform: translateY(100%);
-      opacity: 0;
-      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-      pointer-events: none;
-    }
-    #sticky-find-us.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
     .hero-tile { position: relative; overflow: hidden; display: block; }
     .hero-tile img { transition: transform 0.6s ease; }
     .hero-tile:hover img { transform: scale(1.04); }
     .menu-row { border-bottom: 1px solid rgba(29,19,16,0.1); }
     .menu-row:last-child { border-bottom: none; }
 
-    /* "Dog friendly" fixed corner badge — adapted from a React TextLoop component spec
-       (shape="wave", speed, curviness, separator, ribbon/ribbonColor props) into vanilla
-       CSS, since this is a static site with no React runtime. Originally built as a
-       full-width scrolling ribbon; scoped down to a small fixed tag per feedback (the
-       ribbon was too disruptive). Color corrected to the design.md blue system —
-       awning-navy (#455174, measured from the real umbrella fabric) rather than the
-       spec's indigo or the terracotta used in the first pass; the real storefront photo
-       (hero "Find Us" tile) shows the dog sitting right by that navy umbrella. Only the
-       paw emoji keeps a small bob, retaining a little of the original "wave" character
-       without a marquee that wouldn't fit at badge size. Respects prefers-reduced-motion. */
-    .dog-badge {
+    /* "Dog friendly" spinning corner badge — Round 6, replacing the earlier
+       static pill (see the HTML comment above the badge markup for the full
+       component-translation history). New spec: a React TextLoop with
+       shape="arch" (circular text), a continuous spin (speed/direction), a
+       colored "ribbon" backing, and a repeating separator emoji —
+       translated into an SVG <textPath> ring (the correct primitive for
+       genuine curved text) plus a CSS rotation animation, since there's no
+       React/TextLoop runtime here. Ribbon uses church-sapphire (#1D4ED8),
+       the site's established primary blue, per an earlier round's explicit
+       "use the blue colour" instruction — not the spec's indigo (#5227FF).
+       Round 7: the ribbon is now a genuine thin stroked ring (fill:none,
+       a wide stroke) instead of a filled disc — a filled circle isn't a
+       "ribbon", and it forced a static paw glyph into the middle just to
+       fill empty space, which fought the spinning motion instead of
+       reading as part of it; dropped. Angled at a fixed tilt for the
+       "angled" look; the spin animation runs on the inner ring so the
+       tilt itself stays put while the text loops (a rotated circle's
+       silhouette doesn't change, so the tilt doesn't affect how much of
+       it the corner clips — only the text's orientation). Per the spec's
+       pauseOnHover:false, this deliberately keeps spinning on hover —
+       unlike the drift-wall below, which does pause on hover.
+       Round 8: two real fixes plus a resize. The illegible text turned
+       out to be a viewBox/box-size mismatch, not just a small font —
+       the SVG had viewBox="0 0 160 160" rendered into a 104/86px box, so
+       every unit (including font-size:12) was actually rendering at
+       roughly 65% of its stated size once the browser scaled the SVG
+       down to fit. viewBox and the CSS box are now the same number
+       (220), so 1 SVG unit = 1 real pixel and font-size means what it
+       says. Text is also centered on the ring now via
+       dominant-baseline="central" — textPath only follows the path
+       horizontally; without it, the text's alphabetic baseline (not its
+       vertical center) sat on the path, so it read as hugging the top of
+       the band. And per feedback the ring is bigger overall but shows
+       much less of itself — right/bottom now equal the ring's own
+       radius, which puts its center exactly on the viewport corner, so
+       only the inward quarter is visible and it reads as emerging from
+       both edges at once, not sitting mostly on-screen. */
+    .dog-loop {
       position: fixed;
       z-index: 30;
-      right: 1rem;
-      bottom: 5.5rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.1rem;
-      border-radius: 9999px;
-      background: #455174;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      right: -110px;
+      bottom: -110px;
+      width: 220px;
+      height: 220px;
+      transform: rotate(-10deg);
       text-decoration: none;
+      filter: drop-shadow(0 4px 14px rgba(0,0,0,0.3));
     }
-    .dog-badge-label {
-      font-family: 'Archivo', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #ffffff;
-      white-space: nowrap;
+    .dog-loop-ring {
+      display: block;
+      width: 100%;
+      height: 100%;
+      animation: dog-loop-spin 11s linear infinite;
     }
-    .dog-badge-paw {
-      display: inline-block;
-      font-size: 15px;
-      animation: dog-badge-bob 1.8s ease-in-out infinite;
-    }
-    @keyframes dog-badge-bob {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-3px) rotate(-10deg); }
+    @keyframes dog-loop-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .dog-badge-paw { animation: none !important; }
+      .dog-loop-ring { animation: none !important; }
     }
     @media (max-width: 480px) {
-      .dog-badge { right: 0.75rem; bottom: 5rem; padding: 0.5rem 0.9rem; }
-      .dog-badge-label { font-size: 11px; }
+      .dog-loop { width: 160px; height: 160px; right: -80px; bottom: -80px; }
+    }
+
+    /* Staggered mobile nav drawer — see the HTML comment above #nav-drawer
+       for the React StaggeredMenu-spec translation notes. Two full-bleed
+       color layers slide in first (the spec's "colors" array), then the
+       cream panel and its links stagger in behind them via per-item
+       transition-delay (set inline on each element, same convention as
+       the drift-wall's per-column duration variables below). Opening adds
+       .is-open one frame after `hidden` is removed (see JS) so the browser
+       paints the off-canvas state first — without that frame, the elements
+       would start and end in the same place and nothing would visibly
+       transition. */
+    .staggered-menu-layer {
+      position: absolute; inset: 0; transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    #nav-drawer.is-open .staggered-menu-layer { transform: translateX(0); }
+    .staggered-menu-panel {
+      position: relative; height: 100%; overflow-y: auto;
+      background: #fcf9f4; transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(.4,0,.2,1); transition-delay: 0.12s;
+    }
+    #nav-drawer.is-open .staggered-menu-panel { transform: translateX(0); }
+    .staggered-menu-item {
+      display: flex; align-items: baseline; gap: 0.75rem;
+      font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 28px;
+      text-transform: uppercase; letter-spacing: -0.01em; color: #16181D;
+      padding: 0.7rem 0; border-bottom: 1px solid rgba(22,24,29,0.08);
+      text-decoration: none;
+      opacity: 0; transform: translateX(28px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .staggered-menu-num {
+      font-size: 13px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.08em;
+    }
+    .staggered-menu-socials {
+      opacity: 0; transform: translateX(28px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .staggered-menu-socials a {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em; color: #5B5B60; text-decoration: none;
+    }
+    .staggered-menu-socials a:hover { color: #1D4ED8; }
+    #nav-drawer.is-open .staggered-menu-item,
+    #nav-drawer.is-open .staggered-menu-socials { opacity: 1; transform: translateX(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .staggered-menu-layer, .staggered-menu-panel, .staggered-menu-item, .staggered-menu-socials {
+        transition: none !important;
+      }
     }
 
     /* "From the Feed" drift-wall — corrected brief: vanilla CSS/JS only, no
@@ -137,50 +195,50 @@
     }
   </style>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#9A5230","awning-navy":"#455174","surface-container":"#f0ede9","secondary-fixed-dim":"#b0c6ff","surface-variant":"#e5e2dd","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#2B1E1A","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#fcf9f4","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#ebe8e3","wood-warm":"#5C3A21","oat-cream":"#F8F5F0","primary-fixed":"#f5ddd7","surface-container-low":"#f6f3ee","on-tertiary":"#ffffff","inverse-on-surface":"#f3f0eb","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#fcf9f4","surface-container-highest":"#e5e2dd","primary-container":"#2b1e1a","outline-variant":"#d2c3bf","on-primary-fixed":"#251915","espresso-deep":"#1D1310","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#6B5C4F","church-sapphire":"#1D4ED8","outline":"#807471","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#fcf9f4","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4f4542","tertiary":"#190500","surface-dim":"#dcdad5","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Archivo"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Archivo"],"display-mobile":["Archivo"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Archivo"],"headline-md":["Archivo"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Archivo"],"quote":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
+  <!-- Round 4: "cathedral" palette pivot — warm/brown family (terracotta-warm,
+       espresso-deep, stone-aged, roasted-bean, wood-warm, oat-cream) replaced
+       with cool blue/black/grey equivalents, per design.md §7. terracotta-warm
+       now reuses church-sapphire's exact hex rather than getting its own new
+       color (one fewer distinct hue to maintain). awning-navy was left alone —
+       already fits this cool direction. surface/background (#fcf9f4, the warm
+       cream page canvas) was deliberately NOT touched — design.md §7 flags this
+       as an explicit open question it chose not to bundle into this pass ("a
+       bigger, more visible change... needs an explicit decision"), not an
+       oversight. -->
+  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"inverse-primary":"#d8c2bb","on-secondary-container":"#00337c","on-tertiary-fixed":"#351000","terracotta-warm":"#1D4ED8","awning-navy":"#455174","surface-container":"#f0ede9","secondary-fixed-dim":"#b0c6ff","surface-variant":"#e5e2dd","error-container":"#ffdad6","surface-tint":"#6c5b55","parchment-subtle":"#EFECE6","tertiary-container":"#3e1400","on-background":"#1c1c19","roasted-bean":"#1E1F24","primary":"#120805","on-primary-container":"#98847e","awning-sky":"#4A90E2","error":"#ba1a1a","primary-fixed-dim":"#d8c2bb","surface":"#fcf9f4","on-secondary-fixed":"#001945","on-tertiary-container":"#c87247","surface-container-high":"#ebe8e3","wood-warm":"#3A3B42","oat-cream":"#F3F3F5","primary-fixed":"#f5ddd7","surface-container-low":"#f6f3ee","on-tertiary":"#ffffff","inverse-on-surface":"#f3f0eb","on-primary":"#ffffff","on-surface":"#1c1c19","background":"#fcf9f4","surface-container-highest":"#e5e2dd","primary-container":"#2b1e1a","outline-variant":"#d2c3bf","on-primary-fixed":"#251915","espresso-deep":"#16181D","tertiary-fixed-dim":"#ffb694","on-primary-fixed-variant":"#53433e","tertiary-fixed":"#ffdbcc","surface-container-lowest":"#ffffff","stone-aged":"#5B5B60","church-sapphire":"#1D4ED8","outline":"#807471","on-secondary":"#ffffff","secondary-fixed":"#d9e2ff","on-error-container":"#93000a","secondary-container":"#759efd","surface-bright":"#fcf9f4","on-secondary-fixed-variant":"#00429c","on-tertiary-fixed-variant":"#76330d","on-error":"#ffffff","secondary":"#2b5bb5","sapphire-light":"#1976D2","on-surface-variant":"#4f4542","tertiary":"#190500","surface-dim":"#dcdad5","inverse-surface":"#31302d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Plus Jakarta Sans"],"display":["Archivo"],"label-md":["Plus Jakarta Sans"],"title-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-sm":["Archivo"],"display-mobile":["Archivo"],"body-md":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Archivo"],"headline-md":["Archivo"],"label-lg":["Plus Jakarta Sans"],"headline-lg":["Archivo"],"quote":["Noto Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
 </head>
 <body class="bg-background font-body-md text-body-md text-on-surface antialiased">
 
-<!-- =====================================================================
-     STICKY "FIND US" BAR — slides in after hero scrolls off screen.
-     No "order now" CTA — wayfinding only (see design brief §6).
-     ===================================================================== -->
-<div id="sticky-find-us" class="fixed bottom-0 left-0 right-0 z-40 bg-espresso-deep border-t border-outline/20" role="complementary" aria-label="Find Heaven Coffee">
-  <div class="max-w-7xl mx-auto px-gutter py-3 flex flex-wrap items-center justify-between gap-x-space-lg gap-y-space-xs">
-    <div class="flex flex-wrap items-center gap-x-space-lg gap-y-space-xs">
-      <span class="flex items-center gap-1.5 font-label-lg text-label-lg text-surface uppercase tracking-wide">
-        <span class="material-symbols-outlined text-terracotta-warm text-[18px]">pin_drop</span>
-        38 Burg St, Central Methodist Mission
-      </span>
-      <span class="hidden sm:flex items-center gap-1.5 font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;">
-        <span class="material-symbols-outlined text-[16px]">schedule</span>
-        <span data-hours>Hours to be confirmed</span>
-      </span>
-    </div>
-    <a href="tel:+27728842057" class="flex items-center gap-1.5 font-label-lg text-label-lg text-surface hover:text-terracotta-warm transition-colors uppercase tracking-wide">
-      <span class="material-symbols-outlined text-[18px]">call</span>
-      <span>072 884 2057</span>
-    </a>
-  </div>
-</div>
+<!-- Round 5: the fixed sticky "Find Us" bar (address/hours/phone, slid in
+     after scrolling past the hero) was removed entirely per feedback.
+     Wayfinding info stays reachable via the header and the Location &
+     Hours section, just not persistently pinned while scrolling. -->
 
 <!-- =====================================================================
-     DOG-FRIENDLY BADGE — fixed corner tag, always visible.
+     DOG-FRIENDLY BADGE — fixed corner tag, always visible, a spinning
+     arched-text ring (Round 6, restyled as a genuine thin ribbon in
+     Round 7, resized/recentered/legibility-fixed in Round 8 — see
+     <style> block for the full history, including a real viewBox-vs-box
+     scaling bug that was the actual cause of the illegible text).
      Grounded in repeated dog photos across @heavencoffeect and the real
      storefront photo (see hero "Find Us" tile — the dog sits right by
      the navy umbrella). Adapted from a supplied React TextLoop component
-     spec (shape="wave", speed, curviness, separator="🐾", ribbon props)
-     into vanilla CSS — this is a static site with no React runtime, so
-     the component itself can't be imported. First pass was a full-width
-     scrolling ribbon in terracotta; scoped down to this small fixed tag
-     per feedback (the ribbon was too disruptive), and recolored to the
-     design.md blue system (awning-navy, not the spec's indigo or the
-     terracotta from the first pass). Positioned to clear the sticky
-     "Find Us" bar above at all times. See <style> block for CSS.
-     ===================================================================== -->
-<a href="#location" class="dog-badge" title="Pavement seating available outside" aria-label="Dog friendly — pavement seating available outside">
-  <span class="dog-badge-paw" aria-hidden="true">🐾</span>
-  <span class="dog-badge-label">Dog Friendly</span>
+     spec (shape="arch", speed, direction, curviness, separator="🐶",
+     ribbon/ribbonColor props) into an SVG stroked-ring <textPath> plus a
+     CSS spin — this is a static site with no React runtime, so the
+     component itself can't be imported. Same claim as the previous
+     pill/disc versions (pavement seating outside), just a new visual
+     treatment. -->
+<a href="#location" class="dog-loop" title="Pavement seating available outside" aria-label="Dog friendly — pavement seating available outside">
+  <svg class="dog-loop-ring" viewBox="0 0 220 220" aria-hidden="true">
+    <defs>
+      <path id="dog-loop-path" d="M110,110 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/>
+    </defs>
+    <circle cx="110" cy="110" r="80" fill="none" stroke="#1D4ED8" stroke-width="32"/>
+    <text font-family="Archivo, sans-serif" font-weight="800" font-size="22" letter-spacing="2" fill="#ffffff" dominant-baseline="central">
+      <textPath href="#dog-loop-path" startOffset="0%">DOG FRIENDLY 🐶 DOG FRIENDLY 🐶 </textPath>
+    </text>
+  </svg>
 </a>
 
 <!-- =====================================================================
@@ -206,11 +264,11 @@
          Do not derive brand colors from this or any interim asset. When a real logo file
          exists, self-host it — do not depend on a third-party or AI-generation CDN URL. -->
     <a href="#" class="inline-flex flex-col items-center" style="line-height:1;" aria-label="Heaven Coffee — home">
-      <span style="font-family:'Poppins',sans-serif;font-weight:400;font-size:22px;letter-spacing:0.02em;color:#1D1310;">heaven</span>
+      <span style="font-family:'Poppins',sans-serif;font-weight:400;font-size:22px;letter-spacing:0.02em;color:#16181D;">heaven</span>
       <svg viewBox="0 0 120 16" style="width:74px;height:10px;margin-top:1px;" aria-hidden="true">
-        <path d="M4 3 C 30 13, 90 13, 116 3" stroke="#1D1310" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M4 3 C 30 13, 90 13, 116 3" stroke="#16181D" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       </svg>
-      <span style="font-family:'Poppins',sans-serif;font-weight:400;font-size:10px;letter-spacing:0.08em;color:#6B5C4F;margin-top:1px;">coffee</span>
+      <span style="font-family:'Poppins',sans-serif;font-weight:400;font-size:10px;letter-spacing:0.08em;color:#5B5B60;margin-top:1px;">coffee</span>
     </a>
 
     <div class="flex items-center gap-space-sm">
@@ -252,16 +310,42 @@
     <a href="#location" class="font-label-md text-label-md uppercase tracking-wide text-on-surface-variant hover:text-espresso-deep border-b-2 border-transparent hover:border-terracotta-warm px-1 py-1 transition-colors">Find Us</a>
   </nav>
 
-  <!-- Mobile nav drawer — hidden by default, and md:hidden permanently so a
-       drawer left open on mobile doesn't persist if the viewport is resized
-       to desktop width (the persistent nav row above takes over instead). -->
-  <div id="nav-drawer" class="hidden md:hidden bg-background border-t border-outline-variant/30">
-    <nav class="max-w-7xl mx-auto px-gutter py-space-sm flex flex-col">
-      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#story">Story</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#menu">Menu</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 border-b border-outline-variant/20 hover:text-terracotta-warm transition-colors" href="#instagram">From the Feed</a>
-      <a class="font-label-lg text-label-lg uppercase tracking-wide text-on-surface px-2 py-3 hover:text-terracotta-warm transition-colors" href="#location">Find Us</a>
-    </nav>
+  <!-- Mobile nav drawer — "staggered menu" pattern adapted from a supplied
+       React StaggeredMenu component spec (position/items/socialItems/
+       displayItemNumbering/colors/accentColor/logoUrl props) into vanilla
+       CSS/JS — no React runtime here. Ported for mobile only (md:hidden,
+       and permanently so a drawer left open on mobile doesn't persist if
+       the viewport is resized to desktop — the persistent nav row above
+       takes over instead), per feedback ("for the hamburger in mobile
+       orientation only"). Colors use the site's own cathedral palette
+       (church-sapphire/espresso-deep) rather than the spec's purple
+       (#B497CF/#5227FF) — same substitution pattern as the dog badge.
+       socialItems in the spec were placeholder Twitter/GitHub/LinkedIn
+       links; the only real, confirmed account for this business is
+       Instagram (used elsewhere in this file), so that's the only social
+       link listed — inventing accounts on platforms nobody confirmed
+       would be the same fabrication problem flagged throughout this
+       project. logoUrl has no real asset yet (see the header logo
+       comment above), so the panel doesn't repeat a logo mark.
+       changeMenuColorOnOpen wasn't ported: the header strip stays fully
+       visible above this drawer in both states (the panel opens below
+       it, not behind it), so the hamburger icon's existing dark color
+       already has enough contrast throughout — there's no state where it
+       needs to change. -->
+  <div id="nav-drawer" class="hidden md:hidden fixed inset-x-0 bottom-0 z-40 overflow-hidden" style="top:4rem; height:calc(100vh - 4rem);">
+    <div class="staggered-menu-layer" style="background:#1D4ED8;"></div>
+    <div class="staggered-menu-layer" style="background:#16181D; transition-delay:80ms;"></div>
+    <div class="staggered-menu-panel">
+      <nav class="flex flex-col px-gutter pt-space-xl">
+        <a class="staggered-menu-item" style="transition-delay:160ms" href="#story"><span class="staggered-menu-num">01</span>Story</a>
+        <a class="staggered-menu-item" style="transition-delay:220ms" href="#menu"><span class="staggered-menu-num">02</span>Menu</a>
+        <a class="staggered-menu-item" style="transition-delay:280ms" href="#instagram"><span class="staggered-menu-num">03</span>From the Feed</a>
+        <a class="staggered-menu-item" style="transition-delay:340ms" href="#location"><span class="staggered-menu-num">04</span>Find Us</a>
+      </nav>
+      <div class="staggered-menu-socials px-gutter pt-space-lg mt-space-xs" style="transition-delay:400ms">
+        <a href="https://instagram.com/heavencoffeect" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -278,24 +362,11 @@
          ================================================================= -->
     <section id="hero" class="w-full bg-background pt-space-xl">
       <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
-        <h1 class="font-display text-display-mobile lg:text-[88px] text-espresso-deep uppercase" style="letter-spacing:-0.02em;">
+        <!-- Round 5: info badges row (Central Methodist Mission / Cape Town CBD /
+             Dogs welcome) removed from directly under the hero headline per feedback. -->
+        <h1 class="font-display text-display-mobile lg:text-[88px] text-espresso-deep uppercase mb-space-lg" style="letter-spacing:-0.02em;">
           Sanctuary coffee<br/>at Greenmarket Square.
         </h1>
-
-        <!-- Info badges -->
-        <div class="flex flex-wrap items-center gap-x-space-md gap-y-space-xs mt-space-md mb-space-lg font-label-sm text-label-sm uppercase tracking-wide text-stone-aged">
-          <span class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-church-sapphire text-[15px]" style="font-variation-settings:'FILL' 1;">church</span>
-            Central Methodist Mission
-          </span>
-          <span class="text-outline-variant">·</span>
-          <span>Cape Town CBD</span>
-          <span class="text-outline-variant">·</span>
-          <span class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[15px]" style="color:#9A5230;font-variation-settings:'FILL' 1;">pets</span>
-            Dogs welcome
-          </span>
-        </div>
       </div>
 
       <!-- Three-tile photo nav: Story / Menu / Find Us -->
@@ -366,7 +437,7 @@
 
           <div class="lg:col-span-7 flex flex-col gap-space-md">
             <h2 class="font-display text-headline-lg-mobile lg:text-headline-lg text-espresso-deep uppercase" style="letter-spacing:-0.01em;">
-              A Second Chance,<br/>A Cup of Coffee.
+              Open to Everyone<br/>Who Finds the Door.
             </h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
               Mondli Mahamba opened Heaven Coffee in April 2017 inside the Central Methodist Mission on Greenmarket Square — one of Cape Town's most storied buildings, and one of the city's most recognisable church facades.
@@ -374,11 +445,14 @@
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
               The café grew from a belief that community and coffee belong together. Inside Gothic stone arches, next to wooden pews, Heaven became a place of welcome for everyone who steps off the square — locals on a morning commute, tourists looking for somewhere quiet, and everyone in between.
             </p>
-            <blockquote class="border-l-2 border-terracotta-warm pl-space-md mt-space-xs">
-              <p class="font-quote text-headline-sm italic text-roasted-bean leading-snug">
-                "Second chances and community — those are the foundations."
-              </p>
-            </blockquote>
+            <!-- Round 4: dropped the blockquote/quotation-mark treatment. The
+                 previous line presented invented copy in quotation marks as if
+                 Mondli said it -- a fabricated-attribution problem, not just an
+                 unconfirmed fact. This is now plain editorial text: a values
+                 statement the site makes, not a claim about what he said. -->
+            <p class="font-quote text-headline-sm italic text-roasted-bean leading-snug mt-space-xs">
+              Community and coffee belong together here.
+            </p>
 
             <!-- Stat row — structural reference: Caplatte's Est./Locations/Origin row -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter-sm mt-space-lg pt-space-lg border-t border-outline-variant/30 max-w-2xl">
@@ -398,13 +472,12 @@
           </div>
 
           <div class="lg:col-span-5 relative">
-            <!-- REAL PHOTO (round 4): founder portrait, now the section's single large image
-                 (previously a small circular avatar beside a separate name/role block — that
-                 "tag" was removed per feedback and the portrait promoted to the main photo).
-                 Caption is overlaid directly on the photo: name/role only, no biographical
-                 detail, per the policy on his personal history (design brief §3).
-                 interior-signage.jpg (the sign-board + macramé wall shot previously here)
-                 is still in images/ if a future section wants it. -->
+            <!-- REAL PHOTO (round 5): reverted to Mondli's portrait as the section's
+                 single, only image, per feedback. The stone-arch interior (with the
+                 dog and latte) moved to the Instagram "From the Feed" wall instead —
+                 see HEAVEN_CONTENT.instagram (heaven-10) below. Caption is name/role
+                 only, no biographical detail, per the policy on his personal history
+                 (design brief §3). -->
             <div class="relative overflow-hidden bg-surface-container aspect-[3/4]">
               <img alt="Mondli Mahamba, founder of Heaven Coffee, smiling at the counter" class="w-full h-full object-cover" src="images/founder-mondli.jpg" loading="lazy"/>
               <div class="absolute inset-0 bg-gradient-to-t from-espresso-deep/70 via-transparent to-transparent"></div>
@@ -432,15 +505,12 @@
         <span class="font-label-sm text-label-sm uppercase tracking-widest text-terracotta-warm font-semibold">What We Serve</span>
         <h2 class="font-display text-headline-lg-mobile lg:text-headline-lg text-espresso-deep uppercase mt-space-xs mb-space-lg" style="letter-spacing:-0.01em;">Menu</h2>
 
-        <!-- PLACEHOLDER SECTION: menu items below are illustrative only.
-             Update HEAVEN_CONTENT.menu in the script block before launch.
-             Client must confirm all items, categories, and any pricing. -->
-        <div class="mb-space-lg flex items-start gap-space-sm rounded p-space-sm border max-w-2xl" style="background:#fffbeb;border-color:#fcd34d;">
-          <span class="material-symbols-outlined text-[20px] mt-0.5 flex-shrink-0" style="color:#92400e;">info</span>
-          <p class="font-body-sm text-body-sm" style="color:#92400e;">
-            Menu items shown are illustrative placeholders only — we're waiting on the final menu from Heaven Coffee. No pricing is shown; items and categories will be updated when the client provides them.
-          </p>
-        </div>
+        <!-- PLACEHOLDER: menu items below are illustrative only. Update
+             HEAVEN_CONTENT.menu in the script block before launch. Client
+             must confirm all items, categories, and any pricing. Visible
+             on-page disclaimer banner removed per feedback (round 5) —
+             this comment is the only remaining flag; the data itself is
+             still bracketed nowhere near "confirmed" in the config below. -->
 
         <!-- Menu category list — rendered by JS from HEAVEN_CONTENT.menu -->
         <div id="menu-cards" class="grid grid-cols-1 md:grid-cols-2 gap-x-gutter-lg gap-y-space-lg">
@@ -475,16 +545,11 @@
           </a>
         </div>
 
-        <!-- PLACEHOLDER SECTION: Instagram cards below are layout placeholders only.
-             Replace with real captions and images from @heavencoffeect.
-             See HEAVEN_CONTENT.instagram in the script block below. -->
-        <div class="mb-space-md flex items-start gap-space-sm rounded p-space-sm border" style="background:#fffbeb;border-color:#fcd34d;">
-          <span class="material-symbols-outlined text-[20px] mt-0.5 flex-shrink-0" style="color:#92400e;">info</span>
-          <p class="font-body-sm text-body-sm" style="color:#92400e;">
-            Tiles below are layout placeholders — not a live feed. Real posts at <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" style="text-decoration:underline;">@heavencoffeect</a>. Update <code>HEAVEN_CONTENT.instagram</code> with real content before launch.
-          </p>
-        </div>
-
+        <!-- PLACEHOLDER: tiles below are layout placeholders only, not a live
+             feed. Replace with real captions and images from @heavencoffeect.
+             See HEAVEN_CONTENT.instagram in the script block below. Visible
+             on-page disclaimer banner removed per feedback (round 5) — this
+             comment is the only remaining flag. -->
         <div id="ig-wall" class="ig-wall" aria-label="Instagram posts from @heavencoffeect — decorative, auto-scrolling">
           <div id="ig-wall-columns" class="ig-wall-columns">
             <!-- JS-rendered: see HEAVEN_CONTENT.instagram in the script block below -->
@@ -517,10 +582,10 @@
             </span>
             <!-- PLACEHOLDER: press outlet name — see HEAVEN_CONTENT.pressOutlet below.
                  Do NOT replace [Press outlet — TBD] with an invented name. -->
-            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-outline-variant/30 font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;opacity:0.8;">
-              <span class="material-symbols-outlined text-[14px]" style="color:#6B5C4F;">article</span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-outline-variant/30 font-label-sm text-label-sm uppercase tracking-wide" style="color:#5B5B60;opacity:0.8;">
+              <span class="material-symbols-outlined text-[14px]" style="color:#5B5B60;">article</span>
               <span data-press-outlet>[Press outlet — TBD]</span>
-              <span class="normal-case font-body-sm text-body-sm" style="color:#6B5C4F;">· "5 Black-Owned Coffee Spots in Cape Town"</span>
+              <span class="normal-case font-body-sm text-body-sm" style="color:#5B5B60;">· "5 Black-Owned Coffee Spots in Cape Town"</span>
             </span>
           </div>
         </div>
@@ -562,19 +627,15 @@
               <span class="font-body-sm text-body-sm text-stone-aged"><span class="inline-block w-2 h-2 rounded-sm align-middle mr-1 bg-awning-navy" aria-hidden="true" title="Measured from the real umbrella fabric"></span>Inside Central Methodist Mission — look for the navy awning</span>
             </div>
 
-            <!-- PLACEHOLDER: operating hours not confirmed — third-party directory
-                 sources conflict. Confirm directly with Heaven Coffee before
-                 launch. See HEAVEN_CONTENT.hours below. -->
+            <!-- Round 4: hours confirmed (7am-6pm). No specific days were named
+                 in the confirmation -- taken as daily; a one-word edit to
+                 HEAVEN_CONTENT.hours below if that's later found wrong. -->
             <div class="flex flex-col gap-space-xs">
               <span class="font-label-sm text-label-sm uppercase tracking-wide text-stone-aged flex items-center gap-1.5">
                 <span class="material-symbols-outlined text-[16px] text-terracotta-warm">schedule</span>
                 Hours
               </span>
-              <span data-hours class="font-title-md text-title-md text-stone-aged italic">Hours to be confirmed with Heaven Coffee</span>
-              <div class="flex items-start gap-1.5 px-2.5 py-2 border mt-1" style="background:#fffbeb;border-color:#fcd34d;">
-                <span class="material-symbols-outlined text-[15px] mt-0.5 flex-shrink-0" style="color:#92400e;">warning</span>
-                <span class="font-body-sm text-body-sm" style="color:#92400e;">[Unconfirmed — please verify operating hours with Heaven Coffee before launch]</span>
-              </div>
+              <span data-hours class="font-title-md text-title-md text-espresso-deep">7am – 6pm, daily</span>
             </div>
 
             <div class="flex flex-col gap-space-xs pt-space-sm border-t border-outline-variant/30">
@@ -643,17 +704,17 @@
 
       <!-- Social + flags -->
       <div class="flex items-center gap-space-md">
-        <a aria-label="Instagram @heavencoffeect" class="w-9 h-9 rounded-full flex items-center justify-center transition-all" style="color:#EFECE6;border:1px solid rgba(252,249,244,0.2);" href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" onmouseover="this.style.borderColor='#9A5230';this.style.color='#9A5230'" onmouseout="this.style.borderColor='rgba(252,249,244,0.2)';this.style.color='#EFECE6'">
+        <a aria-label="Instagram @heavencoffeect" class="w-9 h-9 rounded-full flex items-center justify-center transition-all" style="color:#EFECE6;border:1px solid rgba(252,249,244,0.2);" href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" onmouseover="this.style.borderColor='#1D4ED8';this.style.color='#1D4ED8'" onmouseout="this.style.borderColor='rgba(252,249,244,0.2)';this.style.color='#EFECE6'">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
         </a>
         <!-- Visual flag icons only — no functional i18n in v0.2.
              Grounded in real German/Russian captions visible on @heavencoffeect. -->
         <div class="flex items-center gap-1.5">
-          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇬🇧 EN</span>
+          <span class="font-label-sm text-label-sm" style="color:#5B5B60;">🇬🇧 EN</span>
           <span style="color:#53433e;">·</span>
-          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇩🇪 DE</span>
+          <span class="font-label-sm text-label-sm" style="color:#5B5B60;">🇩🇪 DE</span>
           <span style="color:#53433e;">·</span>
-          <span class="font-label-sm text-label-sm" style="color:#6B5C4F;">🇷🇺 RU</span>
+          <span class="font-label-sm text-label-sm" style="color:#5B5B60;">🇷🇺 RU</span>
         </div>
       </div>
 
@@ -665,7 +726,7 @@
         <a class="font-label-sm text-label-sm uppercase tracking-wide hover:text-terracotta-warm transition-colors" style="color:#EFECE6;" href="#location">Find Us</a>
       </nav>
 
-      <span class="font-label-sm text-label-sm uppercase tracking-wide" style="color:#6B5C4F;">Heaven Coffee © · Pitch Draft</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-wide" style="color:#5B5B60;">Heaven Coffee © · Pitch Draft</span>
     </div>
   </div>
 </footer>
@@ -683,10 +744,10 @@
    ============================================================ */
 var HEAVEN_CONTENT = {
 
-  // PLACEHOLDER: operating hours not confirmed.
-  // Third-party directory sources conflict with each other.
-  // Confirm directly with Heaven Coffee (Mondli Mahamba) before launch.
-  hours: 'Hours — to be confirmed with Heaven Coffee',
+  // CONFIRMED round 4: 7am-6pm. No specific days were named in the
+  // confirmation -- taken as daily since nothing suggested otherwise.
+  // If that assumption turns out wrong, this is a one-word edit.
+  hours: '7am – 6pm, daily',
 
   // PLACEHOLDER: press outlet name for "5 Black-Owned Coffee Spots" not yet verified.
   // Do NOT replace with an invented or guessed publication name.
@@ -721,10 +782,13 @@ var HEAVEN_CONTENT = {
     { id: 'heaven-03', image: 'images/interior-counter.webp', alt: "Heaven Coffee's wooden counter with the sign board and macramé on the wall, people gathered at the bar", caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
     { id: 'heaven-04', image: 'images/interior-signage.jpg', alt: 'The heaven coffee sign board mounted above framed quotes reading Touch the earth lightly and Love casts out fear, with a macramé hanging beside it', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
     { id: 'heaven-05', image: 'images/founder-mondli.jpg', alt: 'Mondli Mahamba, founder of Heaven Coffee, at the counter', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-06', image: 'https://picsum.photos/seed/hc-ig6/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-07', image: 'https://picsum.photos/seed/hc-ig7/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-08', image: 'https://picsum.photos/seed/hc-ig8/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
-    { id: 'heaven-09', image: 'https://picsum.photos/seed/hc-ig9/480/600', alt: '[PLACEHOLDER — real Instagram post image from @heavencoffeect]', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' }
+    { id: 'heaven-06', image: 'images/tourist-pastry-umbrella.png', alt: 'A visitor enjoying a pastry and coffee under a navy Heaven Coffee umbrella, with the Greenmarket Square market visible behind', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-07', image: 'images/dog-petting-outdoor.png', alt: 'Two customers petting a dog at the outdoor tables under Heaven Coffee umbrellas', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-08', image: 'images/puppy-entrance-door.png', alt: 'A couple holding a puppy at the Gothic entrance, with the heaven coffee door signage visible behind them', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    { id: 'heaven-09', image: 'images/three-friends-coffee.png', alt: 'Three customers sharing coffee and tea together under the umbrellas outside Heaven Coffee', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' },
+    // Round 5: moved here from the Story section per feedback (Mondli's portrait
+    // is that section's only image now).
+    { id: 'heaven-10', image: 'images/stone-arch-interior.png', alt: 'Inside Central Methodist Mission — Gothic stone arches, wooden pews and stained glass, with a small dog on a chair and a latte on the table', caption: '[PLACEHOLDER — real caption from @heavencoffeect]', href: 'https://instagram.com/heavencoffeect' }
   ]
 };
 
@@ -775,10 +839,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var IG_DURATIONS = [30, 38, 34, 42]; // seconds — deliberately non-uniform per column
     var IG_DELAYS = [0, -6, -3, -9];     // seconds — negative delay desyncs each column's phase
 
+    // Round 4: the tile's hover title used to be post.caption, which is still
+    // a bracketed placeholder for every entry -- exposing that as a tooltip
+    // was the single most likely thing to make an otherwise-real-looking card
+    // read as unfinished. caption stays in the data (useful once real captions
+    // exist), just no longer surfaced in the UI. A neutral, always-true string
+    // is used instead.
     var renderIgTile = function (post, hidden) {
       var href = post.href || 'https://instagram.com/heavencoffeect';
       var alt = hidden ? '' : (post.alt || 'Instagram post from @heavencoffeect — placeholder');
-      var extra = hidden ? ' aria-hidden="true" tabindex="-1"' : ' title="' + post.caption + '"';
+      var extra = hidden ? ' aria-hidden="true" tabindex="-1"' : ' title="View on Instagram"';
       return '<a class="ig-tile" href="' + href + '" target="_blank" rel="noopener noreferrer"' + extra + '>'
         + '<img class="ig-tile-img" src="' + post.image + '" alt="' + alt + '" loading="lazy" decoding="async" width="280" height="350"/>'
         + '</a>';
@@ -821,58 +891,54 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('visibilitychange', function () { igTabHidden = document.hidden; igUpdatePauseState(); });
   }
 
-  // --- Nav drawer toggle ---
-  // Icon animation is pure CSS now (group-aria-expanded variants on the SVG
-  // paths in the header) — this just flips aria-expanded and the drawer's
-  // visibility, no icon-swap logic needed.
+  // --- Staggered nav drawer toggle ---
+  // Icon animation is pure CSS (group-aria-expanded variants on the SVG
+  // paths in the header). The drawer itself needs one extra step beyond a
+  // plain `hidden` flip: removing `hidden` and adding `.is-open` in the
+  // same tick would skip the CSS transition entirely (the color layers,
+  // panel and items would just appear in their final positions, since the
+  // browser never paints the off-canvas state in between). Two nested
+  // requestAnimationFrame calls force that paint first, so the stagger-in
+  // transitions defined in <style> actually run. Closing skips the reverse
+  // animation and re-hides instantly — same behavior the drawer had before
+  // this round, just applied to a taller panel now.
   var navToggle = document.getElementById('nav-toggle');
   var navDrawer = document.getElementById('nav-drawer');
 
   if (navToggle && navDrawer) {
+    var closeDrawer = function () {
+      navDrawer.classList.remove('is-open');
+      navDrawer.classList.add('hidden');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    };
+    var openDrawer = function () {
+      navDrawer.classList.remove('hidden');
+      navToggle.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('overflow-hidden');
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { navDrawer.classList.add('is-open'); });
+      });
+    };
+
     navToggle.addEventListener('click', function (e) {
       e.stopPropagation();
-      var isOpen = !navDrawer.classList.contains('hidden');
-      navDrawer.classList.toggle('hidden', isOpen);
-      navToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      if (navDrawer.classList.contains('hidden')) { openDrawer(); } else { closeDrawer(); }
     });
 
     navDrawer.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        navDrawer.classList.add('hidden');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', closeDrawer);
     });
 
     document.addEventListener('click', function (e) {
-      if (!navToggle.contains(e.target) && !navDrawer.contains(e.target)) {
-        navDrawer.classList.add('hidden');
-        navToggle.setAttribute('aria-expanded', 'false');
+      if (!navDrawer.classList.contains('hidden') && !navToggle.contains(e.target) && !navDrawer.contains(e.target)) {
+        closeDrawer();
       }
     });
   }
 
-  // --- Sticky "Find Us" bar ---
-  // Slides in after hero section scrolls off screen.
-  // Replaces the "order now" sticky pattern used by reference templates.
-  var heroSection = document.getElementById('hero');
-  var stickyBar = document.getElementById('sticky-find-us');
-  var mainEl = document.getElementById('main-content');
-
-  if (heroSection && stickyBar) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) {
-          stickyBar.classList.add('visible');
-          if (mainEl) mainEl.style.paddingBottom = stickyBar.offsetHeight + 'px';
-        } else {
-          stickyBar.classList.remove('visible');
-          if (mainEl) mainEl.style.paddingBottom = '';
-        }
-      });
-    }, { threshold: 0 });
-
-    observer.observe(heroSection);
-  }
+  // Round 5: the sticky "Find Us" bar and its IntersectionObserver were
+  // removed entirely per feedback -- no code left to maintain here.
 
 });
 </script>
