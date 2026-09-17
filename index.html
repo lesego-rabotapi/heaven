@@ -30,22 +30,6 @@
     .menu-row { border-bottom: 1px solid rgba(203,203,210,0.5); }
     .menu-row:last-child { border-bottom: none; }
 
-    /* Hero scroll-expand hint (Round 10 polish pass) — a static chevron
-       read as inert on a moment the whole site is asking the visitor to
-       scroll into; a slow bob gives it the same "this responds to you"
-       quality as the dog badge's spin and the drift-wall's motion,
-       without competing for attention (small amplitude, long duration).
-       Gated at the CSS level too, not just by the JS early-return for
-       prefers-reduced-motion, matching the .dog-loop-ring/.ig-wall-col-track
-       pattern elsewhere in this file. */
-    @keyframes scroll-expand-hint-bob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(6px); }
-    }
-    @media (prefers-reduced-motion: no-preference) {
-      #scroll-expand-hint .material-symbols-outlined { animation: scroll-expand-hint-bob 1.8s ease-in-out infinite; }
-    }
-
     /* "Dog friendly" spinning corner badge — Round 6, replacing the earlier
        static pill (see the HTML comment above the badge markup for the full
        component-translation history). New spec: a React TextLoop with
@@ -382,64 +366,33 @@
   <div class="flex flex-col w-full">
 
     <!-- =================================================================
-         SECTION 1: HERO — scroll-expand frame (Round 10, replacing Round
-         6's static full-bleed photo). Adapted from a supplied React
-         ScrollExpand component spec into vanilla JS/CSS (window-scroll-
-         driven, no React runtime here) — see the JS block below for the
-         full translation notes. The frame starts as a small centered
-         card and grows to full-bleed as the page scrolls, revealing the
-         rest of the page; default (pre-JS / prefers-reduced-motion) markup
-         renders it already full-bleed, identical to Round 6's static
-         hero, so a broken/disabled JS path never strands visitors with a
-         tiny, half-formed hero. stone-arch-interior.png is portrait
-         (662x823) — object-position is tuned to keep the arches/stained
-         glass in frame; re-check that tuning if the source photo ever
-         changes. Structural reference: Caplatte's "Speciality coffee at
-         your doorstep" hero. Tiles double as primary navigation.
+         SECTION 1: HERO — plain text hero, no photo (Round 13). Rounds
+         10-12 built a scroll-driven "grow from a small card to full-
+         bleed" hero on stone-arch-interior.png. Removed per feedback:
+         the effect was meant to run in reverse — full-bleed at rest,
+         collapsing/shrinking upward as the visitor scrolls down, not
+         growing from small to full — and the photo itself needs
+         replacing with something more suited to a hero treatment before
+         either direction is rebuilt. Rebuild the collapse-on-scroll
+         version (mechanically: swap which end of the progress range maps
+         to "small" vs "full-bleed" — the sticky/spacer/lerp scaffolding
+         from Round 10 is still the right approach) once a suitable photo
+         is confirmed. No image until then; headline/hook-line copy
+         carried over unchanged. Structural reference: Caplatte's
+         "Speciality coffee at your doorstep" hero. Tiles double as
+         primary navigation.
          ================================================================= -->
-    <section id="hero" class="w-full">
-      <div id="scroll-expand" class="relative" style="height: 100vh;">
-        <div class="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden">
-          <div id="scroll-expand-frame" class="relative overflow-hidden w-full h-full">
-            <img id="scroll-expand-media" src="images/stone-arch-interior.png" alt="Inside Central Methodist Mission — Gothic stone arches, wooden pews and stained glass" class="absolute inset-0 w-full h-full object-cover" style="object-position: 50% 20%;" loading="eager"/>
-            <!-- Permanent baseline-legibility gradient — kept regardless of
-                 JS/scroll state, so the headline stays readable even if the
-                 JS-driven scrim below never runs. Round 10 critique pass:
-                 flipped from bottom-dark to top-dark (was bg-gradient-to-t,
-                 text bottom-anchored) because at full expansion the bottom
-                 of this specific photo is where the dog + latte sit — the
-                 photo's most charming detail — and bottom-anchored text was
-                 landing straight across the dog's face. The top of the
-                 frame (arches, ceiling, stained glass) is calmer and has no
-                 subject to collide with, so the gradient and the content
-                 block both moved there instead; the dog + latte are now
-                 fully visible and unobstructed lower in the frame. -->
-            <div class="absolute inset-0 bg-gradient-to-b from-espresso-deep/60 via-espresso-deep/5 to-transparent"></div>
-            <!-- JS-driven scrim (the spec's overlayScrim prop): extra
-                 darkening only while the frame is small, faded out as it
-                 expands. Starts at 0 so the pre-JS/reduced-motion default
-                 relies solely on the gradient above, already proven
-                 legible. -->
-            <div id="scroll-expand-scrim" class="absolute inset-0 bg-espresso-deep" style="opacity: 0;"></div>
-            <!-- "Scroll to explore" hint (the spec's scrollHint prop) —
-                 only shown while the frame is small; hidden by default. -->
-            <div id="scroll-expand-hint" class="absolute inset-0 flex flex-col items-center justify-center text-center px-gutter pointer-events-none" style="opacity: 0;">
-              <span class="material-symbols-outlined text-white text-[28px] mb-space-xs" aria-hidden="true">expand_more</span>
-              <span class="font-label-sm text-label-sm uppercase tracking-widest text-white">Scroll to explore</span>
-            </div>
-            <div id="scroll-expand-content" class="absolute inset-x-0 top-0 max-w-7xl mx-auto px-gutter lg:px-gutter-lg pt-24 lg:pt-36 w-full">
-              <!-- Round 5: info badges row (Central Methodist Mission / Cape Town CBD /
-                   Dogs welcome) removed from directly under the hero headline per feedback. -->
-              <h1 class="font-display text-display-mobile lg:text-[88px] text-white uppercase mb-space-sm" style="letter-spacing:-0.02em;">
-                Sanctuary coffee<br/>at Greenmarket Square.
-              </h1>
-              <!-- Tourist-facing hook line: grounded in facts already established
-                   in this project (Central Methodist Mission, Gothic Revival
-                   architecture, Greenmarket Square). -->
-              <p class="font-body-md text-body-lg text-white/90 max-w-xl">One of Cape Town's few cafés inside a working 19th-century church.</p>
-            </div>
-          </div>
-        </div>
+    <section id="hero" class="w-full bg-background pt-space-xl">
+      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+        <!-- Round 5: info badges row (Central Methodist Mission / Cape Town CBD /
+             Dogs welcome) removed from directly under the hero headline per feedback. -->
+        <h1 class="font-display text-display-mobile lg:text-[88px] text-espresso-deep uppercase mb-space-sm" style="letter-spacing:-0.02em;">
+          Sanctuary coffee<br/>at Greenmarket Square.
+        </h1>
+        <!-- Tourist-facing hook line: grounded in facts already established
+             in this project (Central Methodist Mission, Gothic Revival
+             architecture, Greenmarket Square). -->
+        <p class="font-body-md text-body-lg text-stone-aged max-w-xl mb-space-lg">One of Cape Town's few cafés inside a working 19th-century church.</p>
       </div>
 
       <!-- Three-tile photo nav: Story / Menu / Find Us -->
@@ -916,135 +869,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-press-outlet]').forEach(function (el) {
     el.textContent = HEAVEN_CONTENT.pressOutlet;
   });
-
-  // --- Hero scroll-expand (Round 10) ---
-  // Adapted from a supplied React ScrollExpand component spec (src/alt/
-  // title/scrollHint/useWindowScroll props, plus a second, fully-tuned
-  // usage giving startWidth/startHeight/startRadius/endRadius/mediaZoom/
-  // scrollDistance/holdDistance/smoothing/overlayScrim) into vanilla
-  // window-scroll-driven JS/CSS — this is a static site with no React
-  // runtime, so the component itself can't be imported. The numbers below
-  // are taken directly from that second, fully-configured usage, not
-  // invented. useWindowScroll is the only viable mode here (no scrollable
-  // sub-container exists). The spec's own example copy ("Product hero",
-  // "Built to scale", "Every pixel, everywhere"...) was generic template
-  // filler, not real Heaven content, so it wasn't carried over — title/
-  // hook-line text reuse the real established hero copy already in the
-  // HTML; "Scroll to explore" is the only new string, and it's plain UI
-  // microcopy, not a factual or brand claim.
-  //
-  // Mechanism: #scroll-expand is a spacer sized to
-  // 100vh * (1 + scrollDistance + holdDistance) so there's room to scroll
-  // through; a sticky viewport-height box inside it holds the frame,
-  // which unsticks naturally once the spacer scrolls past — no manual
-  // fixed/static position-swapping needed. Scroll position maps to a
-  // 0-1 target progress over the first `scrollDistance` viewport-heights
-  // (the remaining `holdDistance` just keeps the spacer tall enough to
-  // hold the fully-expanded frame in place a little longer before normal
-  // scrolling continues). `smoothing` lerps the rendered progress toward
-  // that target each frame for a trailing/eased feel, rather than
-  // snapping straight to the scroll position. The render loop stops
-  // requesting frames once it settles at the target (matching this
-  // file's existing battery/perf discipline on the drift-wall below) and
-  // only restarts on the next scroll event.
-  (function () {
-    var spacer = document.getElementById('scroll-expand');
-    var frame = document.getElementById('scroll-expand-frame');
-    var media = document.getElementById('scroll-expand-media');
-    var scrim = document.getElementById('scroll-expand-scrim');
-    var hint = document.getElementById('scroll-expand-hint');
-    var content = document.getElementById('scroll-expand-content');
-    if (!spacer || !frame || !media || !scrim || !hint || !content) return;
-
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return; // leave the default markup: already full-bleed, static, legible
-
-    var START_WIDTH = 42, START_HEIGHT = 58, START_RADIUS = 24, END_RADIUS = 0;
-    var MEDIA_ZOOM = 1.35, SCROLL_DISTANCE = 1.2, HOLD_DISTANCE = 0.35, SMOOTHING = 0.1, OVERLAY_SCRIM = 0.45;
-
-    var targetProgress = 0;
-    var currentProgress = 0;
-    var rafId = null;
-
-    var setSpacerHeight = function () {
-      spacer.style.height = (window.innerHeight * (1 + SCROLL_DISTANCE + HOLD_DISTANCE)) + 'px';
-    };
-
-    var updateTarget = function () {
-      var rect = spacer.getBoundingClientRect();
-      var scrolled = -rect.top;
-      var distance = window.innerHeight * SCROLL_DISTANCE;
-      targetProgress = Math.min(Math.max(distance > 0 ? scrolled / distance : 0, 0), 1);
-    };
-
-    var applyProgress = function (p) {
-      var width = START_WIDTH + (100 - START_WIDTH) * p;
-      var height = START_HEIGHT + (100 - START_HEIGHT) * p;
-      var radius = START_RADIUS + (END_RADIUS - START_RADIUS) * p;
-      var zoom = MEDIA_ZOOM + (1 - MEDIA_ZOOM) * p;
-
-      frame.style.width = width + '%';
-      frame.style.height = height + '%';
-      frame.style.borderRadius = radius + 'px';
-      media.style.transform = 'scale(' + zoom + ')';
-      scrim.style.opacity = OVERLAY_SCRIM * (1 - p);
-      // Critique pass: hint used 1 - p*3, which lingered faintly visible
-      // through the middle of the expand instead of clearing decisively —
-      // steepened so it's gone well before the headline starts appearing.
-      hint.style.opacity = Math.max(1 - p * 5, 0);
-      // Content now finishes fading in exactly as the frame reaches full
-      // expansion (p=1, the start of the hold phase) rather than partway
-      // through the motion, so the hold reads as "the headline has
-      // arrived," not just extra scroll distance. A small upward settle
-      // (translateY) rides along with the fade for the same reason — a
-      // flat opacity fade alone doesn't read as "arriving," a slight
-      // motion does.
-      var contentP = Math.max((p - 0.5) / 0.5, 0);
-      content.style.opacity = contentP;
-      content.style.transform = 'translateY(' + Math.round((1 - contentP) * 16) + 'px)';
-      // Floating-card shadow while small, fading out as the frame becomes
-      // full-bleed — an edge-to-edge photo shouldn't cast a shadow, only
-      // the "card sitting above the page" state should.
-      frame.style.boxShadow = '0 ' + Math.round(30 * (1 - p)) + 'px ' + Math.round(60 * (1 - p)) + 'px rgba(22,24,29,' + (0.35 * (1 - p)).toFixed(2) + ')';
-    };
-
-    var loop = function () {
-      currentProgress += (targetProgress - currentProgress) * SMOOTHING;
-      if (Math.abs(targetProgress - currentProgress) < 0.001) {
-        currentProgress = targetProgress;
-      }
-      applyProgress(currentProgress);
-      if (currentProgress !== targetProgress) {
-        rafId = requestAnimationFrame(loop);
-      } else {
-        rafId = null;
-      }
-    };
-    var requestRender = function () {
-      if (rafId === null) { rafId = requestAnimationFrame(loop); }
-    };
-
-    setSpacerHeight();
-    updateTarget();
-    applyProgress(currentProgress); // paint the small start state immediately, before any scroll
-    requestRender(); // in case the page loaded already scrolled past the hero (e.g. anchor jump)
-
-    // One-time entrance fade for the small card, so it settles into place
-    // rather than snapping in fully-formed on load. Scoped to opacity only
-    // (frame's own property, untouched by applyProgress above) so it can't
-    // fight the per-frame lerp driving width/height/radius. Base HTML
-    // default is opacity:1 (the safe, fully-visible state) — only this
-    // non-reduced-motion path ever sets it to 0 first, so a reduced-motion
-    // visitor never sees an invisible frame waiting on a fade that won't run.
-    frame.style.opacity = '0';
-    frame.style.transition = 'opacity 0.6s ease';
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { frame.style.opacity = '1'; });
-    });
-
-    window.addEventListener('resize', function () { setSpacerHeight(); updateTarget(); requestRender(); });
-    window.addEventListener('scroll', function () { updateTarget(); requestRender(); }, { passive: true });
-  })();
 
   // --- Render menu from HEAVEN_CONTENT.menu ("chapel board" treatment:
   //     a photo anchor, two category columns split by a Gothic-arch
