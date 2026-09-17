@@ -30,6 +30,75 @@
     .menu-row { border-bottom: 1px solid rgba(203,203,210,0.5); }
     .menu-row:last-child { border-bottom: none; }
 
+    /* Sky Hero (feature branch, SKY-HERO-SPEC.md) — 4 stacked layers:
+       plate (photo, currently a flat placeholder fill — see HTML comment),
+       sky wash (soft-light gradient, ambient only), floor fade (independent
+       darkening so copy stays legible regardless of plate brightness), copy.
+       Colour values here are the spec's literal ones, confirmed with the
+       user to be a deliberately separate palette from the live site's
+       church-sapphire (#1D4ED8) — do not reconcile the two. */
+    .sky-hero { position: relative; overflow: hidden; isolation: isolate; min-height: 640px; }
+    .sky-hero-plate { position: absolute; inset: 0; z-index: 0; background-color: #16181D; }
+    .sky-hero-plate img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); }
+    .sky-hero-wash {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(180deg, rgba(191,224,245,.4) 0%, rgba(127,184,224,.12) 30%, rgba(29,19,16,.15) 65%, rgba(29,19,16,.82) 100%);
+      mix-blend-mode: soft-light;
+    }
+    .sky-hero-floor {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: linear-gradient(180deg, transparent 42%, rgba(20,16,13,.88) 100%);
+    }
+    /* padding-top clears the fixed header (h-16) now that the hero is a
+       full-bleed dark stack — not a spec value, a correctness fix. */
+    .sky-hero-copy { position: relative; z-index: 3; padding-top: 6rem; padding-bottom: 4rem; }
+    @media (max-width: 639px) { .sky-hero { min-height: 520px; } }
+
+    /* Per-word headline reveal, triggered once on scroll-into-view (see JS).
+       Reduced-motion note: neither of this file's two existing conventions
+       fits directly, since the *default* CSS state here (hidden/blurred) is
+       wrong for reduced-motion visitors — so the override forces the
+       visible end-state under `reduce`, rather than toggling an animation
+       on/off around an already-correct default. */
+    .word {
+      display: inline-block;
+      opacity: 0; filter: blur(10px); transform: translateY(14px);
+      transition: opacity .7s cubic-bezier(.22,.68,0,1), filter .7s cubic-bezier(.22,.68,0,1), transform .7s cubic-bezier(.22,.68,0,1);
+    }
+    .word.is-revealed { opacity: 1; filter: blur(0); transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .word { opacity: 1; filter: none; transform: none; transition: none; }
+    }
+
+    /* Rotating scroll-cue badge — same SVG textPath-on-circle + CSS-rotation
+       technique as the dog-friendly badge below (viewBox must equal the
+       rendered box 1:1 or the text silently renders at the wrong scale —
+       see that badge's own comment for the full story on this bug).
+       Decorative only (aria-hidden, pointer-events:none, no link): per the
+       colour-role rule, a non-clickable scroll hint is mood, not action, so
+       it stays on the ambient sky-blue tint and never touches sapphire.
+       Contained within the hero (position:absolute), not viewport-fixed
+       like the dog badge. */
+    .sky-badge { position: absolute; z-index: 3; right: 24px; bottom: 24px; width: 96px; height: 96px; pointer-events: none; }
+    .sky-badge-ring { display: block; width: 100%; height: 100%; animation: sky-badge-spin 13s linear infinite; }
+    @keyframes sky-badge-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .sky-badge-ring { animation: none !important; } }
+
+    /* Residual sky wash, scoped to Story only (the next real light-background
+       section after the hero — the literal next DOM node is the dark
+       wayfinding banner, which the spec's "oat-cream" language clearly
+       isn't describing). isolation:isolate keeps the z-index:-1 pseudo-
+       element from leaking behind sections above/below Story. This is the
+       one fade-out transition the spec allows — do not repeat elsewhere. */
+    #story { position: relative; isolation: isolate; }
+    #story::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 320px;
+      background: radial-gradient(ellipse 700px 280px at 50% 0%, rgba(127,184,224,.16), transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
     /* "Dog friendly" spinning corner badge — Round 6, replacing the earlier
        static pill (see the HTML comment above the badge markup for the full
        component-translation history). New spec: a React TextLoop with
@@ -366,37 +435,63 @@
   <div class="flex flex-col w-full">
 
     <!-- =================================================================
-         SECTION 1: HERO — plain text hero, no photo (Round 13). Rounds
-         10-12 built a scroll-driven "grow from a small card to full-
-         bleed" hero on stone-arch-interior.png. Removed per feedback:
-         the effect was meant to run in reverse — full-bleed at rest,
-         collapsing/shrinking upward as the visitor scrolls down, not
-         growing from small to full — and the photo itself needs
-         replacing with something more suited to a hero treatment before
-         either direction is rebuilt. Rebuild the collapse-on-scroll
-         version (mechanically: swap which end of the progress range maps
-         to "small" vs "full-bleed" — the sticky/spacer/lerp scaffolding
-         from Round 10 is still the right approach) once a suitable photo
-         is confirmed. No image until then; headline/hook-line copy
-         carried over unchanged. Structural reference: Caplatte's
-         "Speciality coffee at your doorstep" hero. Tiles double as
-         primary navigation.
+         SECTION 1: HERO — "Sky Hero" (feature branch, SKY-HERO-SPEC.md).
+         Original design inspired by matchioo.framer.website's general mood
+         — no code, markup, class names, CSS, or media assets copied from
+         that site or its CDN (framerusercontent.com); it turned out to be
+         a static photograph, not a technique to port. 4 stacked layers
+         (plate/sky-wash/floor-fade/copy — see <style> block) plus a per-
+         word scroll-reveal headline and a rotating scroll-cue badge (same
+         SVG textPath-on-circle technique as the dog-friendly badge below).
+         No CTA button here: the three-tile nav directly below already is
+         the wayfinding action, and this project's standing rule is
+         wayfinding-only CTAs with no redundant second button. Structural
+         reference: Caplatte's "Speciality coffee at your doorstep" hero.
          ================================================================= -->
-    <section id="hero" class="w-full bg-background pt-space-xl">
-      <div class="max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
+    <section id="hero" class="w-full sky-hero">
+      <!-- PLACEHOLDER: no real hero plate photo exists yet (church light /
+           stained glass), per SKY-HERO-SPEC.md — pending, Lesego sourcing.
+           Flat espresso-deep fill (.sky-hero-plate's background-color)
+           stands in so the gradient/reveal system can be built and
+           reviewed now. To swap in the real photo: add
+           <img class="..." src="images/hero-plate.jpg" alt="..."/> inside
+           this div — one-line change, no restructuring needed. -->
+      <div class="sky-hero-plate" aria-hidden="true"></div>
+      <div class="sky-hero-wash" aria-hidden="true"></div>
+      <div class="sky-hero-floor" aria-hidden="true"></div>
+
+      <div class="sky-hero-copy max-w-7xl mx-auto px-gutter lg:px-gutter-lg">
         <!-- Round 5: info badges row (Central Methodist Mission / Cape Town CBD /
              Dogs welcome) removed from directly under the hero headline per feedback. -->
-        <h1 class="font-display text-display-mobile lg:text-[88px] text-espresso-deep uppercase mb-space-sm" style="letter-spacing:-0.02em;">
-          Sanctuary coffee<br/>at Greenmarket Square.
+        <h1 id="sky-hero-heading" class="font-display text-display-mobile lg:text-[88px] text-white uppercase mb-space-sm" style="letter-spacing:-0.02em;">
+          <span class="word" style="transition-delay:0ms">Sanctuary</span>
+          <span class="word" style="transition-delay:90ms">coffee</span><br/>
+          <span class="word" style="transition-delay:180ms">at</span>
+          <span class="word" style="transition-delay:270ms">Greenmarket</span>
+          <span class="word" style="transition-delay:360ms">Square.</span>
         </h1>
         <!-- Tourist-facing hook line: grounded in facts already established
              in this project (Central Methodist Mission, Gothic Revival
              architecture, Greenmarket Square). -->
-        <p class="font-body-md text-body-lg text-stone-aged max-w-xl mb-space-lg">One of Cape Town's few cafés inside a working 19th-century church.</p>
+        <p class="font-body-md text-body-lg max-w-xl mb-space-lg" style="color:#EFECE6;">One of Cape Town's few cafés inside a working 19th-century church.</p>
       </div>
 
-      <!-- Three-tile photo nav: Story / Menu / Find Us -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-outline-variant/30 mt-space-sm">
+      <div class="sky-badge" aria-hidden="true">
+        <svg class="sky-badge-ring" viewBox="0 0 96 96">
+          <defs><path id="sky-badge-path" d="M48,48 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"/></defs>
+          <circle cx="48" cy="48" r="3" fill="rgba(191,224,245,.9)"/>
+          <text font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="7" letter-spacing="1" fill="rgba(191,224,245,.9)" dominant-baseline="central">
+            <textPath href="#sky-badge-path" startOffset="0%">SCROLL DOWN &#8226; SCROLL DOWN &#8226; SCROLL DOWN &#8226; </textPath>
+          </text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Three-tile photo nav: Story / Menu / Find Us. Sibling of #hero, not
+         nested inside .sky-hero — .sky-hero is a clipped, position:relative
+         stack reserved for the plate/wash/floor layers; the nav grid has
+         nothing to do with that stack. -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-outline-variant/30 mt-space-sm">
         <a href="#story" class="hero-tile aspect-[4/5] sm:aspect-[3/4] bg-surface-container">
           <!-- REAL PHOTO (round 4): the wide interior shot the round-2 findings flagged as
                missing — wooden counter, the heaven coffee sign board + macramé on the wall,
@@ -419,7 +514,6 @@
           <span class="absolute inset-0 flex items-center justify-center font-display text-headline-lg text-white uppercase" style="letter-spacing:-0.01em;">Find Us</span>
         </a>
       </div>
-    </section>
 
     <!-- =================================================================
          SECTION 2: WAYFINDING CUE
@@ -976,6 +1070,21 @@ document.addEventListener('DOMContentLoaded', function () {
         + visibleHtml + hiddenHtml
         + '</div></div>';
     }).join('');
+  }
+
+  // --- Sky hero: per-word headline reveal on scroll-into-view (fires once) ---
+  var skyHeroHeading = document.getElementById('sky-hero-heading');
+  if (skyHeroHeading) {
+    var skyHeroWords = skyHeroHeading.querySelectorAll('.word');
+    var skyHeroObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          skyHeroWords.forEach(function (word) { word.classList.add('is-revealed'); });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    skyHeroObserver.observe(skyHeroHeading);
   }
 
   // --- Pause Instagram drift-wall when off-screen or tab hidden (battery/perf) ---
