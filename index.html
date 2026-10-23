@@ -28,6 +28,14 @@
     .hv-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
     .hv-ghost:hover { background-color: rgba(29,78,216,0.08) !important; }
     .hv-link:hover { color: #1D4ED8 !important; }
+    /* Keyboard focus ring. Two-tone (navy ring over a white gap) so it reads on the
+       light sections, the blue sky, the gradient footer and photos alike; it only
+       shows for keyboard focus, never for a mouse or tap. */
+    a:focus-visible, button:focus-visible { outline: 3px solid #0F1B2D; outline-offset: 3px; box-shadow: 0 0 0 3px #fff; }
+    /* Feed tiles sit in an overflow:hidden row that would clip an outer ring, so
+       theirs is drawn just inside the tile edge instead. */
+    .feed-tile:focus-visible { outline: none; box-shadow: none; }
+    .feed-tile:focus-visible::after { content: ''; position: absolute; inset: 9px; border-radius: 8px; box-shadow: 0 0 0 3px #fff, 0 0 0 6px #0F1B2D; pointer-events: none; }
     .cloud { position: absolute; border-radius: 50%; background: #FBFCFD; filter: blur(38px); pointer-events: none; }
     .tile img { transition: transform .6s ease; }
     .tile:hover img { transform: scale(1.05); }
