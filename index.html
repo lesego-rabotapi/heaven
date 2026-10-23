@@ -140,7 +140,10 @@
       .feed-section { padding: 140px 0 120px; }
       .feed-h2 { font-size: 120px; }
       .feed-tile { width: 360px; height: 360px; border-radius: 20px; }
-      .footer-heaven { font-size: 360px; }
+      /* "heaven" is ~3.37em wide; the footer's 56px side padding leaves
+         100vw - 112px, so 360px only fit from ~1340px up and clipped the
+         last letter on common laptops. */
+      .footer-heaven { font-size: min(360px, calc((100vw - 112px) / 3.4)); }
     }
 
     /* Dog-friendly seal — desktop only, per the source (the mobile export
