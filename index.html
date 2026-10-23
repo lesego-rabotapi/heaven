@@ -37,6 +37,22 @@
       .feed-track.l { animation: feed-left var(--speed, 60s) linear infinite; }
       .cloud.d { animation: drift 18s ease-in-out infinite; }
     }
+    /* Reduced motion: no marquee, so the feed becomes a normal scrollable strip
+       (it used to sit clipped at ~1.3 tiles with no way to reach the rest).
+       The looping duplicate set is hidden, and the pause control has nothing to do. */
+    @media (prefers-reduced-motion: reduce) {
+      .feed-row { overflow-x: auto !important; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: 16px; scrollbar-width: thin; }
+      .feed-row::-webkit-scrollbar { display: block; height: 8px; }
+      .feed-row::-webkit-scrollbar-thumb { background: rgba(15,27,45,.3); border-radius: 4px; }
+      .feed-track { padding: 0 16px 14px; }
+      .feed-track > [aria-hidden="true"] { display: none !important; }
+      .feed-tile { scroll-snap-align: start; }
+      #feed-controls { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+      .feed-row { scroll-padding-inline: 56px; }
+      .feed-track { padding-left: 56px; padding-right: 56px; }
+    }
 
     /* Staggered mobile nav drawer — mechanism carried over from the
        previous design (mobile source export had no drawer markup at all,
@@ -360,6 +376,11 @@
   <div id="feed-row" class="feed-row mt-9 lg:mt-16" style="overflow:hidden;">
     <div id="feed-track" class="feed-track l flex" style="gap:12px; width:max-content;"></div>
   </div>
+  <div id="feed-controls" class="flex justify-end px-4 lg:px-14 mt-4">
+    <button id="feed-pause" type="button" class="hv-ghost flex items-center justify-center flex-shrink-0" aria-pressed="false" aria-label="Pause feed scrolling" title="Pause feed scrolling" style="width:48px; height:48px; border-radius:50%; border:1.5px solid #1D4ED8; background:transparent; color:#1D4ED8; cursor:pointer;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"></path></svg>
+    </button>
+  </div>
 
   <!-- Desktop-only "Find us" card, inside #feed per the desktop source -->
   <div class="hidden lg:block px-14 mt-12">
@@ -573,15 +594,43 @@ document.addEventListener('DOMContentLoaded', function () {
     feedTrack.innerHTML = visibleHtml + hiddenHtml;
     feedTrack.style.setProperty('--speed', (window.innerWidth >= 1024 ? 150 : 130) + 's');
 
+    // The marquee runs only when nothing wants it stopped: the visitor's own
+    // pause button, pointer hover, keyboard focus inside the row, the row being
+    // off-screen, or the tab being hidden.
+    var feedUserPaused = false, feedHovered = false, feedFocused = false;
     var feedOffScreen = false, feedTabHidden = document.hidden;
-    var feedUpdatePauseState = function () { feedTrack.style.animationPlayState = (feedOffScreen || feedTabHidden) ? 'paused' : 'running'; };
+    var feedUpdatePauseState = function () {
+      var paused = feedUserPaused || feedHovered || feedFocused || feedOffScreen || feedTabHidden;
+      feedTrack.style.animationPlayState = paused ? 'paused' : 'running';
+    };
     var feedObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) { feedOffScreen = !entry.isIntersecting; feedUpdatePauseState(); });
     }, { threshold: 0 });
     feedObserver.observe(feedRow);
     document.addEventListener('visibilitychange', function () { feedTabHidden = document.hidden; feedUpdatePauseState(); });
-    feedRow.addEventListener('mouseenter', function () { feedTrack.style.animationPlayState = 'paused'; });
-    feedRow.addEventListener('mouseleave', feedUpdatePauseState);
+    feedRow.addEventListener('mouseenter', function () { feedHovered = true; feedUpdatePauseState(); });
+    feedRow.addEventListener('mouseleave', function () { feedHovered = false; feedUpdatePauseState(); });
+    feedRow.addEventListener('focusin', function () { feedFocused = true; feedUpdatePauseState(); });
+    feedRow.addEventListener('focusout', function (e) {
+      if (feedRow.contains(e.relatedTarget)) { return; }
+      feedFocused = false;
+      feedRow.scrollLeft = 0; // focusing an off-screen tile scrolls the clipped row; undo it before the loop resumes
+      feedUpdatePauseState();
+    });
+
+    var feedPauseBtn = document.getElementById('feed-pause');
+    if (feedPauseBtn) {
+      var feedPausePath = feedPauseBtn.querySelector('path');
+      var PATH_PAUSE = 'M7 5h3.5v14H7zM13.5 5H17v14h-3.5z';
+      var PATH_PLAY = 'M8 5.5v13l11-6.5z';
+      feedPauseBtn.addEventListener('click', function () {
+        feedUserPaused = !feedUserPaused;
+        // Constant label + aria-pressed (pressed = paused); only the icon changes.
+        feedPauseBtn.setAttribute('aria-pressed', feedUserPaused ? 'true' : 'false');
+        feedPausePath.setAttribute('d', feedUserPaused ? PATH_PLAY : PATH_PAUSE);
+        feedUpdatePauseState();
+      });
+    }
   }
 
   // --- Hours ruler rows (rendered twice: desktop section + mobile-in-footer section) ---
