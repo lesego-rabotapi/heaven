@@ -22,6 +22,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62.5..100,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     body { margin: 0; padding: 0; overscroll-behavior: none; font-optical-sizing: auto; }
+    /* Skip link: parked above the page, drops into view only when it has keyboard focus. */
+    .skip-link { position: absolute; left: 16px; top: -120px; z-index: 100; padding: 12px 20px; border-radius: 999px; background: #0F1B2D; color: #fff; font-size: 14px; font-weight: 700; }
+    .skip-link:focus { top: 12px; }
+    /* <main> is only ever focused by script (the skip link target), so it needs no ring. */
+    #main:focus { outline: none; }
     ::-webkit-scrollbar { display: none; }
     a { text-decoration: none; }
     .hv-btn { transition: background-color .2s ease, transform .2s ease, filter .2s ease; }
@@ -187,6 +192,8 @@
 </head>
 <body style="background:#EEF4FA; color:#0F1B2D;" class="font-body-md antialiased">
 
+<a href="#main" class="skip-link">Skip to main content</a>
+
 <!-- =====================================================================
      HEADER — a fixed floating pill that stays on screen while scrolling
      (the source exports had it absolute inside the hero; made fixed so
@@ -236,6 +243,7 @@
   </div>
 </div>
 
+<main id="main" tabindex="-1">
 <!-- =====================================================================
      HERO — literal per-breakpoint layout. Mobile: single arch photo tile,
      no dog seal, full-width "Get directions" pill in the hero. Desktop:
@@ -430,6 +438,7 @@
     <div style="height:360px; border-radius:180px 180px 20px 20px; overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/puppy-entrance-door.webp"/><img src="images/puppy-entrance-door.jpg" alt="The Gothic entrance of Central Methodist Mission with heaven coffee door signage" width="652" height="867" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
   </div>
 </section>
+</main>
 
 <footer id="footer-desktop" class="hidden lg:flex flex-col relative overflow-hidden" style="padding:72px 56px 40px; background: linear-gradient(180deg, #EEF4FA 0%, #A9CDF0 60%, #7FB3E6 100%);">
   <div class="cloud" style="width:700px; height:160px; left:380px; top:40px; opacity:.8;" aria-hidden="true"></div>
