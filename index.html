@@ -66,7 +66,7 @@
     .staggered-menu-item { display: flex; align-items: baseline; gap: .75rem; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: -.01em; color: #0F1B2D; padding: .7rem 0; border-bottom: 1px solid rgba(15,27,45,.08); text-decoration: none; opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
     .staggered-menu-num { font-size: 13px; font-weight: 600; color: #1D4ED8; letter-spacing: .08em; }
     .staggered-menu-socials { opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
-    .staggered-menu-socials a { font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: #3E4C63; text-decoration: none; }
+    .staggered-menu-socials a { display: inline-flex; align-items: center; min-height: 44px; font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: #3E4C63; text-decoration: none; }
     #nav-drawer.is-open .staggered-menu-item, #nav-drawer.is-open .staggered-menu-socials { opacity: 1; transform: translateX(0); }
     /* Closing: drop the opening stagger so the drawer leaves in one beat. */
     #nav-drawer.is-closing { pointer-events: none; }
@@ -74,6 +74,21 @@
     #nav-drawer.is-closing .staggered-menu-item, #nav-drawer.is-closing .staggered-menu-socials { transition-delay: 0s !important; }
     @media (prefers-reduced-motion: reduce) {
       .staggered-menu-layer, .staggered-menu-panel, .staggered-menu-item, .staggered-menu-socials { transition: none !important; }
+    }
+
+    /* Touch targets: 44px. Several text links were only ~21px tall. The negative
+       block margin gives each footer row a full 44px box while the row pitch stays
+       44px (link slot 34px + the column's 10px gap). The logo and header nav links
+       grow their hit area with padding that margin cancels out, so nothing moves.
+       Footer buttons (.hv-btn / .hv-ghost) already have explicit heights, so they
+       are excluded. The mobile footer is always touch; the desktop one only on
+       coarse pointers. */
+    .site-header > a:first-child { padding-block: 6px; margin-block: -6px; }
+    .site-header nav a { padding: 12px 8px; margin: -12px -8px; }
+    #footer-mobile .hv-link:not(.hv-btn):not(.hv-ghost) { display: flex; align-items: center; min-height: 44px; margin-block: -5px; }
+    #footer-desktop .hv-link:not(.hv-btn):not(.hv-ghost) { display: flex; align-items: center; min-height: 24px; }
+    @media (pointer: coarse) {
+      #footer-desktop .hv-link:not(.hv-btn):not(.hv-ghost) { min-height: 44px; margin-block: -5px; }
     }
 
     /* ===== Exact per-breakpoint values, transcribed 1:1 from the two
