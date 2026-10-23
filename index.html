@@ -124,16 +124,27 @@
        section heading underneath it. */
     #story, #menu, #feed, #visit, #visit-desktop { scroll-margin-top: 90px; }
     @media (min-width: 1024px) {
-      .hero-section { height: 1200px; background: linear-gradient(180deg, #2F6FBC 0%, #4E93D8 26%, #79B1E6 46%, #A9CDF0 64%, #D6E7F7 84%, #EEF4FA 100%); }
+      /* Desktop hero stack, top to bottom: eyebrow (150px), tagline + hours pill
+         (186px), headline (352px), photo band. The tagline used to sit below the
+         band at y=1000, under the fold on every laptop. The headline's 250px is
+         kept whenever the screen is tall enough for the whole stack (>= ~830px);
+         on shorter screens it shrinks so the stack still fits the first screen.
+         1.64 = two lines at line-height .82; the band overlaps the headline's
+         last line exactly as before. */
+      .hero-section { --hero-fs: max(150px, min(250px, calc((100vh - 420px) / 1.64))); height: calc(832px + 1.64 * var(--hero-fs)); background: linear-gradient(180deg, #2F6FBC 0%, #4E93D8 26%, #79B1E6 46%, #A9CDF0 64%, #D6E7F7 84%, #EEF4FA 100%); }
       .hero-vignette { background: radial-gradient(60% 28% at 50% 25%, rgba(16,54,108,.5) 0%, rgba(16,54,108,0) 72%); }
       .site-header { top: 28px; left: 40px; right: 40px; padding: 10px 10px 10px 28px; }
       .site-header .logo-word { font-size: 26px; }
       .site-header .logo-sub { font-size: 13px; }
       #story, #menu, #feed, #visit, #visit-desktop { scroll-margin-top: 116px; }
       .hero-est { top: 150px; font-size: 13px; gap: 28px; }
-      .hero-h1 { top: 150px; font-size: 250px; }
-      .hero-sub { top: 1000px; gap: 24px; }
-      .hero-sub p { font-size: 34px; max-width: 760px; }
+      .hero-h1 { top: 352px; font-size: var(--hero-fs); }
+      .hero-band { top: calc(352px + 1.64 * var(--hero-fs)); }
+      .hero-sub { top: 186px; gap: 24px; }
+      /* Up here the tagline sits on the dark vignette behind the white headline
+         (navy was ~2.7:1 there), so it takes the eyebrow's white like the rest of
+         the top zone. Mobile keeps navy: its tagline is still on the light sky. */
+      .hero-sub p { font-size: 34px; max-width: 600px; color: #fff !important; text-shadow: 0 1px 14px rgba(12,40,84,.5); }
       .hero-pill { padding: 12px 20px; }
       .hero-pill span:last-child { font-size: 14px; }
       .truths-section { padding: 60px 56px 120px; }
@@ -248,7 +259,7 @@
       <picture class="block w-full h-full"><source type="image/webp" srcset="images/stone-arch-interior.webp"/><img src="images/stone-arch-interior.jpg" alt="Inside Central Methodist Mission: Gothic stone arches, pews and stained glass" width="662" height="823" class="w-full h-full object-cover block" fetchpriority="high" decoding="async"/></picture>
     </div>
   </div>
-  <div class="absolute z-[2] hidden lg:flex justify-center items-start" style="left:56px; right:56px; top:560px; gap:24px;">
+  <div class="hero-band absolute z-[2] hidden lg:flex justify-center items-start" style="left:56px; right:56px; gap:24px;">
     <div class="tile" style="width:320px; height:260px; margin-top:120px; border-radius:14px; overflow:hidden; border:6px solid #FBFCFD; box-shadow:0 30px 60px -30px rgba(15,27,45,.42);">
       <picture class="block w-full h-full"><source type="image/webp" srcset="images/cup-handover.webp"/><img src="images/cup-handover.jpg" alt="A barista handing over a heaven coffee to-go cup" width="446" height="448" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture>
     </div>
