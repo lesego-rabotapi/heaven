@@ -173,6 +173,39 @@
       .footer-heaven { font-size: min(360px, calc((100vw - 112px) / 3.4)); }
     }
 
+    /* Tablet tier (768-1023px). These widths get the mobile DOM, which was a
+       phone column stretched to 750px: full-width photos 520px tall, a single
+       menu column, a 116px headline lost in the sky. This block only re-flows
+       the sections that wasted the most room; <768 and >=1024 are untouched.
+       Doubled class selectors beat Tailwind's flex/flex-col utilities, which are
+       injected after this stylesheet. The hero is deliberately left as it is. */
+    @media (min-width: 768px) and (max-width: 1023.98px) {
+      .site-header { top: 20px; left: 32px; right: 32px; }
+      .truths-section.truths-section { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 20px; padding: 56px 32px 88px; }
+      .truths-tile { height: 300px; }
+      .truths-h2 { font-size: 26px; }
+      .story-section.story-section { display: grid; grid-template-columns: 5fr 7fr; column-gap: 32px; align-items: start; padding: 24px 32px 96px; }
+      .story-img { height: 520px; border-radius: 220px 220px 18px 18px; }
+      .story-h2 { font-size: 52px; }
+      .story-p { font-size: 17px; }
+      .story-quote { font-size: 38px; }
+      .menu-section { margin: 0 16px; padding: 56px 40px 48px; border-radius: 28px; }
+      .menu-h2 { font-size: min(180px, calc((100vw - 280px) / 3.6)); }
+      .menu-tag { font-size: 30px; }
+      .menu-ruler { height: 12px; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.5) 0 1px, transparent 1px 20px); }
+      #menu-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .feed-section { padding: 112px 0 96px; }
+      #feed > .px-4 { padding-inline: 32px; }
+      .feed-h2 { font-size: 88px; }
+      .feed-tile { width: 320px; height: 320px; }
+      /* Photo and "Find us" card side by side under the hours. */
+      #visit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 24px; }
+      #visit > :nth-child(1), #visit > :nth-child(2), #visit > :nth-child(5) { grid-column: 1 / -1; }
+      #visit > :nth-child(3) { height: auto !important; min-height: 420px; }
+      #visit > :nth-child(3), #visit > :nth-child(4) { margin-top: 32px !important; }
+      .footer-heaven { font-size: min(220px, calc((100vw - 96px) / 3.4)); }
+    }
+
     /* Dog-friendly seal — desktop only, per the source (the mobile export
        omits it entirely; recreated exactly, not filled in for mobile). */
     .dog-seal-ring { animation: dog-seal-spin 44s linear infinite; }
