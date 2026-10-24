@@ -1,0 +1,4 @@
+# tailwind.css is generated (npm run build:css) and is one minified line, so a textual merge
+# is meaningless: on a conflict take either side and rebuild.
+tailwind.css -diff -merge linguist-generated=true
+
