@@ -184,12 +184,14 @@
   </style>
   <script src="https://cdn.tailwindcss.com"></script>
   <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xl":"2.5rem","gutter-lg":"2.5rem","margin-sm":"1.25rem","space-md":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","space-xs":"0.25rem","margin-lg":"3.5rem","space-2xl":"4rem","margin":"1.5rem","gutter-sm":"1rem"},"fontFamily":{"title-sm":["Bricolage Grotesque","Segoe UI","sans-serif"],"display":["Archivo","sans-serif"],"label-md":["Bricolage Grotesque","Segoe UI","sans-serif"],"title-lg":["Bricolage Grotesque","Segoe UI","sans-serif"],"label-sm":["Bricolage Grotesque","Segoe UI","sans-serif"],"headline-sm":["Archivo","sans-serif"],"display-mobile":["Archivo","sans-serif"],"body-md":["Bricolage Grotesque","Segoe UI","sans-serif"],"body-sm":["Bricolage Grotesque","Segoe UI","sans-serif"],"title-md":["Bricolage Grotesque","Segoe UI","sans-serif"],"body-lg":["Bricolage Grotesque","Segoe UI","sans-serif"],"headline-lg-mobile":["Archivo","sans-serif"],"headline-md":["Archivo","sans-serif"],"label-lg":["Bricolage Grotesque","Segoe UI","sans-serif"],"headline-lg":["Archivo","sans-serif"],"quote":["Instrument Serif"]},"fontSize":{"title-sm":["15px",{"lineHeight":"22px","fontWeight":"600"}],"display":["68px",{"lineHeight":"0.95","letterSpacing":"-0.02em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"title-lg":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"700"}],"headline-sm":["22px",{"lineHeight":"28px","fontWeight":"800"}],"display-mobile":["40px",{"lineHeight":"1.02","letterSpacing":"-0.01em","fontWeight":"800"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"title-md":["17px",{"lineHeight":"24px","fontWeight":"600"}],"body-lg":["17px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg-mobile":["32px",{"lineHeight":"1.05","letterSpacing":"-0.01em","fontWeight":"800"}],"headline-md":["26px",{"lineHeight":"32px","fontWeight":"800"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"0.98","letterSpacing":"-0.015em","fontWeight":"800"}]}}}}</script>
+  <!-- Without JavaScript the feed strip and its pause button would be an empty gap and a
+       dead control (the Instagram button above it still works), the hamburger has no
+       drawer to open, the drawer's own markup would sit in the page as invisible rows,
+       and the hours scale would label nothing. Ids beat the utility classes, so no
+       !important is needed. -->
+  <noscript><style>#feed-row, #feed-controls, #nav-toggle, #nav-drawer, #hours-scale { display: none; }</style></noscript>
 </head>
 <body style="background:#EEF4FA; color:#0F1B2D;" class="font-body-md antialiased">
-<!-- Without JavaScript the feed strip and its pause button would be an empty gap
-     and a dead control (the Instagram button above it still works), and the
-     menu button has no drawer to open. -->
-<noscript><style>#feed-row, #feed-controls, #nav-toggle { display: none !important; }</style></noscript>
 
 <!-- =====================================================================
      HEADER — a fixed floating pill that stays on screen while scrolling
@@ -362,7 +364,7 @@
 
   <div id="menu-cards" class="flex flex-col lg:grid lg:grid-cols-4 mt-12" style="gap:36px; column-gap:40px;">
     <!-- JS-rendered: see HEAVEN_CONTENT.menu -->
-    <noscript style="grid-column:1 / -1;"><p class="m-0" style="font-size:17px; line-height:1.5; color:#EEF4FA;">The menu is drawn by a script that is switched off in this browser. Ask at the counter, or see the opening hours below.</p></noscript>
+    <noscript style="grid-column:1 / -1;"><p class="m-0" style="font-size:17px; line-height:1.5; color:#EEF4FA;">The menu needs JavaScript to show on this page. Ask at the counter, or see the opening hours below.</p></noscript>
   </div>
 
   <div class="hidden lg:flex items-center justify-between mt-14 pt-5" style="border-top:2px solid #EEF4FA; font-size:13px; color:#9FB0C8;">
@@ -424,12 +426,12 @@
       <h2 class="font-display uppercase m-0" style="font-stretch:62%; font-weight:900; font-size:200px; line-height:0.78; letter-spacing:-0.03em;">Open 7–6</h2>
       <span class="font-quote italic" style="padding-bottom:14px; font-size:30px; color:#1E3A8A;">every day</span>
     </div>
-    <div class="grid" style="grid-template-columns:140px minmax(0,1fr) 150px; column-gap:20px; padding:14px 0 6px; font-size:12px; font-weight:700; letter-spacing:0.14em; color:#3E4C63;">
+    <div id="hours-scale" class="grid" style="grid-template-columns:140px minmax(0,1fr) 150px; column-gap:20px; padding:14px 0 6px; font-size:12px; font-weight:700; letter-spacing:0.14em; color:#3E4C63;">
       <span>DAY</span>
       <div class="flex justify-between"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
       <span class="text-right">HOURS</span>
     </div>
-    <div id="hours-rows-desktop"><noscript><!-- keep in sync with HEAVEN_CONTENT.hours --><p class="m-0" style="padding:14px 0; font-size:20px; font-weight:700; color:#0F1B2D;">Every day, 07:00 to 18:00</p></noscript></div>
+    <div id="hours-rows-desktop"><noscript><!-- keep in sync with HEAVEN_CONTENT.hours --><p class="m-0" style="padding:14px 0; font-size:20px; font-weight:700; color:#0F1B2D;">Every day, 07:00 — 18:00</p></noscript></div>
   </div>
   <div style="grid-column:9 / span 4;" class="flex flex-col" >
     <div style="height:360px; border-radius:180px 180px 20px 20px; overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/puppy-entrance-door.webp"/><img src="images/puppy-entrance-door.jpg" alt="The Gothic entrance of Central Methodist Mission with heaven coffee door signage" width="652" height="867" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
@@ -486,7 +488,7 @@
       <h2 class="font-display uppercase m-0" style="font-stretch:62%; font-weight:900; font-size:104px; line-height:0.78; letter-spacing:-0.03em;">Open 7–6</h2>
       <span class="font-quote italic" style="padding-bottom:8px; font-size:20px; color:#1E3A8A;">daily</span>
     </div>
-    <div id="hours-rows-mobile"><noscript><!-- keep in sync with HEAVEN_CONTENT.hours --><p class="m-0" style="padding:14px 0; font-size:18px; font-weight:700; color:#0F1B2D;">Every day, 07:00 to 18:00</p></noscript></div>
+    <div id="hours-rows-mobile"><noscript><!-- keep in sync with HEAVEN_CONTENT.hours --><p class="m-0" style="padding:14px 0; font-size:18px; font-weight:700; color:#0F1B2D;">Every day, 07:00 — 18:00</p></noscript></div>
     <div style="margin-top:32px; height:300px; border-radius:150px 150px 18px 18px; overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/puppy-entrance-door.webp"/><img src="images/puppy-entrance-door.jpg" alt="The Gothic entrance with heaven coffee door signage" width="652" height="867" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
     <div class="flex flex-col" style="margin-top:14px; padding:22px; border-radius:18px; background:#FBFCFD; gap:14px;">
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#3E4C63;">Find us</span>
