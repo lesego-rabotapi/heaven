@@ -131,21 +131,24 @@
          on shorter screens it shrinks so the stack still fits the first screen.
          1.64 = two lines at line-height .82; the band overlaps the headline's
          last line exactly as before. */
-      /* Sky stops are in px from the top, each 202px lower than the spec's
-         26/46/64% of 1200px (312/552/768px), because the headline moved down 202px:
-         the same sky colours stay behind the same letters. Left as percentages they
-         slid up the headline into the pale half of the sky and "HEAVEN" fell from
-         ~4.8:1 to ~2.7:1 against it. The two palest stops stay anchored to the bottom
-         so the hero still fades exactly into the page colour. */
-      .hero-section { --hero-fs: max(150px, min(250px, calc((100vh - 420px) / 1.64))); height: calc(832px + 1.64 * var(--hero-fs)); background: linear-gradient(180deg, #2F6FBC 0px, #4E93D8 514px, #79B1E6 754px, #A9CDF0 970px, #D6E7F7 calc(100% - 100px), #EEF4FA 100%); }
+      /* The sky is positioned relative to the headline, not as percentages of the hero:
+         the three mid stops sit at fixed distances below --hero-h1-top, so the same
+         sky colours stay behind the same letters wherever the headline is moved (as
+         percentages they slid up into the pale half of the sky when the tagline moved
+         the headline down 202px, and "HEAVEN" fell from ~4.8:1 to ~2.7:1). The fourth
+         stop is capped at 230px above the bottom so that on short screens (the hero
+         shrinks to 1078px at 666px of viewport height) it keeps at least ~130px of
+         fade before the two palest stops, which are anchored to the bottom so the hero
+         still fades exactly into the page colour. */
+      .hero-section { --hero-h1-top: 352px; --hero-fs: max(150px, min(250px, calc((100vh - 420px) / 1.64))); height: calc(832px + 1.64 * var(--hero-fs)); background: linear-gradient(180deg, #2F6FBC 0px, #4E93D8 calc(var(--hero-h1-top) + 162px), #79B1E6 calc(var(--hero-h1-top) + 402px), #A9CDF0 min(calc(var(--hero-h1-top) + 618px), calc(100% - 230px)), #D6E7F7 calc(100% - 100px), #EEF4FA 100%); }
       .hero-vignette { background: radial-gradient(60% 28% at 50% 25%, rgba(16,54,108,.5) 0%, rgba(16,54,108,0) 72%); }
       .site-header { top: 28px; left: 40px; right: 40px; padding: 10px 10px 10px 28px; }
       .site-header .logo-word { font-size: 26px; }
       .site-header .logo-sub { font-size: 13px; }
       #story, #menu, #feed, #visit, #visit-desktop { scroll-margin-top: 116px; }
       .hero-est { top: 150px; font-size: 13px; gap: 28px; }
-      .hero-h1 { top: 352px; font-size: var(--hero-fs); }
-      .hero-band { top: calc(352px + 1.64 * var(--hero-fs)); }
+      .hero-h1 { top: var(--hero-h1-top); font-size: var(--hero-fs); }
+      .hero-band { top: calc(var(--hero-h1-top) + 1.64 * var(--hero-fs)); }
       .hero-sub { top: 186px; gap: 24px; }
       /* Up here the tagline sits on the dark vignette behind the white headline
          (navy was ~2.7:1 there), so it takes the eyebrow's white like the rest of
@@ -252,11 +255,10 @@
   <!-- Mobile clouds -->
   <div class="cloud d lg:hidden" style="width:320px; height:110px; left:-90px; top:300px; opacity:.9;" aria-hidden="true"></div>
   <div class="cloud lg:hidden" style="width:420px; height:140px; left:-20px; top:900px; opacity:.95;" aria-hidden="true"></div>
-  <!-- Desktop clouds -->
-  <!-- Desktop clouds: pushed 300px further off the side edges (left -120 -> -420,
-       right -80 -> -380; heights unchanged). The centred tagline now sits where
-       they used to drift, and the white blur behind it dragged its white text
-       down to 2.4:1 at 1024px (3:1 is the minimum for text this size). -->
+  <!-- Desktop clouds. The two side clouds sit mostly off the edges so their blur never
+       reaches the centred tagline: white blur behind white text dropped it to 2.4:1
+       at 1024px (3:1 is the minimum for text this size). -->
+
   <div class="cloud d hidden lg:block" style="width:620px; height:180px; left:-420px; top:320px; opacity:.9;" aria-hidden="true"></div>
   <div class="cloud d hidden lg:block" style="width:520px; height:150px; right:-380px; top:230px; opacity:.8; animation-delay:-6s;" aria-hidden="true"></div>
   <div class="cloud hidden lg:block" style="width:900px; height:220px; left:270px; top:1040px; opacity:.95;" aria-hidden="true"></div>
