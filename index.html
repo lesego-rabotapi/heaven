@@ -81,13 +81,16 @@
        44px (link slot 34px + the column's 10px gap). The logo and header nav links
        grow their hit area with padding that margin cancels out, so nothing moves.
        Footer buttons (.hv-btn / .hv-ghost) already have explicit heights, so they
-       are excluded. The mobile footer is always touch; the desktop one only on
-       coarse pointers. */
-    .site-header > a:first-child { padding-block: 6px; margin-block: -6px; }
-    .site-header nav a { padding: 12px 8px; margin: -12px -8px; }
+       are excluded. The mobile footer is always touch. The desktop footer links get
+       the 24px WCAG 2.5.8 minimum for everyone (they were 23px, which moves the rows
+       by 1.5px), and the full 44px only where any attached pointer is coarse: a touch
+       laptop, or an iPad with a trackpad (whose primary pointer reports "fine"). The
+       44px is explicit min-height everywhere, so it does not depend on line-height. */
+    .site-header > a:first-child { padding-block: 6px; margin-block: -6px; min-height: 44px; }
+    .site-header nav a { padding: 12px 8px; margin: -12px -8px; min-height: 44px; }
     #footer-mobile .hv-link:not(.hv-btn):not(.hv-ghost) { display: flex; align-items: center; min-height: 44px; margin-block: -5px; }
     #footer-desktop .hv-link:not(.hv-btn):not(.hv-ghost) { display: flex; align-items: center; min-height: 24px; }
-    @media (pointer: coarse) {
+    @media (any-pointer: coarse) {
       #footer-desktop .hv-link:not(.hv-btn):not(.hv-ghost) { min-height: 44px; margin-block: -5px; }
     }
 
