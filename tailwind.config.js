@@ -10,9 +10,20 @@ const path = require('path');
  * Was the inline #tailwind-config script. The spacing, fontSize and borderRadius
  * extensions it carried were dropped: no class in the page used them, and the
  * compiled stylesheet is byte-identical without them.
+ *
+ * Tailwind treats every word in a scanned file as a possible class, so a comment
+ * that says "ring" or "outline" used to add `.ring` / `.outline` rules to the
+ * stylesheet and make `npm run check:css` fail for prose. HTML comments and the
+ * inline <style> block (our own CSS, which is not Tailwind markup) are stripped
+ * before scanning. Words in the inline script or visible text are still scanned.
  */
 module.exports = {
-  content: [path.join(__dirname, 'index.html')],
+  content: {
+    files: [path.join(__dirname, 'index.html')],
+    transform: {
+      html: (source) => source.replace(/<!--[\s\S]*?-->/g, '').replace(/<style[\s\S]*?<\/style>/g, ''),
+    },
+  },
   darkMode: 'class',
   theme: {
     extend: {
