@@ -42,6 +42,24 @@
     .hv-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
     .hv-ghost:hover { background-color: rgba(29,78,216,0.08) !important; }
     .hv-link:hover { color: #1D4ED8 !important; }
+    /* Keyboard focus ring. Two-tone (navy ring over a white gap) so it reads on the
+       light sections, the blue sky, the gradient footer and photos alike; it only
+       shows for keyboard focus, never for a mouse or tap. */
+    :root { --focus-ink: #0F1B2D; --focus-gap: #fff; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--focus-ink); outline-offset: 3px; box-shadow: 0 0 0 3px var(--focus-gap); }
+    /* Feed tiles sit in an overflow:hidden row that would clip an outer ring, so
+       theirs is drawn just inside the tile edge instead. The corner radius is the
+       tile's (16px, 20px from 1024px up) minus the 9px inset, so the ring stays
+       concentric with the tile. */
+    .feed-tile:focus-visible { outline: none; box-shadow: none; }
+    .feed-tile:focus-visible::after { content: ''; position: absolute; inset: 9px; border-radius: 7px; box-shadow: 0 0 0 3px var(--focus-gap), 0 0 0 6px var(--focus-ink); pointer-events: none; }
+    /* Windows High Contrast / forced colours drop box-shadow but keep outlines, so a
+       tile's shadow-drawn ring would vanish there; give it a real outline instead,
+       inside the tile edge like the ring above. */
+    @media (forced-colors: active) {
+      .feed-tile:focus-visible { outline: 3px solid CanvasText; outline-offset: -9px; }
+      .feed-tile:focus-visible::after { display: none; }
+    }
     .cloud { position: absolute; border-radius: 50%; background: #FBFCFD; filter: blur(38px); pointer-events: none; }
     .tile img { transition: transform .6s ease; }
     .tile:hover img { transform: scale(1.05); }
@@ -132,11 +150,12 @@
     .feed-h2 { font-size: 64px; }
     .feed-tile { width: 280px; height: 280px; border-radius: 16px; }
     .footer-heaven { font-size: min(86px, calc((100vw - 64px) / 3.4)); }
-    /* Header is a fixed floating pill (~58px tall, sitting 16px from
-       top). scroll-margin-top on the in-page jump targets keeps a
-       direct #hash landing or an anchor click from parking the
-       section heading underneath it. */
-    #story, #menu, #feed, #visit, #visit-desktop { scroll-margin-top: 90px; }
+    /* Header is a fixed floating pill (~58px tall, sitting 16px from top).
+       scroll-padding-top on the page keeps both a direct #hash landing / anchor
+       click and keyboard focus scrolling (Tab or Shift+Tab to an element near the
+       top edge) from parking content, or a focus ring, underneath it. It replaces
+       the per-section scroll-margin-top, which only covered the five jump targets. */
+    html { scroll-padding-top: 90px; }
     @media (min-width: 1024px) {
       /* Desktop hero stack, top to bottom: eyebrow (150px), tagline + hours pill
          (186px), headline (352px), photo band. The tagline used to sit below the
@@ -150,7 +169,7 @@
       .site-header { top: 28px; left: 40px; right: 40px; padding: 10px 10px 10px 28px; }
       .site-header .logo-word { font-size: 26px; }
       .site-header .logo-sub { font-size: 13px; }
-      #story, #menu, #feed, #visit, #visit-desktop { scroll-margin-top: 116px; }
+      html { scroll-padding-top: 116px; }
       .hero-est { top: 150px; font-size: 13px; gap: 28px; }
       .hero-h1 { top: 352px; font-size: var(--hero-fs); }
       .hero-band { top: calc(352px + 1.64 * var(--hero-fs)); }
@@ -181,6 +200,7 @@
       .feed-section { padding: 140px 0 120px; }
       .feed-h2 { font-size: 120px; }
       .feed-tile { width: 360px; height: 360px; border-radius: 20px; }
+      .feed-tile:focus-visible::after { border-radius: 11px; }
       /* "heaven" is ~3.37em wide; the footer's 56px side padding leaves
          100vw - 112px, so 360px only fit from ~1340px up and clipped the
          last letter on common laptops. */
