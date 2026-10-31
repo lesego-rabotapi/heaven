@@ -22,6 +22,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62.5..100,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     body { margin: 0; padding: 0; overscroll-behavior: none; font-optical-sizing: auto; }
+    /* Skip link: parked above the viewport, drops into view only when it has keyboard
+       focus. Fixed, not absolute, so focusing it mid-page does not scroll the page
+       back to the top to reveal it. */
+    .skip-link { position: fixed; left: 16px; top: -120px; z-index: 100; padding: 12px 20px; border-radius: 999px; background: #0F1B2D; color: #fff; font-size: 14px; font-weight: 700; }
+    .skip-link:focus { top: 12px; }
+    /* <main> takes focus when the skip link is used (tabindex="-1"). A mouse click on
+       text inside it focuses it too, which should show nothing; a keyboard jump should,
+       so the user can see the skip worked. The ring is inset: <main> is the whole page. */
+    #main:focus:not(:focus-visible) { outline: none; }
+    #main:focus-visible { outline: 3px solid #1D4ED8; outline-offset: -3px; }
+    /* Smooth scrolling is set on <html> by Tailwind's scroll-smooth class; anchor jumps
+       (the skip link included) must be instant for people who ask for reduced motion. */
+    @media (prefers-reduced-motion: reduce) { html.scroll-smooth { scroll-behavior: auto; } }
     ::-webkit-scrollbar { display: none; }
     a { text-decoration: none; }
     .hv-btn { transition: background-color .2s ease, transform .2s ease, filter .2s ease; }
@@ -187,6 +200,8 @@
 </head>
 <body style="background:#EEF4FA; color:#0F1B2D;" class="font-body-md antialiased">
 
+<a href="#main" class="skip-link">Skip to main content</a>
+
 <!-- =====================================================================
      HEADER — a fixed floating pill that stays on screen while scrolling
      (the source exports had it absolute inside the hero; made fixed so
@@ -224,7 +239,7 @@
   <div class="staggered-menu-layer" style="background:#1E3A8A;"></div>
   <div class="staggered-menu-layer" style="background:#0F1B2D; transition-delay:80ms;"></div>
   <div class="staggered-menu-panel">
-    <nav class="flex flex-col px-6 pt-24">
+    <nav aria-label="Menu" class="flex flex-col px-6 pt-24">
       <a class="staggered-menu-item" style="transition-delay:160ms" href="#story"><span class="staggered-menu-num">01</span>Story</a>
       <a class="staggered-menu-item" style="transition-delay:220ms" href="#menu"><span class="staggered-menu-num">02</span>Menu</a>
       <a class="staggered-menu-item" style="transition-delay:280ms" href="#feed"><span class="staggered-menu-num">03</span>From the feed</a>
@@ -236,6 +251,7 @@
   </div>
 </div>
 
+<main id="main" tabindex="-1">
 <!-- =====================================================================
      HERO — literal per-breakpoint layout. Mobile: single arch photo tile,
      no dog seal, full-width "Get directions" pill in the hero. Desktop:
@@ -430,6 +446,7 @@
     <div style="height:360px; border-radius:180px 180px 20px 20px; overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/puppy-entrance-door.webp"/><img src="images/puppy-entrance-door.jpg" alt="The Gothic entrance of Central Methodist Mission with heaven coffee door signage" width="652" height="867" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
   </div>
 </section>
+</main>
 
 <footer id="footer-desktop" class="hidden lg:flex flex-col relative overflow-hidden" style="padding:72px 56px 40px; background: linear-gradient(180deg, #EEF4FA 0%, #A9CDF0 60%, #7FB3E6 100%);">
   <div class="cloud" style="width:700px; height:160px; left:380px; top:40px; opacity:.8;" aria-hidden="true"></div>
@@ -473,7 +490,9 @@
     </a>
   </div>
 
-  <section id="visit" class="flex flex-col" style="padding:40px 16px 0;">
+  <!-- On phones this block sits inside the footer (the mobile export nests it there), so
+       <main> does not contain it; naming the section makes it a landmark of its own. -->
+  <section id="visit" aria-label="Hours and visit" class="flex flex-col" style="padding:40px 16px 0;">
     <div class="flex items-end justify-between" style="border-bottom:2px solid #0F1B2D; padding-bottom:6px;">
       <h2 class="font-display uppercase m-0" style="font-stretch:62%; font-weight:900; font-size:104px; line-height:0.78; letter-spacing:-0.03em;">Open 7–6</h2>
       <span class="font-quote italic" style="padding-bottom:8px; font-size:20px; color:#1E3A8A;">daily</span>
