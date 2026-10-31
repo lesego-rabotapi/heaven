@@ -18,8 +18,10 @@
        them into one "improved" tree — including the mobile export's own
        markup mistake (Hours/Visit content nested inside <footer>).
        Deliberate departures from the source since: the duplicated
-       "Get directions" button was removed, the header is fixed, and the
-       hours ruler collapses identical days into one row. -->
+       "Get directions" button was removed, the header is fixed, the
+       hours ruler collapses identical days into one row, and 768-1023px
+       (tablets, which get the mobile structure) has its own layout tier:
+       one @media block plus a reduced-motion companion, further down. -->
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62.5..100,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     body { margin: 0; padding: 0; overscroll-behavior: none; font-optical-sizing: auto; }
@@ -129,7 +131,8 @@
     /* ===== Exact per-breakpoint values, transcribed 1:1 from the two
        source files rather than interpolated. Mobile is the unprefixed
        default (matches the 390px export); the min-width:1024px block
-       overrides to the 1440px export's own literal numbers. ===== */
+       overrides to the 1440px export's own literal numbers. A tablet block
+       (768-1023px) comes after both and re-sets some of the same classes. ===== */
     .hero-section { height: 1040px; background: linear-gradient(180deg, #2F6FBC 0%, #4E93D8 26%, #79B1E6 48%, #A9CDF0 66%, #D6E7F7 86%, #EEF4FA 100%); }
     .hero-vignette { background: radial-gradient(76% 20% at 50% 19%, rgba(16,54,108,.5) 0%, rgba(16,54,108,0) 72%); }
     .site-header { top: 16px; left: 16px; right: 16px; padding: 6px 6px 6px 20px; }
@@ -145,10 +148,10 @@
     .story-quote, .hero-est { min-width: 0; }
     .hero-pill { padding: 11px 16px; }
     .hero-pill span:last-child { font-size: 13px; }
-    .truths-section { padding: 40px 16px 72px; }
+    .truths-section { padding: 40px 16px 72px; gap: 40px; column-gap: 24px; }
     .truths-tile { height: 260px; border-radius: 18px; }
     .truths-h2 { font-size: 34px; }
-    .story-section { padding: 0 16px 80px; }
+    .story-section { padding: 0 16px 80px; column-gap: 24px; }
     .story-img { height: 420px; border-radius: 180px 180px 18px 18px; }
     .story-h2 { font-size: 58px; }
     .story-p { font-size: 16px; }
@@ -167,7 +170,13 @@
     .feed-section { padding: 88px 0 72px; }
     .feed-h2 { font-size: 64px; }
     .feed-tile { width: 280px; height: 280px; border-radius: 16px; }
+    /* Marquee pace in px per second (the script divides one set of tiles by it, so the
+       loop time follows the tile size). 22.4 and 24.8 are what the old fixed 130s /
+       150s loops came to at 280px and 360px tiles. */
+    .feed-track { --px-per-s: 22.4; }
     .footer-heaven { font-size: min(86px, calc((100vw - 64px) / 3.4)); }
+    .visit-photo { margin-top: 32px; height: 300px; }
+    .visit-card { margin-top: 14px; }
     /* Header is a fixed floating pill (~58px tall, sitting 16px from top).
        scroll-padding-top on the page keeps both a direct #hash landing / anchor
        click and keyboard focus scrolling (Tab or Shift+Tab to an element near the
@@ -228,10 +237,76 @@
       .feed-h2 { font-size: 120px; }
       .feed-tile { width: 360px; height: 360px; border-radius: 20px; }
       .feed-tile:focus-visible::after { border-radius: 11px; }
+      .feed-track { --px-per-s: 24.8; }
       /* "heaven" is ~3.37em wide; the footer's 56px side padding leaves
          100vw - 112px, so 360px only fit from ~1340px up and clipped the
          last letter on common laptops. */
       .footer-heaven { font-size: min(360px, calc((100vw - 112px) / 3.4)); }
+    }
+
+    /* Tablet tier (768-1023px). These widths get the mobile DOM, which was a
+       phone column stretched to 750px: full-width photos 520px tall, a single
+       menu column, full-width buttons. This block only re-flows the sections
+       that wasted the most room; <768 and >=1024 are untouched, and the hero's
+       art direction is left as it is (only its gutter and CTA width change).
+       Everything is set on a semantic class or id, never on child position, and
+       no !important: Tailwind's flex/flex-col utilities are injected after this
+       stylesheet, hence the doubled class selectors where one has to be beaten.
+       Gutter is 32px; sections that nest inside another padded box (the visit
+       block inside the footer) add up to it. The upper bound is 1023.98px, not
+       1023px: browsers snap the viewport width to 1/64px, and 1023.98 is the largest
+       value that still stays below 1024 after snapping (1023.999 rounds up to 1024
+       and would put the tier on top of the desktop layout), so a fractional viewport
+       from browser zoom cannot fall between this tier and the desktop rules. */
+    @media (min-width: 768px) and (max-width: 1023.98px) {
+      .site-header { top: 20px; left: 32px; right: 32px; }
+      .hero-est.hero-est, .hero-h1.hero-h1, .hero-sub.hero-sub { left: 32px; right: 32px; }
+      .hero-sub .hv-btn { max-width: 420px; }
+      .truths-section.truths-section { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 20px; padding: 56px 32px 88px; }
+      .truths-tile { height: 300px; }
+      .truths-h2 { font-size: 26px; }
+      /* minmax(0, ...) because plain fr tracks have a min-content floor: the 520px
+         tall photo would otherwise pin the first column at ~416px and squeeze the
+         heading. The arch uses elliptical radii (50% across, 220px up) so the top is
+         a true half-ellipse at any column width and the 18px bottom corners are not
+         scaled down by the browser's radius clamping. */
+      .story-section.story-section { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 32px; align-items: start; padding: 24px 32px 96px; }
+      .story-img { height: 520px; border-radius: 50% 50% 18px 18px / 220px 220px 18px 18px; }
+      .story-h2 { font-size: 52px; }
+      .story-p { font-size: 17px; }
+      .story-quote { font-size: 38px; }
+      .menu-section { margin: 0 16px; padding: 56px 40px 48px; border-radius: 28px; }
+      .menu-h2 { font-size: min(180px, calc((100vw - 280px) / 3.6)); }
+      .menu-tag { font-size: 30px; }
+      .menu-ruler { height: 12px; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.5) 0 1px, transparent 1px 20px); }
+      /* Two columns flowed top to bottom, not a 2-wide grid: the categories have 6, 2,
+         2 and 4 items, and a grid would pair the 6-item column with the 2-item one and
+         leave a wall of empty board under it. */
+      #menu-cards { display: block; column-count: 2; column-gap: 40px; }
+      #menu-cards > * { break-inside: avoid; margin-bottom: 36px; }
+      #menu-cards > noscript { column-span: all; }
+      .feed-section { padding: 112px 0 96px; }
+      /* Heading and Follow button on one row (the phone stacks them, which turned
+         the button into a 700px-wide bar). */
+      .feed-head.feed-head { flex-direction: row; align-items: flex-end; padding-inline: 32px; }
+      #feed-controls { padding-inline: 32px; }
+      .feed-h2 { font-size: 88px; }
+      .feed-tile { width: 320px; height: 320px; }
+      .footer-links { padding-inline: 16px; }
+      .footer-follow > a { max-width: 420px; margin-inline: auto; }
+      /* Photo and "Find us" card side by side under the hours. The photo has a
+         definite height (its h-full image needs one) and the card keeps its natural
+         height beside it instead of stretching into an empty box. */
+      #visit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 24px; }
+      .visit-head, #hours-rows-mobile, .visit-foot { grid-column: 1 / -1; }
+      .visit-photo { height: clamp(380px, 52vw, 520px); }
+      .visit-card { margin-top: 32px; align-self: start; }
+      /* 100vw minus the footer's and the visit block's 16px padding on each side. */
+      .footer-heaven { font-size: min(300px, calc((100vw - 64px) / 3.4)); }
+    }
+    @media (prefers-reduced-motion: reduce) and (min-width: 768px) and (max-width: 1023.98px) {
+      .feed-row { scroll-padding-inline: 32px; }
+      .feed-track { padding-left: 32px; padding-right: 32px; }
     }
 
     /* Dog-friendly seal — desktop only, per the source (the mobile export
@@ -382,7 +457,7 @@
 <!-- =====================================================================
      THREE TRUTHS
      ===================================================================== -->
-<section class="truths-section flex flex-col lg:grid lg:grid-cols-3" style="gap:40px; column-gap:24px; background:#EEF4FA;">
+<section class="truths-section flex flex-col lg:grid lg:grid-cols-3" style="background:#EEF4FA;">
   <div class="flex flex-col" style="gap:14px;">
     <div class="tile truths-tile" style="overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/interior-signage.webp"/><img src="images/interior-signage.jpg" alt="The heaven coffee sign board inside the church" width="1280" height="853" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
     <div class="flex items-baseline justify-between pt-2.5" style="border-top:1px solid #0F1B2D;"><h2 class="truths-h2 font-display uppercase m-0" style="font-stretch:75%; font-weight:800; letter-spacing:-0.01em;">Sacred</h2><span style="font-size:12px; font-weight:600; color:#3E4C63;">01</span></div>
@@ -403,7 +478,7 @@
 <!-- =====================================================================
      STORY
      ===================================================================== -->
-<section id="story" class="story-section flex flex-col lg:grid lg:grid-cols-12" style="background:#EEF4FA; column-gap:24px;">
+<section id="story" class="story-section flex flex-col lg:grid lg:grid-cols-12" style="background:#EEF4FA;">
   <div class="lg:col-span-5 relative">
     <div class="story-img" style="overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/founder-mondli.webp"/><img src="images/founder-mondli.jpg" alt="Mondli Mahamba, founder of Heaven Coffee, at the counter" width="495" height="619" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
     <div class="absolute rounded-2xl" style="left:24px; bottom:24px; padding:14px 18px; background:#FBFCFD;"><div style="font-weight:700; font-size:15px;">Mondli Mahamba</div><div style="font-size:13px; color:#3E4C63;">Founder, since April 2017</div></div>
@@ -447,7 +522,7 @@
      the Visit-nested-in-footer block below), per the two source files.
      ===================================================================== -->
 <section id="feed" class="feed-section relative overflow-hidden" style="background: linear-gradient(180deg, #EEF4FA 0%, #CFE3F6 55%, #EEF4FA 100%);">
-  <div class="flex flex-col lg:flex-row lg:items-end justify-between px-4 lg:px-14" style="gap:24px;">
+  <div class="feed-head flex flex-col lg:flex-row lg:items-end justify-between px-4 lg:px-14" style="gap:24px;">
     <div class="flex flex-col" style="gap:12px;">
       <span style="font-size:13px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#1E3A8A;">From the feed</span>
       <h2 class="feed-h2 font-display uppercase m-0" style="font-stretch:70%; font-weight:900; line-height:0.86; letter-spacing:-0.02em;">Heaven, <span class="font-quote italic" style="text-transform:none; color:#1E3A8A;">as posted</span></h2>
@@ -534,14 +609,14 @@
      been removed as the flagged fix.
      ===================================================================== -->
 <footer id="footer-mobile" class="lg:hidden relative overflow-hidden flex flex-col" style="padding:48px 16px 28px; gap:32px; background: linear-gradient(180deg, #EEF4FA 0%, #A9CDF0 60%, #7FB3E6 100%);">
-  <div class="grid grid-cols-2" style="gap:24px; font-size:14px;">
+  <div class="footer-links grid grid-cols-2" style="gap:24px; font-size:14px;">
     <nav aria-label="Footer" class="flex flex-col" style="gap:10px;">
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Explore</span>
       <a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">From the feed</a><a href="#visit" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
     </nav>
     <div class="flex flex-col" style="gap:10px;"><span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Say hello</span><span data-phone-placeholder style="color:#3E4C63;">0XX XXX XXXX</span><a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="hv-link" style="color:#0F1B2D;">@heavencoffeect</a></div>
   </div>
-  <div style="padding:32px 16px 0;">
+  <div class="footer-follow" style="padding:32px 16px 0;">
     <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="hv-btn hv-link flex items-center justify-center gap-2.5" style="height:52px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:15px; font-weight:700;">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle></svg>
       Follow @heavencoffeect
@@ -551,20 +626,20 @@
   <!-- On phones this block sits inside the footer (the mobile export nests it there), so
        <main> does not contain it; naming the section makes it a landmark of its own. -->
   <section id="visit" aria-label="Hours and visit" class="flex flex-col" style="padding:40px 16px 0;">
-    <div class="flex items-end justify-between" style="border-bottom:2px solid #0F1B2D; padding-bottom:6px;">
+    <div class="visit-head flex items-end justify-between" style="border-bottom:2px solid #0F1B2D; padding-bottom:6px;">
       <h2 class="font-display uppercase m-0" style="font-stretch:62%; font-weight:900; font-size:104px; line-height:0.78; letter-spacing:-0.03em;">Open 7–6</h2>
       <span class="font-quote italic" style="padding-bottom:8px; font-size:20px; color:#1E3A8A;">daily</span>
     </div>
     <div id="hours-rows-mobile"><noscript><!-- keep in sync with HEAVEN_CONTENT.hours --><p class="m-0" style="padding:14px 0; font-size:18px; font-weight:700; color:#0F1B2D;">Every day, 07:00 — 18:00</p></noscript></div>
-    <div style="margin-top:32px; height:300px; border-radius:150px 150px 18px 18px; overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/puppy-entrance-door.webp"/><img src="images/puppy-entrance-door.jpg" alt="The Gothic entrance with heaven coffee door signage" width="652" height="867" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
-    <div class="flex flex-col" style="margin-top:14px; padding:22px; border-radius:18px; background:#FBFCFD; gap:14px;">
+    <div class="visit-photo" style="border-radius:150px 150px 18px 18px; overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/puppy-entrance-door.webp"/><img src="images/puppy-entrance-door.jpg" alt="The Gothic entrance with heaven coffee door signage" width="652" height="867" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
+    <div class="visit-card flex flex-col" style="padding:22px; border-radius:18px; background:#FBFCFD; gap:14px;">
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#3E4C63;">Find us</span>
       <span style="font-size:18px; font-weight:700; line-height:1.35;">38 Burg Street, corner of Burg &amp; Longmarket, Cape Town 8000</span>
       <p class="m-0" style="font-size:14px; line-height:1.55; color:#26344A;">From the street it reads as a church, because it is. Look for the navy awning.</p>
       <a href="https://maps.google.com/?q=38+Burg+Street+Cape+Town" rel="noopener noreferrer" target="_blank" class="hv-btn hv-link flex items-center justify-center" style="height:50px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;">Get directions</a>
       <span data-phone-placeholder class="flex items-center justify-center" style="height:50px; border-radius:999px; border:1.5px dashed #9FB0C8; color:#3E4C63; font-size:14px; font-weight:700;">Call 0XX XXX XXXX</span>
     </div>
-    <div class="footer-heaven text-center" style="margin-top:32px; font-family:'Poppins',sans-serif; font-weight:300; line-height:0.9; letter-spacing:-0.06em; color:#FBFCFD;">heaven</div>
+    <div class="visit-foot footer-heaven text-center" style="margin-top:32px; font-family:'Poppins',sans-serif; font-weight:300; line-height:0.9; letter-spacing:-0.06em; color:#FBFCFD;">heaven</div>
   </section>
 </footer>
 
@@ -669,7 +744,38 @@ document.addEventListener('DOMContentLoaded', function () {
     var visibleHtml = HEAVEN_CONTENT.feed.map(function (p) { return renderFeedTile(p, false); }).join('');
     var hiddenHtml = HEAVEN_CONTENT.feed.map(function (p) { return renderFeedTile(p, true); }).join('');
     feedTrack.innerHTML = visibleHtml + hiddenHtml;
-    feedTrack.style.setProperty('--speed', (window.innerWidth >= 1024 ? 150 : 130) + 's');
+    // Constant scroll speed, not a constant loop time: the tiles are 280px on phones,
+    // 320px on tablets and 360px on desktop, so a fixed duration would run the wider
+    // tracks faster. The pace (--px-per-s) and the tile size both come from the CSS, so
+    // no breakpoint or size is repeated here, and nothing is measured from layout (the
+    // track's flex rule can arrive after this runs): one set is tile count x (tile
+    // width + gap). It is recomputed when the width changes, which can change the tile
+    // size; the animation is restarted only if the loop time really changed, so a
+    // resize that does not cross a breakpoint never makes the strip jump.
+    var feedLastDuration = 0, feedLastWidth = window.innerWidth;
+    var feedSetSpeed = function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+      var tileWidth = feedTrack.firstElementChild.offsetWidth;
+      var gap = parseFloat(window.getComputedStyle(feedTrack).columnGap) || 12;
+      var pxPerSecond = parseFloat(window.getComputedStyle(feedTrack).getPropertyValue('--px-per-s')) || 22.4;
+      var duration = Math.round(HEAVEN_CONTENT.feed.length * (tileWidth + gap) / pxPerSecond * 10) / 10;
+      if (Math.abs(duration - feedLastDuration) < 1) { return; }
+      feedTrack.style.setProperty('--speed', duration + 's');
+      if (feedLastDuration) {
+        feedTrack.style.animationName = 'none';
+        void feedTrack.offsetWidth;
+        feedTrack.style.animationName = '';
+      }
+      feedLastDuration = duration;
+    };
+    feedSetSpeed();
+    var feedResizeTimer = null;
+    window.addEventListener('resize', function () {
+      if (window.innerWidth === feedLastWidth) { return; }
+      feedLastWidth = window.innerWidth;
+      clearTimeout(feedResizeTimer);
+      feedResizeTimer = setTimeout(feedSetSpeed, 150);
+    });
 
     // The marquee runs only when nothing wants it stopped: the visitor's own
     // pause button, pointer hover, keyboard focus inside the row, the row being
