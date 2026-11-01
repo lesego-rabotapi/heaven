@@ -9,13 +9,14 @@
     "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.input.css -o tailwind.css --minify",
     "watch:css": "tailwindcss -c tailwind.config.js -i src/tailwind.input.css -o tailwind.css --watch",
     "check:css": "npm run build:css && git diff --exit-code tailwind.css",
-    "check:launch": "node scripts/check-launch.mjs"
+    "check:launch": "node scripts/check-launch.mjs",
+    "test": "node --test"
   },
   "devDependencies": {
     "sharp": "^0.35.5",
     "tailwindcss": "3.4.17"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.9"
   }
 }
