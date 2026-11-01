@@ -16,7 +16,7 @@ const ctx = {};
 vm.runInNewContext(html.slice(start, html.indexOf('\n};', start) + 3), ctx);
 const facts = ctx.HEAVEN_CONTENT.facts;
 
-test('four steps, in the order a visitor walks them', () => {
+test('four directions, in the order a visitor walks them', () => {
   assert.equal(steps.length, 4);
   const heads = steps.map((s) => s.match(/<h3[^>]*>([\s\S]*?)<\/h3>/)[1]);
   assert.deepEqual(heads, ['Start at Greenmarket Square', 'Walk to Burg and Longmarket', 'Look for the navy umbrellas', 'Climb the steps to the door']);
@@ -38,7 +38,7 @@ test('the steps line depends on the steps fact, which a photo supports', () => {
 
 test('nothing claims step-free access while that fact is unknown', () => {
   assert.equal(facts.stepFree.status, 'unknown');
-  assert.doesNotMatch(section, /step-free|wheelchair|accessible|ramp|lift\b/i);
+  assert.doesNotMatch(section, /step[- ]free|wheelchair|accessib|ramp|lift\b|level access|no stairs|easy (to reach|access)|mobility/i);
 });
 
 test('it ends with a Directions link that the maps script can rewrite', () => {
