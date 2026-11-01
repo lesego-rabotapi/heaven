@@ -45,3 +45,10 @@ test('navigation says the same thing everywhere', () => {
   assert.ok(links.length >= 4);
   links.forEach((l) => assert.equal(l, 'In pictures'));
 });
+
+// The helpers above read visible text only. These look at the whole file (alt text,
+// meta tags, the HEAVEN_CONTENT feed) for wording the photos contradict.
+test('no "awning" and no "As seen on" anywhere in the file, attributes and script included', () => {
+  assert.doesNotMatch(html, /awning/i);
+  assert.doesNotMatch(html.replace(/\/\/ TODO\(content\)[^\n]*\n(\s*\/\/[^\n]*\n)*/g, ''), /As seen on/i);
+});

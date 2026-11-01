@@ -33,6 +33,53 @@
     /* A utility such as .flex has the same specificity as [hidden] and would win; two attributes beat it. */
     [data-fact][hidden], [data-fact-group][hidden] { display: none; }
 
+    /* Find the door (B3). Up to four directions from the square to the door. On a phone each step is
+       indented a little more than the one above, like treads; from 1024px the four columns
+       rise left to right, so the page itself climbs. rem, % and clamp() only; colours are
+       tokens; nothing moves. */
+    :root { --find-bg: #EEF4FA; --find-ink: #0F1B2D; --find-muted: #3E4C63; --find-kicker: #1E3A8A; --find-accent: #1D4ED8; --find-photo-bg: #A9CDF0; }
+    .find-section { background: var(--find-bg); color: var(--find-ink); padding: 2.5rem 5% 3rem; }
+    .find-head { display: flex; flex-direction: column; gap: .75rem; max-width: 40rem; }
+    .find-kicker { font-size: .8125rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--find-kicker); }
+    .find-h2 { font-stretch: 70%; font-weight: 900; line-height: .9; letter-spacing: -.02em; font-size: clamp(2.25rem, 11vw, 4.5rem); }
+    .find-lede { font-size: clamp(1rem, 2.4vw, 1.125rem); line-height: 1.55; color: var(--find-muted); }
+    .find-steps { list-style: none; margin: 1.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+    .find-step { display: flex; align-items: center; gap: 4%; margin-left: calc(var(--i) * 5%); }
+    .find-photo { flex: 0 0 34%; aspect-ratio: 5 / 6; overflow: hidden; border-radius: 50% 50% .75rem .75rem / 32% 32% .75rem .75rem; background: var(--find-photo-bg); }
+    .find-photo picture, .find-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .find-text { flex: 1 1 0; min-width: 0; }
+    .find-no { display: block; font-stretch: 75%; font-weight: 900; font-size: 2.25rem; line-height: 1; color: var(--find-accent); }
+    .find-h3 { margin-top: .25rem; font-stretch: 80%; font-weight: 800; font-size: clamp(1.25rem, 5vw, 1.5rem); line-height: 1.05; }
+    .find-text p { margin: .375rem 0 0; font-size: .9375rem; line-height: 1.5; color: var(--find-muted); }
+    .find-foot { margin-top: 1.5rem; }
+    .find-cta { display: inline-flex; align-items: center; justify-content: center; gap: .625rem; min-height: 3rem; padding-inline: 1.5rem; border-radius: 999px; background: var(--find-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
+    @media (min-width: 768px) { .find-step { margin-left: calc(var(--i) * 4%); } .find-photo { flex-basis: 30%; } }
+    @media (min-width: 1024px) {
+      .find-section { padding: 5rem 5.5% 6rem; }
+      .find-steps { flex-direction: row; align-items: flex-start; gap: 2.5%; margin-top: 3.5rem; }
+      .find-step { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: stretch; gap: 1rem; margin-left: 0; margin-top: calc((3 - var(--i)) * 2.5rem); }
+      .find-photo { flex-basis: auto; width: 100%; }
+      .find-foot { margin-top: 3rem; }
+    }
+    /* The menu board (B5). Plain HTML, so it reads without script and search engines see it.
+       The board is dark in every theme, so these tokens only need re-pointing if it ever isn't. */
+    :root { --menu-ink: #EEF4FA; --menu-muted: #9FB0C8; --menu-accent: #A9CDF0; --menu-rule: rgba(238,244,250,.16); --menu-rule-strong: rgba(238,244,250,.9); --menu-dots: rgba(238,244,250,.35); }
+    .menu-group { display: flex; flex-direction: column; }
+    .menu-group-head { display: flex; align-items: baseline; gap: .625rem; padding-bottom: .75rem; border-bottom: 1px solid var(--menu-rule-strong); }
+    .menu-cat-no { color: var(--menu-accent); }
+    .menu-cat-h3 { font-stretch: 80%; font-weight: 800; }
+    .menu-list { list-style: none; margin: 0; padding: 0; }
+    .menu-item { padding: .875rem 0; border-bottom: 1px solid var(--menu-rule); }
+    .menu-item-row { display: flex; align-items: baseline; gap: .625rem; }
+    .menu-item-name { font-weight: 700; }
+    .menu-leader { flex: 1 1 auto; min-width: 1rem; border-bottom: 1px dotted var(--menu-dots); transform: translateY(-.25rem); }
+    .menu-item-price { font-stretch: 80%; font-weight: 700; color: var(--menu-accent); font-variant-numeric: tabular-nums; }
+    .menu-item-note { display: block; margin-top: .125rem; color: var(--menu-muted); }
+    .menu-counter { padding-top: .875rem; font-size: 1.375rem; line-height: 1.25; color: var(--menu-ink); }
+    .menu-note { color: var(--menu-muted); }
+    /* Four columns need about 1280px: at 1024 each is under 190px and every description wraps. */
+    @media (min-width: 1024px) and (max-width: 1279.98px) { #menu-cards { display: block; column-count: 2; column-gap: 40px; } #menu-cards > * { break-inside: avoid; margin-bottom: 36px; } }
+
     /* Stairway progress (D2a). "Stairway to heaven in a cup" is the chalkboard's line; the
        page's sections become steps. Desktop: five bars on the right edge, each one wider
        than the one above, so their left edges climb like a staircase; the current step is
@@ -340,7 +387,6 @@
          leave a wall of empty board under it. */
       #menu-cards { display: block; column-count: 2; column-gap: 40px; }
       #menu-cards > * { break-inside: avoid; margin-bottom: 36px; }
-      #menu-cards > noscript { column-span: all; }
       .feed-section { padding: 112px 0 96px; }
       /* Heading and Follow button on one row (the phone stacks them, which turned
          the button into a 700px-wide bar). */
@@ -397,6 +443,7 @@
   </a>
 
   <nav aria-label="Primary" class="hidden lg:flex items-center" style="gap:36px; font-size:14px; font-weight:600; letter-spacing:0.02em;">
+    <a href="#find-the-door" class="hv-link" style="color:#0F1B2D;">Find us</a>
     <a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a>
     <a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a>
     <a href="#feed" class="hv-link" style="color:#0F1B2D;">In pictures</a>
@@ -427,12 +474,13 @@
   <div class="staggered-menu-layer" style="background:#0F1B2D; transition-delay:80ms;"></div>
   <div class="staggered-menu-panel">
     <nav aria-label="Menu" class="flex flex-col px-6 pt-24">
-      <a class="staggered-menu-item" style="transition-delay:160ms" href="#story"><span class="staggered-menu-num">01</span>Story</a>
-      <a class="staggered-menu-item" style="transition-delay:220ms" href="#menu"><span class="staggered-menu-num">02</span>Menu</a>
-      <a class="staggered-menu-item" style="transition-delay:280ms" href="#feed"><span class="staggered-menu-num">03</span>In pictures</a>
-      <a class="staggered-menu-item" style="transition-delay:340ms" href="#visit"><span class="staggered-menu-num">04</span>Hours &amp; visit</a>
+      <a class="staggered-menu-item" style="transition-delay:160ms" href="#find-the-door"><span class="staggered-menu-num">01</span>Find us</a>
+      <a class="staggered-menu-item" style="transition-delay:220ms" href="#story"><span class="staggered-menu-num">02</span>Story</a>
+      <a class="staggered-menu-item" style="transition-delay:280ms" href="#menu"><span class="staggered-menu-num">03</span>Menu</a>
+      <a class="staggered-menu-item" style="transition-delay:340ms" href="#feed"><span class="staggered-menu-num">04</span>In pictures</a>
+      <a class="staggered-menu-item" style="transition-delay:400ms" href="#visit"><span class="staggered-menu-num">05</span>Hours &amp; visit</a>
     </nav>
-    <div class="staggered-menu-socials px-6 pt-8 mt-2" style="transition-delay:400ms">
+    <div class="staggered-menu-socials px-6 pt-8 mt-2" style="transition-delay:460ms">
       <a href="https://instagram.com/heavencoffeect" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   </div>
@@ -495,6 +543,43 @@
 </section>
 
 <!-- =====================================================================
+     FIND THE DOOR (B3). Four plain steps from facts we can see in the photos. A line
+     about step-free access joins the last step only when the client confirms the route
+     (HEAVEN_CONTENT.facts.stepFree); until then the page says only that there are steps.
+     ===================================================================== -->
+<section id="find-the-door" class="find-section" aria-labelledby="find-h2">
+  <div class="find-head">
+    <span class="find-kicker">Find us</span>
+    <h2 id="find-h2" class="find-h2 font-display uppercase m-0">From the square to the door</h2>
+    <p class="find-lede m-0">Heaven Coffee is inside the Central Methodist Mission, on the corner of Burg and Longmarket, a step off the Greenmarket Square market.</p>
+  </div>
+  <ol class="find-steps" role="list">
+    <li class="find-step" style="--i:0;">
+      <div class="find-photo"><picture><source type="image/webp" srcset="images/tourist-pastry-umbrella.webp"/><img src="images/tourist-pastry-umbrella.jpg" alt="A visitor with coffee and a pastry under a navy Heaven umbrella, market stalls across the square behind her" width="697" height="875" loading="lazy" decoding="async"/></picture></div>
+      <div class="find-text"><span class="find-no font-display" aria-hidden="true">1</span><h3 class="find-h3 font-display uppercase m-0">Start at Greenmarket Square</h3><p>The café is a step off the market stalls.</p></div>
+    </li>
+    <li class="find-step" style="--i:1;">
+      <div class="find-photo"><picture><source type="image/webp" srcset="images/storefront-entrance.webp"/><img src="images/storefront-entrance.jpg" alt="The grey stone front of the church, with a pointed arch, a flight of steps and a navy umbrella" width="690" height="768" loading="lazy" decoding="async"/></picture></div>
+      <div class="find-text"><span class="find-no font-display" aria-hidden="true">2</span><h3 class="find-h3 font-display uppercase m-0">Walk to Burg and Longmarket</h3><p>We are inside the Central Methodist Mission, the stone church on the corner.</p></div>
+    </li>
+    <li class="find-step" style="--i:2;">
+      <div class="find-photo"><picture><source type="image/webp" srcset="images/door-arch-800.webp"/><img src="images/door-arch-800.jpg" alt="A chalkboard sign and a navy Heaven umbrella at the foot of the steps to the pointed door" width="800" height="1067" loading="lazy" decoding="async" style="object-position:50% 85%;"/></picture></div>
+      <div class="find-text"><span class="find-no font-display" aria-hidden="true">3</span><h3 class="find-h3 font-display uppercase m-0">Look for the navy umbrellas</h3><p>A chalkboard sign stands by the steps.</p></div>
+    </li>
+    <li class="find-step" data-fact="steps" style="--i:3;">
+      <div class="find-photo"><picture><source type="image/webp" srcset="images/puppy-entrance-door.webp"/><img src="images/puppy-entrance-door.jpg" alt="Two visitors holding a puppy in the pointed doorway, under the heaven coffee sign" width="652" height="867" loading="lazy" decoding="async"/></picture></div>
+      <div class="find-text"><span class="find-no font-display" aria-hidden="true">4</span><h3 class="find-h3 font-display uppercase m-0">Climb the steps to the door</h3><p>A flight of steps leads up to the door, under the pointed arch.</p></div>
+    </li>
+  </ol>
+  <div class="find-foot">
+    <a href="https://www.google.com/maps/search/?api=1&amp;query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions rel="noopener noreferrer" target="_blank" class="find-cta hv-btn hv-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>
+      Get directions
+    </a>
+  </div>
+</section>
+
+<!-- =====================================================================
      THREE TRUTHS
      ===================================================================== -->
 <section class="truths-section flex flex-col lg:grid lg:grid-cols-3" style="background:#EEF4FA;">
@@ -545,15 +630,42 @@
   <div class="menu-ruler"></div>
 
   <div id="menu-cards" class="flex flex-col lg:grid lg:grid-cols-4 mt-12" style="gap:36px; column-gap:40px;">
-    <!-- JS-rendered: see HEAVEN_CONTENT.menu -->
-    <noscript style="grid-column:1 / -1;"><p class="m-0" style="font-size:17px; line-height:1.5; color:#EEF4FA;">The menu needs JavaScript to show on this page. Ask at the counter, or see the opening hours below.</p></noscript>
+    <div class="menu-group">
+      <div class="menu-group-head"><span class="menu-cat-no font-quote italic">I</span><h3 class="menu-cat-h3 font-display uppercase m-0">Coffee</h3></div>
+      <ul class="menu-list" role="list">
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Espresso</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Bold, rich &amp; full of character.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Americano</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Espresso topped with hot water.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Cortado</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Equal parts espresso &amp; warm milk.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Flat White</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Smooth espresso with steamed milk.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Cappuccino</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Espresso with steamed milk &amp; a soft layer of foam.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Latte</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Espresso with steamed milk.</span></li>
+      </ul>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-head"><span class="menu-cat-no font-quote italic">II</span><h3 class="menu-cat-h3 font-display uppercase m-0">Something different</h3></div>
+      <ul class="menu-list" role="list">
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Mocha</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R60</span></div><span class="menu-item-note">Espresso with chocolate &amp; steamed milk.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Matcha Latte</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R65</span></div><span class="menu-item-note">Ceremonial matcha with steamed milk.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Dirty Chai</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R60</span></div><span class="menu-item-note">Chai latte with a shot of espresso.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Hot Chocolate</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R50</span></div><span class="menu-item-note">Rich, creamy &amp; indulgent.</span></li>
+      </ul>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-head"><span class="menu-cat-no font-quote italic">III</span><h3 class="menu-cat-h3 font-display uppercase m-0">Make it yours</h3></div>
+      <ul class="menu-list" role="list">
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Almond / oat / soy milk</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R8</span></div></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Extra shot</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R8</span></div></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Vanilla / hazelnut</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R8</span></div></li>
+      </ul>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-head"><span class="menu-cat-no font-quote italic">IV</span><h3 class="menu-cat-h3 font-display uppercase m-0">From the counter</h3></div>
+      <p class="menu-counter font-quote italic m-0">Fresh bakes at the counter. Ask what's out today.</p>
+    </div>
   </div>
 
-  <div class="hidden lg:flex items-center justify-between mt-14 pt-5" style="border-top:2px solid #EEF4FA; font-size:13px; color:#9FB0C8;">
-    <span>Sample menu. Final items and prices to be confirmed with Heaven.</span>
-    <span style="font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#EEF4FA;">Ask at the counter for today's bakes</span>
-  </div>
-  <p class="lg:hidden mt-7 pt-3.5" style="border-top:1px solid #EEF4FA; font-size:12px; line-height:1.5; color:#9FB0C8;">Sample menu. Final items and prices to be confirmed with Heaven.</p>
+  <p class="menu-note hidden lg:block mt-14 pt-5 m-0" style="border-top:2px solid var(--menu-ink); font-size:13px;">Prices in rand (R)</p>
+  <p class="menu-note lg:hidden mt-7 pt-3.5 m-0" style="border-top:1px solid var(--menu-ink); font-size:12px; line-height:1.5;">Prices in rand (R)</p>
 </section>
 
 <!-- =====================================================================
@@ -629,7 +741,7 @@
     </div>
     <nav aria-label="Footer" class="flex flex-col" style="gap:10px;">
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Explore</span>
-      <a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">In pictures</a><a href="#visit-desktop" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
+      <a href="#find-the-door" class="hv-link" style="color:#0F1B2D;">Find us</a><a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">In pictures</a><a href="#visit-desktop" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
     </nav>
     <div class="flex flex-col" style="gap:10px;"><span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Say hello</span><span data-phone-placeholder style="color:#3E4C63;">0XX XXX XXXX</span><a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="hv-link" style="color:#0F1B2D;">@heavencoffeect</a></div>
     <div class="flex flex-col" style="gap:10px;"><span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">In our words</span><span class="font-quote italic" style="font-size:24px; line-height:1.15; color:#0F1B2D;">born in love, by love, for love</span></div>
@@ -652,7 +764,7 @@
   <div class="footer-links grid grid-cols-2" style="gap:24px; font-size:14px;">
     <nav aria-label="Footer" class="flex flex-col" style="gap:10px;">
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Explore</span>
-      <a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">In pictures</a><a href="#visit" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
+      <a href="#find-the-door" class="hv-link" style="color:#0F1B2D;">Find us</a><a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">In pictures</a><a href="#visit" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
     </nav>
     <div class="flex flex-col" style="gap:10px;"><span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Say hello</span><span data-phone-placeholder style="color:#3E4C63;">0XX XXX XXXX</span><a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="hv-link" style="color:#0F1B2D;">@heavencoffeect</a></div>
   </div>
@@ -728,33 +840,6 @@ var HEAVEN_CONTENT = {
   },
   // TODO(content): the footer used to say "As seen on: Cape Town CCID (2021)". That is
   // not confirmed with the client, so it was removed; add a press column back once it is.
-  // Leader-line + price only render when item.price is truthy (see the
-  // render loop below) — every item ships with price:null for now, so
-  // none render yet; that's correct until Heaven signs off on pricing.
-  menu: {
-    'Espresso': { no: 'I', items: [
-      { name: 'Espresso', note: 'A single concentrated shot', price: null },
-      { name: 'Americano', note: 'Espresso lengthened with hot water', price: null },
-      { name: 'Flat White', note: 'Steamed milk, thin microfoam', price: null },
-      { name: 'Cappuccino', note: 'Steamed milk, deep foam', price: null },
-      { name: 'Latte', note: 'Steamed milk, light foam', price: null },
-      { name: 'Cortado', note: 'Cut with a little steamed milk', price: null }
-    ]},
-    'Filter': { no: 'II', items: [
-      { name: 'Filter Coffee', note: 'Brewed through the grounds', price: null },
-      { name: 'Pourover', note: 'By hand, one pour at a time', price: null }
-    ]},
-    'Cold': { no: 'III', items: [
-      { name: 'Iced Coffee', note: 'Brewed, served over ice', price: null },
-      { name: 'Cold Brew', note: 'Steeped cold for hours', price: null }
-    ]},
-    'From the Counter': { no: 'IV', items: [
-      { name: 'Banana Bread', note: 'Loaf cake, ripe bananas', price: null },
-      { name: 'Choc Chip Cookie', note: 'Baked, chocolate-studded', price: null },
-      { name: 'Muffin of the Day', note: 'Changes daily', price: null },
-      { name: 'Toasted Sandwich', note: 'Filling varies', price: null }
-    ]}
-  },
   feed: [
     { image: 'images/storefront-entrance.jpg', alt: 'Heaven Coffee storefront on Burg Street, navy umbrellas and a dog on the steps', place: 'Burg Street' },
     { image: 'images/cup-handover.jpg', alt: 'A barista handing over a to-go cup with the heaven coffee wordmark', place: 'The counter' },
@@ -794,6 +879,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (stairNav && stairBar) {
     var stairDefs = [
       { label: 'Welcome', ids: ['hero'] },
+      { label: 'Find us', ids: ['find-the-door'] },
       { label: 'Story', ids: ['story'] },
       { label: 'Menu', ids: ['menu'] },
       { label: 'Pictures', ids: ['feed'] },
@@ -883,34 +969,6 @@ document.addEventListener('DOMContentLoaded', function () {
     renderOpenState();
     setInterval(renderOpenState, 60000);
     document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderOpenState(); } });
-  }
-
-  // --- Menu poster board ---
-  var menuContainer = document.getElementById('menu-cards');
-  if (menuContainer) {
-    var html = '';
-    Object.keys(HEAVEN_CONTENT.menu).forEach(function (categoryName) {
-      var category = HEAVEN_CONTENT.menu[categoryName];
-      html += '<div class="flex flex-col">';
-      html += '<div class="flex items-baseline gap-2.5" style="padding-bottom:12px; border-bottom:1px solid rgba(238,244,250,.9);">';
-      html += '<span class="menu-cat-no font-quote italic" style="color:#A9CDF0;">' + category.no + '</span>';
-      html += '<h3 class="menu-cat-h3 font-display uppercase m-0" style="font-stretch:80%; font-weight:800;">' + categoryName + '</h3>';
-      html += '</div>';
-      category.items.forEach(function (item) {
-        html += '<div style="padding:14px 0; border-bottom:1px solid rgba(238,244,250,0.16);">';
-        html += '<div class="flex items-baseline gap-2.5">';
-        html += '<span class="menu-item-name" style="font-weight:700;">' + item.name + '</span>';
-        if (item.price) {
-          html += '<span class="flex-grow" style="border-bottom:1px dotted rgba(238,244,250,.35); transform:translateY(-4px);"></span>';
-          html += '<span class="menu-item-price font-display" style="font-stretch:80%; font-weight:700; color:#A9CDF0;">' + item.price + '</span>';
-        }
-        html += '</div>';
-        html += '<span class="menu-item-note" style="color:#9FB0C8;">' + item.note + '</span>';
-        html += '</div>';
-      });
-      html += '</div>';
-    });
-    menuContainer.innerHTML = html;
   }
 
   // --- Arch portal (CSS: .journey-*): only with ?journey=on, never under reduced motion ---
