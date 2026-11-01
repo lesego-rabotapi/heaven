@@ -386,7 +386,7 @@
 <!-- =====================================================================
      HERO — literal per-breakpoint layout. Mobile: single arch photo tile,
      no dog seal, full-width "Get directions" pill in the hero. Desktop:
-     3-photo band, dog seal top-right, "Get directions" lives in the
+     one arched door photo, dog seal top-right, "Get directions" lives in the
      header instead.
      ===================================================================== -->
 <section id="hero" class="hero-section relative w-full overflow-hidden">
@@ -406,18 +406,12 @@
   <!-- Photo band -->
   <div class="absolute z-[2] flex justify-center lg:hidden" style="left:20px; right:20px; top:300px;">
     <div class="tile" style="width:240px; height:340px; border-radius:120px 120px 12px 12px; overflow:hidden; border:6px solid #FBFCFD; box-shadow:0 30px 60px -26px rgba(15,27,45,.45);">
-      <picture class="block w-full h-full"><source type="image/webp" srcset="images/stone-arch-interior.webp"/><img src="images/stone-arch-interior.jpg" alt="Inside Central Methodist Mission: Gothic stone arches, pews and stained glass" width="662" height="823" class="w-full h-full object-cover block" fetchpriority="high" decoding="async"/></picture>
+      <picture class="block w-full h-full"><source type="image/webp" sizes="240px" srcset="images/door-arch-480.webp 480w, images/door-arch-800.webp 800w"/><img src="images/door-arch-480.jpg" srcset="images/door-arch-480.jpg 480w, images/door-arch-800.jpg 800w" sizes="240px" alt="The Gothic stone entrance to Heaven Coffee: a pointed arch above a flight of steps, a navy umbrella and a chalkboard sign" width="480" height="640" class="w-full h-full object-cover block" style="object-position:50% 28%;" fetchpriority="high" decoding="async"/></picture>
     </div>
   </div>
-  <div class="hero-band absolute z-[2] hidden lg:flex justify-center items-start" style="left:56px; right:56px; gap:24px;">
-    <div class="tile" style="width:320px; height:260px; margin-top:120px; border-radius:14px; overflow:hidden; border:6px solid #FBFCFD; box-shadow:0 30px 60px -30px rgba(15,27,45,.42);">
-      <picture class="block w-full h-full"><source type="image/webp" srcset="images/cup-handover.webp"/><img src="images/cup-handover.jpg" alt="A barista handing over a heaven coffee to-go cup" width="446" height="448" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture>
-    </div>
+  <div class="hero-band absolute z-[2] hidden lg:flex justify-center items-start" style="left:56px; right:56px;">
     <div class="tile" style="width:360px; height:380px; border-radius:180px 180px 14px 14px; overflow:hidden; border:6px solid #FBFCFD; box-shadow:0 34px 70px -30px rgba(15,27,45,.45);">
-      <picture class="block w-full h-full"><source type="image/webp" srcset="images/stone-arch-interior.webp"/><img src="images/stone-arch-interior.jpg" alt="Inside Central Methodist Mission: Gothic stone arches, wooden pews and stained glass" width="662" height="823" class="w-full h-full object-cover block" fetchpriority="high" decoding="async"/></picture>
-    </div>
-    <div class="tile" style="width:320px; height:260px; margin-top:120px; border-radius:14px; overflow:hidden; border:6px solid #FBFCFD; box-shadow:0 30px 60px -30px rgba(15,27,45,.42);">
-      <picture class="block w-full h-full"><source type="image/webp" srcset="images/storefront-entrance.webp"/><img src="images/storefront-entrance.jpg" alt="The Burg Street entrance with navy umbrellas" width="690" height="768" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture>
+      <picture class="block w-full h-full"><source type="image/webp" sizes="360px" srcset="images/door-arch-480.webp 480w, images/door-arch-800.webp 800w"/><img src="images/door-arch-480.jpg" srcset="images/door-arch-480.jpg 480w, images/door-arch-800.jpg 800w" sizes="360px" alt="The Gothic stone entrance to Heaven Coffee: a pointed arch above a flight of steps, a navy umbrella and a chalkboard sign" width="480" height="640" class="w-full h-full object-cover block" style="object-position:50% 28%;" fetchpriority="high" decoding="async"/></picture>
     </div>
   </div>
 
@@ -482,8 +476,8 @@
      ===================================================================== -->
 <section id="story" class="story-section flex flex-col lg:grid lg:grid-cols-12" style="background:#EEF4FA;">
   <div class="lg:col-span-5 relative">
-    <div class="story-img" style="overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" srcset="images/founder-mondli.webp"/><img src="images/founder-mondli.jpg" alt="Mondli Mahamba, founder of Heaven Coffee, at the counter" width="495" height="619" class="w-full h-full object-cover block" loading="lazy" decoding="async"/></picture></div>
-    <div class="absolute rounded-2xl" style="left:24px; bottom:24px; padding:14px 18px; background:#FBFCFD;"><div style="font-weight:700; font-size:15px;">Mondli Mahamba</div><div style="font-size:13px; color:#3E4C63;">Founder, since April 2017</div></div>
+    <div class="story-img" style="overflow:hidden;"><picture class="block w-full h-full"><source type="image/webp" sizes="(min-width: 1024px) 40vw, 100vw" srcset="images/mondli-coco-480.webp 480w, images/mondli-coco-800.webp 800w"/><img src="images/mondli-coco-480.jpg" srcset="images/mondli-coco-480.jpg 480w, images/mondli-coco-800.jpg 800w" sizes="(min-width: 1024px) 40vw, 100vw" alt="Mondli Mahamba, smiling, holding his brown and white collie, Coco, in the doorway of the café with the church nave behind" width="480" height="628" class="w-full h-full object-cover block" style="object-position:50% 30%;" loading="lazy" decoding="async"/></picture></div>
+    <div class="absolute rounded-2xl" style="left:24px; bottom:24px; padding:14px 18px; background:#FBFCFD;"><div style="font-weight:700; font-size:15px;">Mondli and his dog, Coco.</div><div style="font-size:13px; color:#3E4C63;">Mondli Mahamba, founder since April 2017</div></div>
   </div>
   <div class="lg:col-span-7 flex flex-col lg:pt-[30px]" style="gap:22px;">
     <span style="font-size:13px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#1E3A8A;">Our story</span>
@@ -714,7 +708,7 @@ var HEAVEN_CONTENT = {
     { image: 'images/dog-petting-outdoor.jpg', alt: 'Two customers petting a dog at the outdoor tables', place: 'Outside' },
     { image: 'images/interior-counter.jpg', alt: 'The wooden counter with the sign board and people at the bar', place: 'The bar' },
     { image: 'images/three-friends-coffee.jpg', alt: 'Three friends sharing coffee under the umbrellas', place: 'Greenmarket Sq.' },
-    { image: 'images/founder-mondli.jpg', alt: 'Founder Mondli Mahamba at the counter', place: 'The counter' }
+    { image: 'images/mondli-coco-480.jpg', alt: 'Mondli Mahamba holding his dog, Coco, in the doorway', place: 'The doorway' }
   ]
 };
 
