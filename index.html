@@ -42,7 +42,9 @@
     .action-bar-go { flex: none; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding-inline: 1.25rem; border-radius: 999px; background: var(--bar-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
     .action-bar-open { flex: 1; min-width: 0; display: flex; align-items: center; gap: .5rem; color: var(--bar-ink); font-size: .8125rem; font-weight: 700; line-height: 1.25; }
     .action-bar-dot { flex: none; width: .5625rem; height: .5625rem; border-radius: 50%; background: var(--bar-accent); }
-    @media (max-width: 1023.98px) { body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); } }
+    /* The same height again as scroll padding, so a link reached by keyboard or an anchor
+       scrolls clear of the bar instead of landing behind it (WCAG 2.2 Focus Not Obscured). */
+    @media (max-width: 1023.98px) { html { scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); } body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); } }
     .other-maps { font-size: .875rem; color: #26344A; }
     .other-maps summary { display: flex; align-items: center; min-height: 2.75rem; padding-inline: .25rem; font-weight: 700; cursor: pointer; }
     .other-maps a { display: flex; align-items: center; min-height: 2.75rem; padding-inline: .25rem; font-weight: 600; color: #1E3A8A; text-decoration: underline; }
@@ -784,11 +786,16 @@ document.addEventListener('DOMContentLoaded', function () {
   var openLabels = document.querySelectorAll('[data-open-label]');
   var openDots = document.querySelectorAll('[data-open-dot]');
   if (openLabels.length && window.HeavenOpenState) {
+    // With no answer (empty hours, or nothing in the next week) each chip gets its own
+    // printed text and dot back, rather than whatever the last tick left behind.
+    var printedTexts = Array.prototype.map.call(openLabels, function (el) { return el.textContent; });
+    var printedDots = Array.prototype.map.call(openDots, function (el) { return el.style.background; });
     var renderOpenState = function () {
       var state = window.HeavenOpenState.getOpenState(new Date(), HEAVEN_CONTENT.hours);
-      if (!state.label) { return; }
-      Array.prototype.forEach.call(openLabels, function (el) { el.textContent = state.label; });
-      Array.prototype.forEach.call(openDots, function (el) { el.style.background = state.open ? '#15803D' : '#6B7A90'; });
+      Array.prototype.forEach.call(openLabels, function (el, i) { el.textContent = state.label || printedTexts[i]; });
+      Array.prototype.forEach.call(openDots, function (el, i) {
+        el.style.background = !state.label ? printedDots[i] : state.open ? '#15803D' : '#6B7A90';
+      });
     };
     renderOpenState();
     setInterval(renderOpenState, 60000);
