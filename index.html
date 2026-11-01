@@ -30,6 +30,8 @@
        back to the top to reveal it. */
     .skip-link { position: fixed; left: 16px; top: -120px; z-index: 100; padding: 12px 20px; border-radius: 999px; background: #0F1B2D; color: #fff; font-size: 14px; font-weight: 700; }
     .skip-link:focus { top: 12px; }
+    /* A utility such as .flex has the same specificity as [hidden] and would win; two attributes beat it. */
+    [data-fact][hidden], [data-fact-group][hidden] { display: none; }
     /* <main> takes focus when the skip link is used (tabindex="-1"). A mouse click on
        text inside it focuses it too, which should show nothing; a keyboard jump should,
        so the user can see the skip worked. The ring is inset: <main> is the whole page. */
@@ -653,6 +655,26 @@ var HEAVEN_CONTENT = {
   // text), restoring the "hv-link" / "hv-ghost hv-link" classes of the old links.
   // TODO(content): confirm public-holiday hours with Heaven before launch.
   hours: { groups: [ { label: 'Every day', open: '07:00', close: '18:00' } ] },
+  // Single source for the brand and address strings. Markup still repeats them
+  // today; later tasks (directions links, open-now chip) read from here, and a
+  // rename becomes one edit.
+  brand: { name: 'Heaven Coffee', instagram: 'heavencoffeect', tagline: 'born in love, by love, for love' },
+  address: '38 Burg Street, corner of Burg & Longmarket, Cape Town 8000',
+  // What may be said on the page. status: 'confirmed' (the client told us),
+  // 'photo' (seen in a photo we hold) or 'unknown' (not known, so never shown).
+  // Markup opts in with data-fact="key"; applyFacts() hides every element whose fact
+  // is unknown, and hides a data-fact-group left with fewer than two items showing.
+  // npm run check:launch fails while an unknown fact still has an element.
+  facts: {
+    dogs:         { status: 'photo',   source: 'Coco, the collie, in the photos' },
+    outdoorTables:{ status: 'photo',   source: 'tables and umbrellas outside in the photos' },
+    steps:        { status: 'photo',   source: 'a flight of steps up to the door in the photo' },
+    cardPayments: { status: 'unknown', source: 'a Capitec sign in the photos; card payment not confirmed' },
+    wifi:         { status: 'unknown', source: 'not asked yet' },
+    stepFree:     { status: 'unknown', source: 'a wheelchair sign by the steps; the step-free route is not known' },
+    phone:        { status: 'unknown', source: 'number not supplied' },
+    whatsapp:     { status: 'unknown', source: 'not asked yet' }
+  },
   // TODO(content): a press outlet for the footer's "As seen on" column has not
   // been confirmed; add it under "Cape Town CCID (2021)" once it is.
   // Leader-line + price only render when item.price is truthy (see the
@@ -697,6 +719,19 @@ var HEAVEN_CONTENT = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
+
+  // --- Facts: hide what is not known (see HEAVEN_CONTENT.facts) ---
+  var applyFacts = function () {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-fact]'), function (el) {
+      var fact = HEAVEN_CONTENT.facts[el.getAttribute('data-fact')];
+      if (!fact || fact.status === 'unknown') { el.hidden = true; }
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-fact-group]'), function (group) {
+      var shown = group.querySelectorAll('[data-fact]:not([hidden])').length;
+      if (shown < 2) { group.hidden = true; }
+    });
+  };
+  applyFacts();
 
   // --- Menu poster board ---
   var menuContainer = document.getElementById('menu-cards');

@@ -8,7 +8,8 @@
     "dev": "npx --yes serve . -l 3000",
     "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.input.css -o tailwind.css --minify",
     "watch:css": "tailwindcss -c tailwind.config.js -i src/tailwind.input.css -o tailwind.css --watch",
-    "check:css": "npm run build:css && git diff --exit-code tailwind.css"
+    "check:css": "npm run build:css && git diff --exit-code tailwind.css",
+    "check:launch": "node scripts/check-launch.mjs"
   },
   "devDependencies": {
     "tailwindcss": "3.4.17"
