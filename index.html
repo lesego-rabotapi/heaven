@@ -33,6 +33,35 @@
     /* A utility such as .flex has the same specificity as [hidden] and would win; two attributes beat it. */
     [data-fact][hidden], [data-fact-group][hidden] { display: none; }
 
+    /* Find the door (B3). Four steps from the square to the door. On a phone each step is
+       indented a little more than the one above, like treads; from 1024px the four columns
+       rise left to right, so the page itself climbs. rem, % and clamp() only; colours are
+       tokens; nothing moves. */
+    :root { --find-bg: #EEF4FA; --find-ink: #0F1B2D; --find-muted: #3E4C63; --find-kicker: #1E3A8A; --find-accent: #1D4ED8; --find-photo-bg: #A9CDF0; }
+    .find-section { background: var(--find-bg); color: var(--find-ink); padding: 2.5rem 5% 3rem; }
+    .find-head { display: flex; flex-direction: column; gap: .75rem; max-width: 40rem; }
+    .find-kicker { font-size: .8125rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--find-kicker); }
+    .find-h2 { font-stretch: 70%; font-weight: 900; line-height: .9; letter-spacing: -.02em; font-size: clamp(2.25rem, 11vw, 4.5rem); }
+    .find-lede { font-size: clamp(1rem, 2.4vw, 1.125rem); line-height: 1.55; color: var(--find-muted); }
+    .find-steps { list-style: none; margin: 1.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
+    .find-step { display: flex; align-items: center; gap: 4%; margin-left: calc(var(--i) * 5%); }
+    .find-photo { flex: 0 0 34%; aspect-ratio: 5 / 6; overflow: hidden; border-radius: 50% 50% .75rem .75rem / 32% 32% .75rem .75rem; background: var(--find-photo-bg); }
+    .find-photo picture, .find-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .find-text { flex: 1 1 0; min-width: 0; }
+    .find-no { display: block; font-stretch: 75%; font-weight: 900; font-size: 2.25rem; line-height: 1; color: var(--find-accent); }
+    .find-h3 { margin-top: .25rem; font-stretch: 80%; font-weight: 800; font-size: clamp(1.25rem, 5vw, 1.5rem); line-height: 1.05; }
+    .find-text p { margin: .375rem 0 0; font-size: .9375rem; line-height: 1.5; color: var(--find-muted); }
+    .find-foot { margin-top: 1.5rem; }
+    .find-cta { display: inline-flex; align-items: center; justify-content: center; gap: .625rem; min-height: 3rem; padding-inline: 1.5rem; border-radius: 999px; background: var(--find-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
+    @media (min-width: 768px) { .find-step { margin-left: calc(var(--i) * 4%); } .find-photo { flex-basis: 30%; } }
+    @media (min-width: 1024px) {
+      .find-section { padding: 5rem 5.5% 6rem; }
+      .find-steps { flex-direction: row; align-items: flex-start; gap: 2.5%; margin-top: 3.5rem; }
+      .find-step { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: stretch; gap: 1rem; margin-left: 0; margin-top: calc((3 - var(--i)) * 2.5rem); }
+      .find-photo { flex-basis: auto; width: 100%; }
+      .find-foot { margin-top: 3rem; }
+    }
+
     /* Stairway progress (D2a). "Stairway to heaven in a cup" is the chalkboard's line; the
        page's sections become steps. Desktop: five bars on the right edge, each one wider
        than the one above, so their left edges climb like a staircase; the current step is
@@ -402,6 +431,7 @@
   </a>
 
   <nav aria-label="Primary" class="hidden lg:flex items-center" style="gap:36px; font-size:14px; font-weight:600; letter-spacing:0.02em;">
+    <a href="#find-the-door" class="hv-link" style="color:#0F1B2D;">Find us</a>
     <a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a>
     <a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a>
     <a href="#feed" class="hv-link" style="color:#0F1B2D;">From the feed</a>
@@ -432,10 +462,11 @@
   <div class="staggered-menu-layer" style="background:#0F1B2D; transition-delay:80ms;"></div>
   <div class="staggered-menu-panel">
     <nav aria-label="Menu" class="flex flex-col px-6 pt-24">
-      <a class="staggered-menu-item" style="transition-delay:160ms" href="#story"><span class="staggered-menu-num">01</span>Story</a>
-      <a class="staggered-menu-item" style="transition-delay:220ms" href="#menu"><span class="staggered-menu-num">02</span>Menu</a>
-      <a class="staggered-menu-item" style="transition-delay:280ms" href="#feed"><span class="staggered-menu-num">03</span>From the feed</a>
-      <a class="staggered-menu-item" style="transition-delay:340ms" href="#visit"><span class="staggered-menu-num">04</span>Hours &amp; visit</a>
+      <a class="staggered-menu-item" style="transition-delay:160ms" href="#find-the-door"><span class="staggered-menu-num">01</span>Find us</a>
+      <a class="staggered-menu-item" style="transition-delay:220ms" href="#story"><span class="staggered-menu-num">02</span>Story</a>
+      <a class="staggered-menu-item" style="transition-delay:280ms" href="#menu"><span class="staggered-menu-num">03</span>Menu</a>
+      <a class="staggered-menu-item" style="transition-delay:340ms" href="#feed"><span class="staggered-menu-num">04</span>From the feed</a>
+      <a class="staggered-menu-item" style="transition-delay:400ms" href="#visit"><span class="staggered-menu-num">05</span>Hours &amp; visit</a>
     </nav>
     <div class="staggered-menu-socials px-6 pt-8 mt-2" style="transition-delay:400ms">
       <a href="https://instagram.com/heavencoffeect" target="_blank" rel="noopener noreferrer">Instagram</a>
@@ -508,6 +539,43 @@
       <circle cx="5.5" cy="10" r="2"></circle><circle cx="9.5" cy="5.5" r="2"></circle><circle cx="14.5" cy="5.5" r="2"></circle><circle cx="18.5" cy="10" r="2"></circle>
       <path d="M8 17c0-2.8 1.8-5 4-5s4 2.2 4 5c0 1.7-1.3 2.5-2.5 2.2-.7-.2-1-.5-1.5-.5s-.8.3-1.5.5C9.3 19.5 8 18.7 8 17z"></path>
     </svg>
+  </div>
+</section>
+
+<!-- =====================================================================
+     FIND THE DOOR (B3). Four plain steps from facts we can see in the photos. A line
+     about step-free access joins the last step only when the client confirms the route
+     (HEAVEN_CONTENT.facts.stepFree); until then the page says only that there are steps.
+     ===================================================================== -->
+<section id="find-the-door" class="find-section" aria-labelledby="find-h2">
+  <div class="find-head">
+    <span class="find-kicker">Find us</span>
+    <h2 id="find-h2" class="find-h2 font-display uppercase m-0">Four steps to the door</h2>
+    <p class="find-lede m-0">Heaven Coffee is inside the Central Methodist Mission, on the corner of Burg and Longmarket, a step off the Greenmarket Square market.</p>
+  </div>
+  <ol class="find-steps" role="list">
+    <li class="find-step" style="--i:0;">
+      <div class="find-photo"><picture><source type="image/webp" srcset="images/tourist-pastry-umbrella.webp"/><img src="images/tourist-pastry-umbrella.jpg" alt="A visitor with coffee and a pastry under a navy Heaven umbrella, market stalls across the square behind her" width="697" height="875" loading="lazy" decoding="async"/></picture></div>
+      <div class="find-text"><span class="find-no font-display" aria-hidden="true">1</span><h3 class="find-h3 font-display uppercase m-0">Start at Greenmarket Square</h3><p>The café is a step off the market stalls.</p></div>
+    </li>
+    <li class="find-step" style="--i:1;">
+      <div class="find-photo"><picture><source type="image/webp" srcset="images/storefront-entrance.webp"/><img src="images/storefront-entrance.jpg" alt="The grey stone front of the church, with a pointed arch, a flight of steps and a navy umbrella" width="690" height="768" loading="lazy" decoding="async"/></picture></div>
+      <div class="find-text"><span class="find-no font-display" aria-hidden="true">2</span><h3 class="find-h3 font-display uppercase m-0">Walk to Burg and Longmarket</h3><p>We are inside the Central Methodist Mission, the stone church on the corner.</p></div>
+    </li>
+    <li class="find-step" style="--i:2;">
+      <div class="find-photo"><picture><source type="image/webp" srcset="images/door-arch-800.webp"/><img src="images/door-arch-800.jpg" alt="A chalkboard sign and a navy Heaven umbrella at the foot of the steps to the pointed door" width="800" height="1067" loading="lazy" decoding="async" style="object-position:50% 85%;"/></picture></div>
+      <div class="find-text"><span class="find-no font-display" aria-hidden="true">3</span><h3 class="find-h3 font-display uppercase m-0">Look for the navy umbrellas</h3><p>A chalkboard sign stands by the steps.</p></div>
+    </li>
+    <li class="find-step" data-fact="steps" style="--i:3;">
+      <div class="find-photo"><picture><source type="image/webp" srcset="images/puppy-entrance-door.webp"/><img src="images/puppy-entrance-door.jpg" alt="Two visitors holding a puppy in the pointed doorway, under the heaven coffee sign" width="652" height="867" loading="lazy" decoding="async"/></picture></div>
+      <div class="find-text"><span class="find-no font-display" aria-hidden="true">4</span><h3 class="find-h3 font-display uppercase m-0">Climb the steps to the door</h3><p>A flight of steps leads up to the door, under the pointed arch.</p></div>
+    </li>
+  </ol>
+  <div class="find-foot">
+    <a href="https://www.google.com/maps/search/?api=1&amp;query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions rel="noopener noreferrer" target="_blank" class="find-cta hv-btn hv-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>
+      Get directions
+    </a>
   </div>
 </section>
 
@@ -646,7 +714,7 @@
     </div>
     <nav aria-label="Footer" class="flex flex-col" style="gap:10px;">
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Explore</span>
-      <a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">From the feed</a><a href="#visit-desktop" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
+      <a href="#find-the-door" class="hv-link" style="color:#0F1B2D;">Find us</a><a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">From the feed</a><a href="#visit-desktop" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
     </nav>
     <div class="flex flex-col" style="gap:10px;"><span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Say hello</span><span data-phone-placeholder style="color:#3E4C63;">0XX XXX XXXX</span><a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="hv-link" style="color:#0F1B2D;">@heavencoffeect</a></div>
     <div class="flex flex-col" style="gap:10px;"><span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">As seen on</span><span>Cape Town CCID (2021)</span></div>
@@ -669,7 +737,7 @@
   <div class="footer-links grid grid-cols-2" style="gap:24px; font-size:14px;">
     <nav aria-label="Footer" class="flex flex-col" style="gap:10px;">
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Explore</span>
-      <a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">From the feed</a><a href="#visit" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
+      <a href="#find-the-door" class="hv-link" style="color:#0F1B2D;">Find us</a><a href="#story" class="hv-link" style="color:#0F1B2D;">Story</a><a href="#menu" class="hv-link" style="color:#0F1B2D;">Menu</a><a href="#feed" class="hv-link" style="color:#0F1B2D;">From the feed</a><a href="#visit" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
     </nav>
     <div class="flex flex-col" style="gap:10px;"><span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Say hello</span><span data-phone-placeholder style="color:#3E4C63;">0XX XXX XXXX</span><a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" class="hv-link" style="color:#0F1B2D;">@heavencoffeect</a></div>
   </div>
@@ -810,6 +878,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (stairNav && stairBar) {
     var stairDefs = [
       { label: 'Welcome', ids: ['hero'] },
+      { label: 'Find us', ids: ['find-the-door'] },
       { label: 'Story', ids: ['story'] },
       { label: 'Menu', ids: ['menu'] },
       { label: 'Pictures', ids: ['feed'] },
