@@ -80,30 +80,6 @@
     /* Four columns need about 1280px: at 1024 each is under 190px and every description wraps. */
     @media (min-width: 1024px) and (max-width: 1279.98px) { #menu-cards { display: block; column-count: 2; column-gap: 40px; } #menu-cards > * { break-inside: avoid; margin-bottom: 36px; } }
 
-    /* Stairway progress (D2a). "Stairway to heaven in a cup" is the chalkboard's line; the
-       page's sections become steps. Desktop: five bars on the right edge, each one wider
-       than the one above, so their left edges climb like a staircase; the current step is
-       sapphire. Phone: a thin five-part bar across the very top. Sizes are rem, vw and %,
-       colours come from the --stair-* tokens, and nothing moves under reduced motion. */
-    :root { --stair-on: #1D4ED8; --stair-off: #FBFCFD; --stair-ring-on: #FBFCFD; --stair-ring-off: rgba(15,27,45,.6); --stair-label-bg: #FBFCFD; --stair-label-ink: #0F1B2D; }
-    .stairs { position: fixed; right: .75vw; top: 50%; transform: translateY(-50%); z-index: 30; flex-direction: column; align-items: flex-end; }
-    .stairs a { position: relative; display: flex; align-items: center; justify-content: flex-end; min-height: 2.75rem; padding-inline: .25rem .125rem; }
-    .stairs a::after { content: ''; flex: none; height: .5rem; width: calc(.75rem + var(--i) * .4rem); border-radius: 999px; background: var(--stair-off); box-shadow: 0 0 0 .125rem var(--stair-ring-off); }
-    .stairs a[aria-current] { --stair-ring-off: var(--stair-ring-on); }
-    .stairs a[aria-current]::after { background: var(--stair-on); box-shadow: 0 0 0 .125rem var(--stair-ring-on), 0 .25rem .75rem -.125rem rgba(15,27,45,.5); }
-    /* The label is out of the link's own box: an invisible label that still took up room made
-       each link about 8rem wide and caught clicks meant for the page under it. */
-    .stairs .stair-label { position: absolute; right: 100%; top: 50%; margin-right: .5rem; transform: translateY(-50%); white-space: nowrap; padding: .25rem .625rem; border-radius: 999px; background: var(--stair-label-bg); color: var(--stair-label-ink); font-size: .8125rem; font-weight: 700; line-height: 1.2; opacity: 0; pointer-events: none; }
-    .stairs a:hover .stair-label, .stairs a:focus-visible .stair-label { opacity: 1; }
-    .stair-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 60; display: flex; gap: .125rem; height: .25rem; pointer-events: none; }
-    .stair-bar span { flex: 1; background: rgba(251,252,253,.6); }
-    .stair-bar span.on { background: var(--stair-on); }
-    @media (prefers-reduced-motion: no-preference) {
-      .stairs a::after { transition: transform .2s ease-out, background-color .2s ease-out; }
-      .stairs a[aria-current]::after { transform: scaleX(1.25); transform-origin: right center; }
-      .stairs .stair-label { transition: opacity .15s ease-out; }
-    }
-
     /* Phone action bar (B2) and the "Other maps" disclosure. rem, % and env() only; colours
        are tokens so the night theme can re-point them. The bar sits under the drawer (z 35
        < 40), which covers it while the menu is open, and the page gets matching bottom
@@ -459,11 +435,6 @@
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"></path></svg>
   </button>
 </header>
-
-<!-- Stairway progress (D2a): filled in by script from the sections that are on screen at
-     this width; without script there is simply no marker. -->
-<nav id="stairs" class="stairs hidden lg:flex" aria-label="Where you are on the page"></nav>
-<div id="stair-bar" class="stair-bar lg:hidden" aria-hidden="true"></div>
 
 <!-- Mobile nav drawer — not present in either source export (the mobile
      file's hamburger has no shown open-state); this is filled in using
@@ -868,63 +839,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   };
   applyFacts();
-
-  // --- Stairway progress (CSS: .stairs, .stair-bar) ---
-  // One step per section that exists at this width ("Visit" is #visit-desktop on a
-  // wide screen and #visit in the phone footer, so each step lists candidates and
-  // takes the first that is laid out). The current step is the last one whose top has
-  // reached the middle of the screen; that also keeps "Visit" current to the page end.
-  var stairNav = document.getElementById('stairs');
-  var stairBar = document.getElementById('stair-bar');
-  if (stairNav && stairBar) {
-    var stairDefs = [
-      { label: 'Welcome', ids: ['hero'] },
-      { label: 'Find us', ids: ['find-the-door'] },
-      { label: 'Story', ids: ['story'] },
-      { label: 'Menu', ids: ['menu'] },
-      { label: 'Pictures', ids: ['feed'] },
-      { label: 'Visit', ids: ['visit-desktop', 'visit'] }
-    ];
-    var stairs = [], stairCurrent = -1, stairQueued = false;
-    var stairBuild = function () {
-      stairs = [];
-      stairDefs.forEach(function (def) {
-        var el = def.ids.map(function (id) { return document.getElementById(id); })
-          .filter(function (node) { return node && node.offsetParent !== null; })[0];
-        if (el) { stairs.push({ label: def.label, el: el }); }
-      });
-      stairNav.innerHTML = stairs.map(function (s, i) {
-        return '<a href="#' + s.el.id + '" style="--i:' + i + ';"><span class="stair-label">' + s.label + '</span></a>';
-      }).join('');
-      stairBar.innerHTML = stairs.map(function () { return '<span></span>'; }).join('');
-      stairCurrent = -1;
-      stairUpdate();
-    };
-    var stairUpdate = function () {
-      stairQueued = false;
-      var middle = window.innerHeight / 2, now = 0;
-      stairs.forEach(function (s, i) { if (s.el.getBoundingClientRect().top <= middle) { now = i; } });
-      if (now === stairCurrent) { return; }
-      stairCurrent = now;
-      Array.prototype.forEach.call(stairNav.children, function (a, i) {
-        if (i === now) { a.setAttribute('aria-current', 'location'); } else { a.removeAttribute('aria-current'); }
-      });
-      Array.prototype.forEach.call(stairBar.children, function (seg, i) { seg.className = i <= now ? 'on' : ''; });
-    };
-    var stairQueue = function () {
-      if (!stairQueued) { stairQueued = true; window.requestAnimationFrame(stairUpdate); }
-    };
-    window.addEventListener('scroll', stairQueue, { passive: true });
-    window.addEventListener('resize', stairQueue);
-    // Safari before 14 has only the old addListener; without this the missing method would
-    // throw and stop everything below it in this script.
-    var stairQuery = window.matchMedia('(min-width: 1024px)');
-    if (stairQuery.addEventListener) { stairQuery.addEventListener('change', stairBuild); }
-    else if (stairQuery.addListener) { stairQuery.addListener(stairBuild); }
-    // Images and fonts move the sections after the first build, with no scroll to notice it.
-    window.addEventListener('load', stairQueue);
-    stairBuild();
-  }
 
   // --- Directions: the link order follows the visitor's phone (assets/directions.js) ---
   // The markup carries the Google link, so without script (or on any non-Apple device)
