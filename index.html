@@ -33,6 +33,25 @@
     /* A utility such as .flex has the same specificity as [hidden] and would win; two attributes beat it. */
     [data-fact][hidden], [data-fact-group][hidden] { display: none; }
 
+    /* The menu board (B5). Plain HTML, so it reads without script and search engines see it.
+       The board is dark in every theme, so these tokens only need re-pointing if it ever isn't. */
+    :root { --menu-ink: #EEF4FA; --menu-muted: #9FB0C8; --menu-accent: #A9CDF0; --menu-rule: rgba(238,244,250,.16); --menu-rule-strong: rgba(238,244,250,.9); --menu-dots: rgba(238,244,250,.35); }
+    .menu-group { display: flex; flex-direction: column; }
+    .menu-group-head { display: flex; align-items: baseline; gap: .625rem; padding-bottom: .75rem; border-bottom: 1px solid var(--menu-rule-strong); }
+    .menu-cat-no { color: var(--menu-accent); }
+    .menu-cat-h3 { font-stretch: 80%; font-weight: 800; }
+    .menu-list { list-style: none; margin: 0; padding: 0; }
+    .menu-item { padding: .875rem 0; border-bottom: 1px solid var(--menu-rule); }
+    .menu-item-row { display: flex; align-items: baseline; gap: .625rem; }
+    .menu-item-name { font-weight: 700; }
+    .menu-leader { flex: 1 1 auto; min-width: 1rem; border-bottom: 1px dotted var(--menu-dots); transform: translateY(-.25rem); }
+    .menu-item-price { font-stretch: 80%; font-weight: 700; color: var(--menu-accent); font-variant-numeric: tabular-nums; }
+    .menu-item-note { display: block; margin-top: .125rem; color: var(--menu-muted); }
+    .menu-counter { padding-top: .875rem; font-size: 1.375rem; line-height: 1.25; color: var(--menu-ink); }
+    .menu-note { color: var(--menu-muted); }
+    /* Four columns need about 1280px: at 1024 each is under 190px and every description wraps. */
+    @media (min-width: 1024px) and (max-width: 1279.98px) { #menu-cards { display: block; column-count: 2; column-gap: 40px; } #menu-cards > * { break-inside: avoid; margin-bottom: 36px; } }
+
     /* Stairway progress (D2a). "Stairway to heaven in a cup" is the chalkboard's line; the
        page's sections become steps. Desktop: five bars on the right edge, each one wider
        than the one above, so their left edges climb like a staircase; the current step is
@@ -340,7 +359,6 @@
          leave a wall of empty board under it. */
       #menu-cards { display: block; column-count: 2; column-gap: 40px; }
       #menu-cards > * { break-inside: avoid; margin-bottom: 36px; }
-      #menu-cards > noscript { column-span: all; }
       .feed-section { padding: 112px 0 96px; }
       /* Heading and Follow button on one row (the phone stacks them, which turned
          the button into a 700px-wide bar). */
@@ -562,15 +580,42 @@
   <div class="menu-ruler"></div>
 
   <div id="menu-cards" class="flex flex-col lg:grid lg:grid-cols-4 mt-12" style="gap:36px; column-gap:40px;">
-    <!-- JS-rendered: see HEAVEN_CONTENT.menu -->
-    <noscript style="grid-column:1 / -1;"><p class="m-0" style="font-size:17px; line-height:1.5; color:#EEF4FA;">The menu needs JavaScript to show on this page. Ask at the counter, or see the opening hours below.</p></noscript>
+    <div class="menu-group">
+      <div class="menu-group-head"><span class="menu-cat-no font-quote italic">I</span><h3 class="menu-cat-h3 font-display uppercase m-0">Coffee</h3></div>
+      <ul class="menu-list" role="list">
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Espresso</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Bold, rich &amp; full of character.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Americano</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Espresso topped with hot water.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Cortado</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Equal parts espresso &amp; warm milk.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Flat White</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Smooth espresso with steamed milk.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Cappuccino</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Espresso with steamed milk &amp; a soft layer of foam.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Latte</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R42</span></div><span class="menu-item-note">Espresso with steamed milk.</span></li>
+      </ul>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-head"><span class="menu-cat-no font-quote italic">II</span><h3 class="menu-cat-h3 font-display uppercase m-0">Something different</h3></div>
+      <ul class="menu-list" role="list">
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Mocha</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R60</span></div><span class="menu-item-note">Espresso with chocolate &amp; steamed milk.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Matcha Latte</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R65</span></div><span class="menu-item-note">Ceremonial matcha with steamed milk.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Dirty Chai</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R60</span></div><span class="menu-item-note">Chai latte with a shot of espresso.</span></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Hot Chocolate</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R50</span></div><span class="menu-item-note">Rich, creamy &amp; indulgent.</span></li>
+      </ul>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-head"><span class="menu-cat-no font-quote italic">III</span><h3 class="menu-cat-h3 font-display uppercase m-0">Make it yours</h3></div>
+      <ul class="menu-list" role="list">
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Almond / oat / soy milk</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R8</span></div></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Extra shot</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R8</span></div></li>
+        <li class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Vanilla / hazelnut</span><span class="menu-leader" aria-hidden="true"></span><span class="menu-item-price font-display">R8</span></div></li>
+      </ul>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-head"><span class="menu-cat-no font-quote italic">IV</span><h3 class="menu-cat-h3 font-display uppercase m-0">From the counter</h3></div>
+      <p class="menu-counter font-quote italic m-0">Fresh bakes at the counter. Ask what's out today.</p>
+    </div>
   </div>
 
-  <div class="hidden lg:flex items-center justify-between mt-14 pt-5" style="border-top:2px solid #EEF4FA; font-size:13px; color:#9FB0C8;">
-    <span>Sample menu. Final items and prices to be confirmed with Heaven.</span>
-    <span style="font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#EEF4FA;">Ask at the counter for today's bakes</span>
-  </div>
-  <p class="lg:hidden mt-7 pt-3.5" style="border-top:1px solid #EEF4FA; font-size:12px; line-height:1.5; color:#9FB0C8;">Sample menu. Final items and prices to be confirmed with Heaven.</p>
+  <p class="menu-note hidden lg:block mt-14 pt-5 m-0" style="border-top:2px solid var(--menu-ink); font-size:13px;">Prices in rand (R)</p>
+  <p class="menu-note lg:hidden mt-7 pt-3.5 m-0" style="border-top:1px solid var(--menu-ink); font-size:12px; line-height:1.5;">Prices in rand (R)</p>
 </section>
 
 <!-- =====================================================================
@@ -744,33 +789,6 @@ var HEAVEN_CONTENT = {
   },
   // TODO(content): a press outlet for the footer's "As seen on" column has not
   // been confirmed; add it under "Cape Town CCID (2021)" once it is.
-  // Leader-line + price only render when item.price is truthy (see the
-  // render loop below) — every item ships with price:null for now, so
-  // none render yet; that's correct until Heaven signs off on pricing.
-  menu: {
-    'Espresso': { no: 'I', items: [
-      { name: 'Espresso', note: 'A single concentrated shot', price: null },
-      { name: 'Americano', note: 'Espresso lengthened with hot water', price: null },
-      { name: 'Flat White', note: 'Steamed milk, thin microfoam', price: null },
-      { name: 'Cappuccino', note: 'Steamed milk, deep foam', price: null },
-      { name: 'Latte', note: 'Steamed milk, light foam', price: null },
-      { name: 'Cortado', note: 'Cut with a little steamed milk', price: null }
-    ]},
-    'Filter': { no: 'II', items: [
-      { name: 'Filter Coffee', note: 'Brewed through the grounds', price: null },
-      { name: 'Pourover', note: 'By hand, one pour at a time', price: null }
-    ]},
-    'Cold': { no: 'III', items: [
-      { name: 'Iced Coffee', note: 'Brewed, served over ice', price: null },
-      { name: 'Cold Brew', note: 'Steeped cold for hours', price: null }
-    ]},
-    'From the Counter': { no: 'IV', items: [
-      { name: 'Banana Bread', note: 'Loaf cake, ripe bananas', price: null },
-      { name: 'Choc Chip Cookie', note: 'Baked, chocolate-studded', price: null },
-      { name: 'Muffin of the Day', note: 'Changes daily', price: null },
-      { name: 'Toasted Sandwich', note: 'Filling varies', price: null }
-    ]}
-  },
   feed: [
     { image: 'images/storefront-entrance.jpg', alt: 'Heaven Coffee storefront on Burg Street, navy umbrellas and a dog on the steps', place: 'Burg Street' },
     { image: 'images/cup-handover.jpg', alt: 'A barista handing over a to-go cup with the heaven coffee wordmark', place: 'The counter' },
@@ -899,34 +917,6 @@ document.addEventListener('DOMContentLoaded', function () {
     renderOpenState();
     setInterval(renderOpenState, 60000);
     document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderOpenState(); } });
-  }
-
-  // --- Menu poster board ---
-  var menuContainer = document.getElementById('menu-cards');
-  if (menuContainer) {
-    var html = '';
-    Object.keys(HEAVEN_CONTENT.menu).forEach(function (categoryName) {
-      var category = HEAVEN_CONTENT.menu[categoryName];
-      html += '<div class="flex flex-col">';
-      html += '<div class="flex items-baseline gap-2.5" style="padding-bottom:12px; border-bottom:1px solid rgba(238,244,250,.9);">';
-      html += '<span class="menu-cat-no font-quote italic" style="color:#A9CDF0;">' + category.no + '</span>';
-      html += '<h3 class="menu-cat-h3 font-display uppercase m-0" style="font-stretch:80%; font-weight:800;">' + categoryName + '</h3>';
-      html += '</div>';
-      category.items.forEach(function (item) {
-        html += '<div style="padding:14px 0; border-bottom:1px solid rgba(238,244,250,0.16);">';
-        html += '<div class="flex items-baseline gap-2.5">';
-        html += '<span class="menu-item-name" style="font-weight:700;">' + item.name + '</span>';
-        if (item.price) {
-          html += '<span class="flex-grow" style="border-bottom:1px dotted rgba(238,244,250,.35); transform:translateY(-4px);"></span>';
-          html += '<span class="menu-item-price font-display" style="font-stretch:80%; font-weight:700; color:#A9CDF0;">' + item.price + '</span>';
-        }
-        html += '</div>';
-        html += '<span class="menu-item-note" style="color:#9FB0C8;">' + item.note + '</span>';
-        html += '</div>';
-      });
-      html += '</div>';
-    });
-    menuContainer.innerHTML = html;
   }
 
   // --- Arch portal (CSS: .journey-*): only with ?journey=on, never under reduced motion ---
