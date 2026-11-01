@@ -32,6 +32,20 @@
     .skip-link:focus { top: 12px; }
     /* A utility such as .flex has the same specificity as [hidden] and would win; two attributes beat it. */
     [data-fact][hidden], [data-fact-group][hidden] { display: none; }
+
+    /* Phone action bar (B2) and the "Other maps" disclosure. rem, % and env() only; colours
+       are tokens so the night theme can re-point them. The bar sits under the drawer (z 35
+       < 40), which covers it while the menu is open, and the page gets matching bottom
+       padding so the last footer link is never behind it. */
+    :root { --bar-bg: rgba(251,252,253,.94); --bar-ink: #0F1B2D; --bar-accent: #1D4ED8; }
+    .action-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; display: flex; align-items: center; gap: .75rem; padding: .625rem 4% calc(.625rem + env(safe-area-inset-bottom)); background: var(--bar-bg); backdrop-filter: blur(.875rem); box-shadow: 0 -.5rem 1.5rem -1rem rgba(15,27,45,.5); }
+    .action-bar-go { flex: none; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding-inline: 1.25rem; border-radius: 999px; background: var(--bar-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
+    .action-bar-open { flex: 1; min-width: 0; display: flex; align-items: center; gap: .5rem; color: var(--bar-ink); font-size: .8125rem; font-weight: 700; line-height: 1.25; }
+    .action-bar-dot { flex: none; width: .5625rem; height: .5625rem; border-radius: 50%; background: var(--bar-accent); }
+    @media (max-width: 1023.98px) { body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); } }
+    .other-maps { font-size: .875rem; color: #26344A; }
+    .other-maps summary { display: flex; align-items: center; min-height: 2.75rem; padding-inline: .25rem; font-weight: 700; cursor: pointer; }
+    .other-maps a { display: flex; align-items: center; min-height: 2.75rem; padding-inline: .25rem; font-weight: 600; color: #1E3A8A; text-decoration: underline; }
     /* <main> takes focus when the skip link is used (tabindex="-1"). A mouse click on
        text inside it focuses it too, which should show nothing; a keyboard jump should,
        so the user can see the skip worked. The ring is inset: <main> is the whole page. */
@@ -323,6 +337,7 @@
   <!-- Utilities are precompiled: edit tailwind.config.js / the classes in this file, then run `npm run build:css`. -->
   <link rel="stylesheet" href="tailwind.css"/>
   <script src="assets/open-state.js" defer></script>
+  <script src="assets/directions.js" defer></script>
   <!-- Without JavaScript the feed strip and its pause button would be an empty gap and a
        dead control (the Instagram button above it still works), the hamburger has no
        drawer to open, the drawer's own markup would sit in the page as invisible rows,
@@ -353,7 +368,7 @@
     <a href="#visit-desktop" class="hv-link" style="color:#0F1B2D;">Hours &amp; visit</a>
   </nav>
 
-  <a href="https://maps.google.com/?q=38+Burg+Street+Cape+Town" rel="noopener noreferrer" target="_blank" class="hv-btn hv-link hidden lg:flex items-center gap-2.5" style="height:48px; padding:0 22px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;">
+  <a href="https://www.google.com/maps/search/?api=1&query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions rel="noopener noreferrer" target="_blank" class="hv-btn hv-link hidden lg:flex items-center gap-2.5" style="height:48px; padding:0 22px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>
     Get directions
   </a>
@@ -428,10 +443,10 @@
   <div class="hero-sub absolute left-5 right-5 lg:left-14 lg:right-14 z-[9] flex flex-col items-center">
     <p class="font-quote italic text-center m-0" style="color:#0F1B2D;">Sanctuary coffee at Greenmarket Square, inside a working 19th-century church.</p>
     <div class="hero-pill inline-flex items-center gap-2.5 rounded-full mt-5" style="background:#FBFCFD; box-shadow:0 10px 30px -18px rgba(15,27,45,.6);">
-      <span id="open-dot" style="width:9px; height:9px; border-radius:50%; background:#1D4ED8;"></span>
-      <span id="open-label" style="font-weight:700; color:#0F1B2D;">Open daily 07:00 — 18:00</span>
+      <span data-open-dot style="width:9px; height:9px; border-radius:50%; background:#1D4ED8;"></span>
+      <span data-open-label style="font-weight:700; color:#0F1B2D;">Open daily 07:00 — 18:00</span>
     </div>
-    <a href="https://maps.google.com/?q=38+Burg+Street+Cape+Town" rel="noopener noreferrer" target="_blank" class="hv-btn hv-link lg:hidden mt-6 w-full flex items-center justify-center gap-2.5" style="height:52px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:15px; font-weight:700;">
+    <a href="https://www.google.com/maps/search/?api=1&query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions rel="noopener noreferrer" target="_blank" class="hv-btn hv-link lg:hidden mt-6 w-full flex items-center justify-center gap-2.5" style="height:52px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:15px; font-weight:700;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>
       Get directions
     </a>
@@ -548,7 +563,7 @@
       </div>
       <p class="m-0" style="font-size:15px; line-height:1.55; color:#26344A;">From the street it reads as a church, because it is. Look for the navy awning at the Burg Street entrance.</p>
       <div class="flex" style="gap:10px;">
-        <a href="https://maps.google.com/?q=38+Burg+Street+Cape+Town" rel="noopener noreferrer" target="_blank" class="hv-btn hv-link flex-grow flex items-center justify-center" style="height:50px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;">Get directions</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions data-directions-more rel="noopener noreferrer" target="_blank" class="hv-btn hv-link flex-grow flex items-center justify-center" style="height:50px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;">Get directions</a>
         <span data-phone-placeholder class="flex items-center justify-center" style="height:50px; padding:0 20px; border-radius:999px; border:1.5px dashed #9FB0C8; color:#3E4C63; font-size:14px; font-weight:700;">0XX XXX XXXX</span>
       </div>
     </div>
@@ -582,7 +597,7 @@
   <div class="cloud" style="width:700px; height:160px; left:380px; top:40px; opacity:.8;" aria-hidden="true"></div>
   <div class="relative grid grid-cols-4" style="gap:24px; font-size:15px;">
     <div class="flex flex-col" style="gap:10px;"><span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Visit</span><span>38 Burg Street, Cape Town</span><span>Daily 07:00 — 18:00</span>
-      <a href="https://maps.google.com/?q=38+Burg+Street+Cape+Town" rel="noopener noreferrer" target="_blank" class="hv-btn hv-link self-start flex items-center gap-2 mt-1" style="height:46px; padding:0 20px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>Get directions</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions rel="noopener noreferrer" target="_blank" class="hv-btn hv-link self-start flex items-center gap-2 mt-1" style="height:46px; padding:0 20px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>Get directions</a>
     </div>
     <nav aria-label="Footer" class="flex flex-col" style="gap:10px;">
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#12326E;">Explore</span>
@@ -633,12 +648,22 @@
       <span style="font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#3E4C63;">Find us</span>
       <span style="font-size:18px; font-weight:700; line-height:1.35;">38 Burg Street, corner of Burg &amp; Longmarket, Cape Town 8000</span>
       <p class="m-0" style="font-size:14px; line-height:1.55; color:#26344A;">From the street it reads as a church, because it is. Look for the navy awning.</p>
-      <a href="https://maps.google.com/?q=38+Burg+Street+Cape+Town" rel="noopener noreferrer" target="_blank" class="hv-btn hv-link flex items-center justify-center" style="height:50px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;">Get directions</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions data-directions-more rel="noopener noreferrer" target="_blank" class="hv-btn hv-link flex items-center justify-center" style="height:50px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:14px; font-weight:700;">Get directions</a>
       <span data-phone-placeholder class="flex items-center justify-center" style="height:50px; border-radius:999px; border:1.5px dashed #9FB0C8; color:#3E4C63; font-size:14px; font-weight:700;">Call 0XX XXX XXXX</span>
     </div>
     <div class="visit-foot footer-heaven text-center" style="margin-top:32px; font-family:'Poppins',sans-serif; font-weight:300; line-height:0.9; letter-spacing:-0.06em; color:#FBFCFD;">heaven</div>
   </section>
 </footer>
+
+<!-- Mobile action bar (B2): Directions plus whether we are open. Phones only. A Call or
+     WhatsApp button joins it when the phone fact is confirmed (HEAVEN_CONTENT.facts.phone). -->
+<div id="action-bar" class="action-bar lg:hidden">
+  <a href="https://www.google.com/maps/search/?api=1&amp;query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions rel="noopener noreferrer" target="_blank" class="action-bar-go hv-btn hv-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>
+    Directions
+  </a>
+  <span class="action-bar-open"><span data-open-dot class="action-bar-dot"></span><span data-open-label>Open daily 07:00 — 18:00</span></span>
+</div>
 
 <script>
 var HEAVEN_CONTENT = {
@@ -655,6 +680,8 @@ var HEAVEN_CONTENT = {
   // rename becomes one edit.
   brand: { name: 'Heaven Coffee', instagram: 'heavencoffeect', tagline: 'born in love, by love, for love' },
   address: '38 Burg Street, corner of Burg & Longmarket, Cape Town 8000',
+  // What the map apps search for: the name and street find the place; "corner of ..." does not.
+  mapQuery: 'Heaven Coffee, 38 Burg Street, Cape Town 8000',
   // What may be said on the page. status: 'confirmed' (the client told us),
   // 'photo' (seen in a photo we hold) or 'unknown' (not known, so never shown).
   // Markup opts in with data-fact="key"; applyFacts() hides every element whose fact
@@ -728,17 +755,40 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   applyFacts();
 
+  // --- Directions: the link order follows the visitor's phone (assets/directions.js) ---
+  // The markup carries the Google link, so without script (or on any non-Apple device)
+  // nothing needs to change. On an Apple device every Directions link opens Apple Maps,
+  // and the two visit cards get an "Other maps" disclosure with the rest.
+  if (window.HeavenDirections) {
+    var appleFirst = window.HeavenDirections.prefersAppleMaps(navigator.userAgent, navigator.platform, navigator.maxTouchPoints);
+    var mapLinks = window.HeavenDirections.directionsLinks(HEAVEN_CONTENT.mapQuery, appleFirst);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-directions]'), function (link) {
+      link.setAttribute('href', mapLinks.primary.url);
+      if (!link.hasAttribute('data-directions-more')) { return; }
+      var more = document.createElement('details');
+      more.className = 'other-maps';
+      more.innerHTML = '<summary>Other maps</summary>' + mapLinks.others.map(function (m) {
+        return '<a href="' + m.url + '" rel="noopener noreferrer" target="_blank">' + m.name + '</a>';
+      }).join('');
+      // Desktop card: the link sits in a row of buttons, so the disclosure goes under the row.
+      var host = link.parentElement.classList.contains('flex-col') ? link : link.parentElement;
+      host.insertAdjacentElement('afterend', more);
+    });
+  }
+
   // --- Open now chip (assets/open-state.js; the printed "Open daily" text stays without JS) ---
   // Cape Town time, whatever the visitor's clock says. No aria-live: a chip that
   // changes at 07:00 and 18:00 should not interrupt a screen reader mid-sentence.
-  var openLabel = document.getElementById('open-label');
-  var openDot = document.getElementById('open-dot');
-  if (openLabel && openDot && window.HeavenOpenState) {
+  // The hero pill and the phone action bar both carry the chip; each has a
+  // data-open-label text and a data-open-dot, and all of them update together.
+  var openLabels = document.querySelectorAll('[data-open-label]');
+  var openDots = document.querySelectorAll('[data-open-dot]');
+  if (openLabels.length && window.HeavenOpenState) {
     var renderOpenState = function () {
       var state = window.HeavenOpenState.getOpenState(new Date(), HEAVEN_CONTENT.hours);
       if (!state.label) { return; }
-      openLabel.textContent = state.label;
-      openDot.style.background = state.open ? '#15803D' : '#6B7A90';
+      Array.prototype.forEach.call(openLabels, function (el) { el.textContent = state.label; });
+      Array.prototype.forEach.call(openDots, function (el) { el.style.background = state.open ? '#15803D' : '#6B7A90'; });
     };
     renderOpenState();
     setInterval(renderOpenState, 60000);
