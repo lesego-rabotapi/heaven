@@ -12,6 +12,7 @@
     "check:launch": "node scripts/check-launch.mjs"
   },
   "devDependencies": {
+    "sharp": "^0.35.5",
     "tailwindcss": "3.4.17"
   },
   "engines": {
