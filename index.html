@@ -322,6 +322,7 @@
   </style>
   <!-- Utilities are precompiled: edit tailwind.config.js / the classes in this file, then run `npm run build:css`. -->
   <link rel="stylesheet" href="tailwind.css"/>
+  <script src="assets/open-state.js" defer></script>
   <!-- Without JavaScript the feed strip and its pause button would be an empty gap and a
        dead control (the Instagram button above it still works), the hamburger has no
        drawer to open, the drawer's own markup would sit in the page as invisible rows,
@@ -427,8 +428,8 @@
   <div class="hero-sub absolute left-5 right-5 lg:left-14 lg:right-14 z-[9] flex flex-col items-center">
     <p class="font-quote italic text-center m-0" style="color:#0F1B2D;">Sanctuary coffee at Greenmarket Square, inside a working 19th-century church.</p>
     <div class="hero-pill inline-flex items-center gap-2.5 rounded-full mt-5" style="background:#FBFCFD; box-shadow:0 10px 30px -18px rgba(15,27,45,.6);">
-      <span style="width:9px; height:9px; border-radius:50%; background:#1D4ED8;"></span>
-      <span style="font-weight:700; color:#0F1B2D;">Open daily 07:00 — 18:00</span>
+      <span id="open-dot" style="width:9px; height:9px; border-radius:50%; background:#1D4ED8;"></span>
+      <span id="open-label" style="font-weight:700; color:#0F1B2D;">Open daily 07:00 — 18:00</span>
     </div>
     <a href="https://maps.google.com/?q=38+Burg+Street+Cape+Town" rel="noopener noreferrer" target="_blank" class="hv-btn hv-link lg:hidden mt-6 w-full flex items-center justify-center gap-2.5" style="height:52px; border-radius:999px; background:#1D4ED8; color:#fff; font-size:15px; font-weight:700;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>
@@ -726,6 +727,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   };
   applyFacts();
+
+  // --- Open now chip (assets/open-state.js; the printed "Open daily" text stays without JS) ---
+  // Cape Town time, whatever the visitor's clock says. No aria-live: a chip that
+  // changes at 07:00 and 18:00 should not interrupt a screen reader mid-sentence.
+  var openLabel = document.getElementById('open-label');
+  var openDot = document.getElementById('open-dot');
+  if (openLabel && openDot && window.HeavenOpenState) {
+    var renderOpenState = function () {
+      var state = window.HeavenOpenState.getOpenState(new Date(), HEAVEN_CONTENT.hours);
+      if (!state.label) { return; }
+      openLabel.textContent = state.label;
+      openDot.style.background = state.open ? '#15803D' : '#6B7A90';
+    };
+    renderOpenState();
+    setInterval(renderOpenState, 60000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderOpenState(); } });
+  }
 
   // --- Menu poster board ---
   var menuContainer = document.getElementById('menu-cards');
