@@ -30,18 +30,28 @@
     return (hours.groups || []).filter(function (g) { return !g.days || g.days.indexOf(day) !== -1; });
   }
 
+  // A close time that is not after the open time means the group runs past midnight
+  // (18:00 to 02:00) and belongs to the day it opens on.
+  function pastMidnight(g) { return toMinutes(g.close) <= toMinutes(g.open); }
+
   function getOpenState(now, hours) {
     var clock = capeTownClock(now);
 
     var openNow = groupsFor(hours, clock.day).filter(function (g) {
-      return clock.minutes >= toMinutes(g.open) && clock.minutes < toMinutes(g.close);
+      var open = toMinutes(g.open), close = toMinutes(g.close);
+      return pastMidnight(g) ? clock.minutes >= open : clock.minutes >= open && clock.minutes < close;
     })[0];
-    if (openNow) {
-      return { open: true, label: 'Open now · until ' + openNow.close };
+    // Still running from yesterday's late group?
+    var carried = groupsFor(hours, (clock.day + 6) % 7).filter(function (g) {
+      return pastMidnight(g) && clock.minutes < toMinutes(g.close);
+    })[0];
+    if (openNow || carried) {
+      return { open: true, label: 'Open now · until ' + (openNow || carried).close };
     }
 
-    // Next opening: later today, else the first day within a week that has hours.
-    for (var ahead = 0; ahead < 7; ahead++) {
+    // Next opening: later today, else the first day with hours. Eight days are looked at
+    // (today through today next week) so a one-weekday schedule finds itself after closing.
+    for (var ahead = 0; ahead <= 7; ahead++) {
       var day = (clock.day + ahead) % 7;
       var opens = groupsFor(hours, day)
         .filter(function (g) { return ahead > 0 || toMinutes(g.open) > clock.minutes; })

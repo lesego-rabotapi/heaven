@@ -66,6 +66,27 @@ test('the near-midnight edge: 23:59 closed, opens tomorrow; 00:00 closed, opens 
   assert.equal(getOpenState(at('00:00'), hours).label, 'Closed · opens 07:00');
 });
 
+test('a single-weekday schedule, after closing, names the same weekday a week later', () => {
+  const wednesdays = { groups: [{ label: 'Wednesdays', days: [3], open: '07:00', close: '18:00' }] };
+  assert.equal(getOpenState(at('19:00'), wednesdays).label, 'Closed · opens 07:00 on Wednesday');
+  assert.equal(getOpenState(at('06:00'), wednesdays).label, 'Closed · opens 07:00');
+});
+
+test('hours past midnight: open from 18:00 until 02:00 the next morning', () => {
+  const late = { groups: [{ label: 'Every day', open: '18:00', close: '02:00' }] };
+  assert.equal(getOpenState(at('17:59'), late).label, 'Closed · opens 18:00');
+  assert.equal(getOpenState(at('18:00'), late).label, 'Open now · until 02:00');
+  assert.equal(getOpenState(at('23:30'), late).open, true);
+  assert.equal(getOpenState(at('01:59'), late).label, 'Open now · until 02:00');
+  assert.equal(getOpenState(at('02:00'), late).label, 'Closed · opens 18:00');
+});
+
+test('past-midnight hours that only run on Friday are still open early on Saturday, not on Friday morning', () => {
+  const friNight = { groups: [{ label: 'Friday night', days: [5], open: '20:00', close: '01:00' }] };
+  assert.equal(getOpenState(at('00:30', '2026-11-07'), friNight).open, true);  // Saturday 00:30
+  assert.equal(getOpenState(at('00:30', '2026-11-06'), friNight).open, false); // Friday 00:30
+});
+
 test('no hours at all gives a neutral, non-throwing answer', () => {
   const s = getOpenState(at('12:00'), { groups: [] });
   assert.equal(s.open, false);

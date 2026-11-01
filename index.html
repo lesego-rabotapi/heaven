@@ -734,11 +734,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var openLabel = document.getElementById('open-label');
   var openDot = document.getElementById('open-dot');
   if (openLabel && openDot && window.HeavenOpenState) {
+    // With no answer (empty hours, or nothing in the next week) the printed text and
+    // the original dot come back, rather than whatever the last tick left behind.
+    var printedText = openLabel.textContent, printedDot = openDot.style.background;
     var renderOpenState = function () {
       var state = window.HeavenOpenState.getOpenState(new Date(), HEAVEN_CONTENT.hours);
-      if (!state.label) { return; }
-      openLabel.textContent = state.label;
-      openDot.style.background = state.open ? '#15803D' : '#6B7A90';
+      openLabel.textContent = state.label || printedText;
+      openDot.style.background = !state.label ? printedDot : state.open ? '#15803D' : '#6B7A90';
     };
     renderOpenState();
     setInterval(renderOpenState, 60000);
