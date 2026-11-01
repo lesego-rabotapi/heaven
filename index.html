@@ -50,7 +50,7 @@
     .menu-counter { padding-top: .875rem; font-size: 1.375rem; line-height: 1.25; color: var(--menu-ink); }
     .menu-note { color: var(--menu-muted); }
     /* Four columns need about 1280px: at 1024 each is under 190px and every description wraps. */
-    @media (min-width: 1024px) and (max-width: 1279.98px) { #menu-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) and (max-width: 1279.98px) { #menu-cards { display: block; column-count: 2; column-gap: 40px; } #menu-cards > * { break-inside: avoid; margin-bottom: 36px; } }
 
     /* Stairway progress (D2a). "Stairway to heaven in a cup" is the chalkboard's line; the
        page's sections become steps. Desktop: five bars on the right edge, each one wider
@@ -917,6 +917,41 @@ document.addEventListener('DOMContentLoaded', function () {
     renderOpenState();
     setInterval(renderOpenState, 60000);
     document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderOpenState(); } });
+  }
+
+  // --- Arch portal (CSS: .journey-*): only with ?journey=on, never under reduced motion ---
+  // The plan called for a CSS scroll timeline with this as the fallback. One mechanism
+  // that behaves the same in every browser is easier to trust, so this is the only one.
+  if (/[?&]journey=on(&|$)/.test(window.location.search)
+      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      && 'IntersectionObserver' in window) {
+    document.documentElement.setAttribute('data-journey', 'on');
+    var portalSteps = [], portalObservers = [];
+    for (var step = 0; step <= 40; step++) { portalSteps.push(step / 40); }
+    Array.prototype.forEach.call(document.querySelectorAll('#hero .tile'), function (frame) {
+      frame.classList.add('journey-tile');
+      frame.firstElementChild.classList.add('journey-door');
+      frame.insertAdjacentHTML('beforeend', '<picture class="journey-nave" aria-hidden="true"><source type="image/webp" srcset="images/stone-arch-interior.webp"/><img src="images/stone-arch-interior.jpg" alt="" width="662" height="823" loading="lazy" decoding="async"/></picture>');
+      var portalObserver = new IntersectionObserver(function (entries) {
+        var entry = entries[entries.length - 1];
+        // Leaving through the top: 0 while whole, 1 once gone. Anything else: 0.
+        var gone = entry.boundingClientRect.top < 0 ? 1 - entry.intersectionRatio : 0;
+        frame.style.setProperty('--journey', gone.toFixed(3));
+      }, { threshold: portalSteps });
+      // Watch the frame's parent, which is the same size and never scaled. Watching the
+      // frame itself fed back: growing it changed the ratio that decides how much it grows.
+      portalObserver.observe(frame.parentElement);
+      portalObservers.push(portalObserver);
+    });
+    // If the visitor turns reduced motion on while the page is open, stop at once.
+    var portalMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var portalStop = function (e) {
+      if (!e.matches) { return; }
+      portalObservers.forEach(function (o) { o.disconnect(); });
+      document.documentElement.removeAttribute('data-journey');
+    };
+    if (portalMotion.addEventListener) { portalMotion.addEventListener('change', portalStop); }
+    else if (portalMotion.addListener) { portalMotion.addListener(portalStop); }
   }
 
   // --- Horizontal feed marquee ---

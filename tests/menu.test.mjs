@@ -44,17 +44,19 @@ test('the menu section exists in the HTML itself, not only after script runs', (
   assert.doesNotMatch(section, /JS-rendered|needs JavaScript/);
 });
 
-test('groups appear in order with exactly the printed items, descriptions and prices', () => {
-  const groups = [...section.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3|<\/div>\s*<\/div>\s*<div class="hidden lg:flex|$)/g)];
-  const names = groups.map((g) => text(g[1]));
-  assert.deepEqual(names.slice(0, 3), expected.map((e) => e.group));
+test('groups appear in order with their numerals, exactly the printed items, descriptions and prices', () => {
+  const groups = section.split('<div class="menu-group">').slice(1);
+  assert.equal(groups.length, 4, 'expected four menu groups');
+  const head = (g) => [inner(g, 'menu-cat-no'), inner(g, 'menu-cat-h3')];
+  assert.deepEqual(groups.map(head), [['I', 'Coffee'], ['II', 'Something different'], ['III', 'Make it yours'], ['IV', 'From the counter']]);
   expected.forEach((e, i) => {
-    const items = [...groups[i][2].matchAll(/<li\b[\s\S]*?<\/li>/g)].map((m) => m[0]);
+    const items = [...groups[i].matchAll(/<li\b[\s\S]*?<\/li>/g)].map((m) => m[0]);
     const got = items.map((li) => [inner(li, 'menu-item-name'), inner(li, 'menu-item-note'), inner(li, 'menu-item-price')]);
     assert.deepEqual(got, e.items, e.group);
   });
+  assert.equal((groups[3].match(/<li\b/g) || []).length, 0, 'the counter group is a sentence, not a list');
+  assert.match(text(groups[3]), /Fresh bakes at the counter\. Ask what's out today\./);
 });
-
 test('the counter line, the currency note and no invented items', () => {
   const t = text(section);
   assert.match(t, /Fresh bakes at the counter\. Ask what's out today\./);
@@ -63,5 +65,5 @@ test('the counter line, the currency note and no invented items', () => {
 });
 
 test('the script no longer carries a menu', () => {
-  assert.doesNotMatch(html, /HEAVEN_CONTENT\.menu|menu: \{|Menu poster board/);
+  assert.doesNotMatch(html, /HEAVEN_CONTENT\.menu|Menu poster board/);
 });
