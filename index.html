@@ -53,6 +53,16 @@
     .find-text p { margin: .375rem 0 0; font-size: .9375rem; line-height: 1.5; color: var(--find-muted); }
     .find-foot { margin-top: 1.5rem; }
     .find-cta { display: inline-flex; align-items: center; justify-content: center; gap: .625rem; min-height: 3rem; padding-inline: 1.5rem; border-radius: 999px; background: var(--find-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
+    /* Good to know (B4): small chips for facts a photo or the client has confirmed. A chip
+       whose fact is unknown is hidden by applyFacts(); the group hides if fewer than two
+       are left. rem and tokens only; the chips are labels, not controls. */
+    :root { --good-chip-bg: #FBFCFD; --good-chip-line: rgba(15,27,45,.16); --good-ink: #0F1B2D; --good-icon: #1D4ED8; }
+    .good { margin-top: 2rem; }
+    .good-kicker { display: block; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--find-kicker); }
+    .good-list { list-style: none; margin: .75rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .625rem; }
+    .good-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem .875rem .5rem .75rem; border-radius: 999px; background: var(--good-chip-bg); border: 1px solid var(--good-chip-line); color: var(--good-ink); font-size: .9375rem; font-weight: 600; line-height: 1.2; }
+    .good-chip svg { flex: none; width: 1.125rem; height: 1.125rem; color: var(--good-icon); }
+    .good + .find-foot { margin-top: 1.5rem; }
     @media (min-width: 768px) { .find-step { margin-left: calc(var(--i) * 4%); } .find-photo { flex-basis: 30%; } }
     @media (min-width: 1024px) {
       .find-section { padding: 5rem 5.5% 6rem; }
@@ -542,6 +552,13 @@
       <div class="find-text"><span class="find-no font-display" aria-hidden="true">4</span><h3 class="find-h3 font-display uppercase m-0">Climb the steps to the door</h3><p>A flight of steps leads up to the door, under the pointed arch.</p></div>
     </li>
   </ol>
+  <div class="good" data-fact-group>
+    <span class="good-kicker">Good to know</span>
+    <ul class="good-list" aria-label="Good to know">
+      <li class="good-chip" data-fact="outdoorTables"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16M12 9v11M8 20h8"></path></svg>Tables outside</li>
+      <li class="good-chip" data-fact="steps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h4v-4h4v-4h4V8h4V4"></path></svg>A flight of steps to the door</li>
+    </ul>
+  </div>
   <div class="find-foot">
     <a href="https://www.google.com/maps/search/?api=1&amp;query=Heaven%20Coffee%2C%2038%20Burg%20Street%2C%20Cape%20Town%208000" data-directions rel="noopener noreferrer" target="_blank" class="find-cta hv-btn hv-link">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>
