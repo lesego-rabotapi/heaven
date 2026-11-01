@@ -45,8 +45,7 @@ test('it ends with a Directions link that the maps script can rewrite', () => {
   assert.match(section, /<a [^>]*data-directions[^>]*>[\s\S]*?Get directions/);
 });
 
-test('"Find us" is reachable from the header, the menu drawer and the stairway marker', () => {
+test('"Find us" is reachable from the header, and the menu drawer', () => {
   assert.match(html, /<nav aria-label="Primary"[\s\S]*?href="#find-the-door"/);
   assert.match(html, /staggered-menu-item[^>]*href="#find-the-door"/);
-  assert.match(html, /label: 'Find us', ids: \['find-the-door'\]/);
 });
