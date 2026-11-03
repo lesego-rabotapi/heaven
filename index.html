@@ -273,7 +273,7 @@
     .site-header { top: 16px; left: 16px; right: 16px; padding: 6px 6px 6px 20px; }
     .site-header .logo-word { font-size: 22px; }
     .site-header .logo-sub { font-size: 10px; }
-    .hero-est { top: 108px; font-size: 12px; gap: 22px; }
+    .hero-est { top: 108px; font-size: 12px; gap: 22px; text-shadow: 0 1px 8px rgba(12,40,84,.6); }
     /* Fluid caps: the widest headline line is ~2.85em wide, so below ~377px the
        fixed 116px overflowed the 20px gutters. min() keeps the source's 116px
        everywhere it already fit and only shrinks on narrower phones. */
@@ -341,7 +341,7 @@
       .site-header .logo-word { font-size: 26px; }
       .site-header .logo-sub { font-size: 13px; }
       html { scroll-padding-top: 116px; }
-      .hero-est { top: 150px; font-size: 13px; gap: 28px; }
+      .hero-est { top: 150px; font-size: 13px; gap: 28px; text-shadow: 0 1px 8px rgba(12,40,84,.6); }
       .hero-h1 { top: var(--hero-h1-top); font-size: var(--hero-fs); }
       .hero-band { top: calc(var(--hero-h1-top) + 1.64 * var(--hero-fs)); }
       .hero-sub { top: 186px; gap: 24px; }
@@ -563,7 +563,7 @@
     <span class="hidden lg:inline">Est. 2017 · 38 Burg Street, Cape Town</span>
     <span class="hidden lg:inline-block" style="width:32px; height:1px; background:#FBFCFD; margin-left:12px;"></span>
   </div>
-  <h1 class="hero-h1 absolute left-5 right-5 lg:left-14 lg:right-14 z-[5] pointer-events-none font-display text-white uppercase text-center m-0" style="margin-top:44px; font-stretch:62%; font-weight:900; letter-spacing:-0.02em; line-height:0.82; text-shadow:0 6px 34px rgba(12,40,84,.5);">heaven<br/>Coffee</h1>
+  <h1 class="hero-h1 absolute left-5 right-5 lg:left-14 lg:right-14 z-[5] pointer-events-none font-display text-white uppercase text-center m-0" style="margin-top:44px; font-stretch:62%; font-weight:900; letter-spacing:-0.02em; line-height:0.82; text-shadow:0 6px 34px rgba(12,40,84,.5);">heaven <br/>Coffee</h1>
 
   <div class="hero-sub absolute left-5 right-5 lg:left-14 lg:right-14 z-[9] flex flex-col items-center">
     <p class="font-quote italic text-center m-0" style="color:#0F1B2D;">Sanctuary coffee at Greenmarket Square, inside a working 19th-century church.</p>
@@ -761,7 +761,7 @@
 <section id="visit-desktop" class="hidden lg:grid" style="background:#EEF4FA; padding:60px 56px 120px; grid-template-columns:repeat(12,minmax(0,1fr)); column-gap:24px;">
   <div style="grid-column:span 7;" class="flex flex-col">
     <div class="flex items-end justify-between" style="border-bottom:2px solid #0F1B2D; padding-bottom:10px;">
-      <h2 class="font-display uppercase m-0" style="font-stretch:62%; font-weight:900; font-size:200px; line-height:0.78; letter-spacing:-0.03em;">Open 7–6</h2>
+      <h2 aria-label="Open 7 to 6" class="font-display uppercase m-0" style="font-stretch:62%; font-weight:900; font-size:200px; line-height:0.78; letter-spacing:-0.03em;">Open 7–6</h2>
       <span class="font-quote italic" style="padding-bottom:14px; font-size:30px; color:#1E3A8A;">every day</span>
     </div>
     <div id="hours-scale" class="grid" style="grid-template-columns:140px minmax(0,1fr) 150px; column-gap:20px; padding:14px 0 6px; font-size:12px; font-weight:700; letter-spacing:0.14em; color:#3E4C63;">
@@ -823,7 +823,7 @@
        <main> does not contain it; naming the section makes it a landmark of its own. -->
   <section id="visit" aria-label="Hours and visit" class="flex flex-col" style="padding:40px 16px 0;">
     <div class="visit-head flex items-end justify-between" style="border-bottom:2px solid #0F1B2D; padding-bottom:6px;">
-      <h2 class="font-display uppercase m-0" style="font-stretch:62%; font-weight:900; font-size:104px; line-height:0.78; letter-spacing:-0.03em;">Open 7–6</h2>
+      <h2 aria-label="Open 7 to 6" class="font-display uppercase m-0" style="font-stretch:62%; font-weight:900; font-size:104px; line-height:0.78; letter-spacing:-0.03em;">Open 7–6</h2>
       <span class="font-quote italic" style="padding-bottom:8px; font-size:20px; color:#1E3A8A;">daily</span>
     </div>
     <div id="hours-rows-mobile"><noscript><!-- keep in sync with HEAVEN_CONTENT.hours --><p class="m-0" style="padding:14px 0; font-size:18px; font-weight:700; color:#0F1B2D;">Every day, 07:00 — 18:00</p></noscript></div>
