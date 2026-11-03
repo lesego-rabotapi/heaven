@@ -28,3 +28,17 @@ for (const job of jobs) {
       'jpg ' + Math.round(statSync(base + '.jpg').size / 1024) + ' KB');
   }
 }
+
+// Share image for search and social previews (og:image): a text-free 1.91:1 crop of the door
+// photo, the pointed arch and the door, 1200x630. Cropped from the original first so the
+// pixels are not resized twice; sharp writes no metadata, so no EXIF/GPS.
+const doorSource = join(root, 'incoming/door-and-steps.jpg');
+const doorMeta = await sharp(doorSource).rotate().metadata();
+const cropHeight = Math.round(doorMeta.width * 630 / 1200);
+const ogPath = join(root, 'images/og-1200x630.jpg');
+await sharp(doorSource).rotate()
+  .extract({ left: 0, top: 40, width: doorMeta.width, height: cropHeight })
+  .resize(1200, 630)
+  .jpeg({ quality: 72, progressive: true, mozjpeg: true })
+  .toFile(ogPath);
+console.log('og-1200x630 1200x630 jpg ' + Math.round(statSync(ogPath).size / 1024) + ' KB');
