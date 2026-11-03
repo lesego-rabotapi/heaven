@@ -138,6 +138,16 @@
       .feed-tile:focus-visible::after { display: none; }
     }
     .cloud { position: absolute; border-radius: 50%; background: #FBFCFD; filter: blur(38px); pointer-events: none; }
+    /* Hero arch frame (D1). The photo is clipped to a pointed arch (clipPath in the hero's svg
+       defs); the white edge is an svg stroke drawn above it, 6px wide, so it follows the point
+       exactly. The shadow is a drop-shadow, which follows the clipped shape; a box-shadow would
+       be the old rectangle. Both stay inside .tile, so the optional arch portal scales them
+       together. */
+    .arch-frame { position: relative; filter: drop-shadow(0 28px 26px rgba(15,27,45,.32)); }
+    .arch-m > picture { clip-path: url(#arch-clip-m); }
+    .arch-d > picture { clip-path: url(#arch-clip-d); }
+    .arch-edge { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .arch-edge path { fill: none; stroke: #FBFCFD; stroke-width: 6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
     .tile img { transition: transform .6s ease; }
     .tile:hover img { transform: scale(1.05); }
     /* Arch portal (D2b), off unless <html data-journey="on"> (set by ?journey=on). As the
@@ -475,6 +485,14 @@
      header instead.
      ===================================================================== -->
 <section id="hero" class="hero-section relative w-full overflow-hidden">
+  <!-- Arch clip paths: a pointed (lancet) arch like the real door, two arcs meeting at the apex.
+       objectBoundingBox units, so the shape follows each frame's size; the arc radii are the
+       frame's width (phone) and 0.9 x width (desktop), the springing line sits where the arcs
+       are vertical. The svg is 0x0 but not display:none, which some browsers ignore for clip-path. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <clipPath id="arch-clip-m" clipPathUnits="objectBoundingBox"><path d="M0 .9647 L0 .6112 A1 .7059 0 0 1 .5 0 A1 .7059 0 0 1 1 .6112 L1 .9647 Q1 1 .95 1 L.05 1 Q0 1 0 .9647 Z"></path></clipPath>
+    <clipPath id="arch-clip-d" clipPathUnits="objectBoundingBox"><path d="M0 .9632 L0 .7637 A.9 .8526 0 0 1 .5 0 A.9 .8526 0 0 1 1 .7637 L1 .9632 Q1 1 .9611 1 L.0389 1 Q0 1 0 .9632 Z"></path></clipPath>
+  </svg>
   <!-- Mobile clouds -->
   <div class="cloud d lg:hidden" style="width:320px; height:110px; left:-90px; top:300px; opacity:.9;" aria-hidden="true"></div>
   <div class="cloud lg:hidden" style="width:420px; height:140px; left:-20px; top:900px; opacity:.95;" aria-hidden="true"></div>
@@ -490,13 +508,15 @@
 
   <!-- Photo band -->
   <div class="absolute z-[2] flex justify-center lg:hidden" style="left:20px; right:20px; top:300px;">
-    <div class="tile" style="width:240px; height:340px; border-radius:120px 120px 12px 12px; overflow:hidden; border:6px solid #FBFCFD; box-shadow:0 30px 60px -26px rgba(15,27,45,.45);">
+    <div class="tile arch-frame arch-m" style="width:240px; height:340px;">
       <picture class="block w-full h-full"><source type="image/webp" sizes="240px" srcset="images/door-arch-480.webp 480w, images/door-arch-800.webp 800w"/><img src="images/door-arch-480.jpg" srcset="images/door-arch-480.jpg 480w, images/door-arch-800.jpg 800w" sizes="240px" alt="The Gothic stone entrance to Heaven Coffee: a pointed arch above a flight of steps, a navy umbrella and a chalkboard sign" width="480" height="640" class="w-full h-full object-cover block" style="object-position:50% 28%;" fetchpriority="high" decoding="async"/></picture>
+      <svg class="arch-edge" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 .9647 L0 .6112 A1 .7059 0 0 1 .5 0 A1 .7059 0 0 1 1 .6112 L1 .9647 Q1 1 .95 1 L.05 1 Q0 1 0 .9647 Z"></path></svg>
     </div>
   </div>
   <div class="hero-band absolute z-[2] hidden lg:flex justify-center items-start" style="left:56px; right:56px;">
-    <div class="tile" style="width:360px; height:380px; border-radius:180px 180px 14px 14px; overflow:hidden; border:6px solid #FBFCFD; box-shadow:0 34px 70px -30px rgba(15,27,45,.45);">
+    <div class="tile arch-frame arch-d" style="width:360px; height:380px;">
       <picture class="block w-full h-full"><source type="image/webp" sizes="360px" srcset="images/door-arch-480.webp 480w, images/door-arch-800.webp 800w"/><img src="images/door-arch-480.jpg" srcset="images/door-arch-480.jpg 480w, images/door-arch-800.jpg 800w" sizes="360px" alt="The Gothic stone entrance to Heaven Coffee: a pointed arch above a flight of steps, a navy umbrella and a chalkboard sign" width="480" height="640" class="w-full h-full object-cover block" style="object-position:50% 28%;" fetchpriority="high" decoding="async"/></picture>
+      <svg class="arch-edge" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 .9632 L0 .7637 A.9 .8526 0 0 1 .5 0 A.9 .8526 0 0 1 1 .7637 L1 .9632 Q1 1 .9611 1 L.0389 1 Q0 1 0 .9632 Z"></path></svg>
     </div>
   </div>
 
