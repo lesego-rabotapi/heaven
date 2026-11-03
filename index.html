@@ -3,8 +3,44 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Heaven Coffee | Central Methodist Mission, Cape Town</title>
-  <meta name="description" content="Heaven Coffee Shop — a café inside Central Methodist Mission, 38 Burg Street, Greenmarket Square, Cape Town. Founded 2017 by Mondli Mahamba."/>
+  <title>Heaven Coffee | A café inside a church, Cape Town</title>
+  <meta name="description" content="Coffee inside a working 19th-century church on Greenmarket Square, Cape Town. Open daily 07:00 to 18:00. 38 Burg Street."/>
+  <!-- Share preview. TODO(content): og:image, twitter:image and the JSON-LD image are relative
+       paths because there is no domain yet; crawlers need absolute URLs, so make them absolute
+       (and add og:url and a canonical link) when the domain exists. The hours and address here
+       must equal HEAVEN_CONTENT; tests/seo.test.mjs checks it. -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Heaven Coffee"/>
+  <meta property="og:title" content="Heaven Coffee | A café inside a church, Cape Town"/>
+  <meta property="og:description" content="Coffee inside a working 19th-century church on Greenmarket Square, Cape Town. Open daily 07:00 to 18:00. 38 Burg Street."/>
+  <meta property="og:image" content="images/og-1200x630.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="The pointed stone arch of Central Methodist Mission, with the Heaven Coffee door inside it"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="images/og-1200x630.jpg"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Heaven Coffee",
+    "image": "images/og-1200x630.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "38 Burg Street",
+      "addressLocality": "Cape Town",
+      "postalCode": "8000",
+      "addressCountry": "ZA"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "07:00",
+      "closes": "18:00"
+    },
+    "sameAs": ["https://instagram.com/heavencoffeect"]
+  }
+  </script>
   <meta name="robots" content="noindex"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
