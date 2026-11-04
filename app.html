@@ -7,8 +7,65 @@
   <meta name="theme-color" content="#0A1220"/>
   <title>Heaven Coffee | A café inside a church, Cape Town</title>
   <meta name="description" content="Coffee inside a working 19th-century church on Greenmarket Square, Cape Town. Open daily 07:00 to 18:00. 38 Burg Street."/>
+  <!-- Share preview. TODO(content): og:image, twitter:image and the JSON-LD image are relative
+       paths because there is no domain yet; crawlers need absolute URLs, so make them absolute
+       (and add og:url and a canonical link) when the domain exists. The hours and address here
+       must equal HEAVEN_CONTENT; tests/seo.test.mjs checks it. -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Heaven Coffee"/>
+  <meta property="og:title" content="Heaven Coffee | A café inside a church, Cape Town"/>
+  <meta property="og:description" content="Coffee inside a working 19th-century church on Greenmarket Square, Cape Town. Open daily 07:00 to 18:00. 38 Burg Street."/>
+  <meta property="og:image" content="images/og-1200x630.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="The pointed stone arch of Central Methodist Mission, with the Heaven Coffee door inside it"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="images/og-1200x630.jpg"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Heaven Coffee",
+    "image": "images/og-1200x630.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "38 Burg Street",
+      "addressLocality": "Cape Town",
+      "postalCode": "8000",
+      "addressCountry": "ZA"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "07:00",
+      "closes": "18:00"
+    },
+    "sameAs": ["https://instagram.com/heavencoffeect"]
+  }
+  </script>
   <meta name="robots" content="noindex"/>
-  <link rel="stylesheet" href="/tailwind.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <!-- Literal transcription of two supplied Claude Design Canvas exports
+       (Mobile·390 and Desktop·1440 .dc.html files, not copied into this
+       repo) — a deliberate, exact recreation, not an adapted/simplified
+       version. Where the two source files genuinely diverge in structure
+       (not just size), this file carries BOTH literal structures,
+       switched at a single lg (1024px) breakpoint, rather than merging
+       them into one "improved" tree — including the mobile export's own
+       markup mistake (Hours/Visit content nested inside <footer>).
+       Deliberate departures from the source since: the duplicated
+       "Get directions" button was removed, the header is fixed, the
+       hours ruler collapses identical days into one row, and 768-1023px
+       (tablets, which get the mobile structure) has its own layout tier:
+       one @media block plus a reduced-motion companion, further down. -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62.5..100,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <!-- Without JavaScript the feed strip and its pause button would be an empty gap and a
+       dead control (the Instagram button above it still works), the hamburger has no
+       drawer to open, the drawer's own markup would sit in the page as invisible rows,
+       and the hours scale would label nothing. Ids beat the utility classes, so no
+       !important is needed. -->
   <style>html.js-motion [data-intro] { opacity: 0; }</style>
   <script>
     // Motion is an enhancement: this class lets the CSS hide the hero [data-intro] items until the bundle animates
@@ -19,8 +76,9 @@
       window.__motionFailsafe = setTimeout(function () { document.documentElement.classList.remove('js-motion'); }, 4000);
     }
   </script>
+  <noscript><style>#feed-controls, #nav-toggle, #nav-drawer { display: none; }</style></noscript>
 </head>
-<body>
+<body class="font-body-md antialiased">
   <div id="root"><!--app-html--></div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
