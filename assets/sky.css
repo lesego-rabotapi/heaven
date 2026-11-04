@@ -1,0 +1,113 @@
+/* ===== Heaven sky options =====
+   Only sky-related colour changes. Structure, type, copy, photos and
+   motion are the live site's own. Variants are switched by
+   html[data-sky]; "now" applies nothing.
+   Tokens: --g page ground · --menu menu board · --card info cards
+   --hero / --hero-lg hero sky · --glow / --glow-lg navy halo
+   --feed feed band · --foot footer · --cloud / --cloudo cloud tint */
+
+/* ---------- B · dusk: hero sky goes navy, page stays light ---------- */
+html[data-sky="dusk"] .hero-section { background: linear-gradient(180deg, #070E1C 0%, #0F1B2D 22%, #1E3A8A 44%, #3F6BB8 54%, #A9CDF0 61%, #EEF4FA 66%) !important; }
+html[data-sky="dusk"] .cloud { background: #A9CDF0 !important; opacity: .16 !important; }
+html[data-sky="dusk"] .cloud[style*="top:900px"],
+html[data-sky="dusk"] .cloud[style*="top:1040px"] { background: #FBFCFD !important; opacity: .9 !important; }
+html[data-sky="dusk"] #footer-mobile { background: linear-gradient(to top, #0F1B2D 0px, #1E3A8A 220px, #A9CDF0 420px, #EEF4FA 560px) !important; }
+html[data-sky="dusk"] footer [role="group"] a:not([aria-current]) { color: #EEF4FA !important; border-color: rgba(238,244,250,.45) !important; }
+@media (min-width: 1024px) {
+  html[data-sky="dusk"] .hero-section { background: linear-gradient(180deg, #070E1C 0%, #0F1B2D 24%, #1E3A8A 50%, #3F6BB8 64%, #A9CDF0 74%, #EEF4FA 81%) !important; }
+  html[data-sky="dusk"] #footer-desktop { background: linear-gradient(180deg, #EEF4FA 0%, #D6E7F7 40%, #1E3A8A 72%, #0F1B2D 100%) !important; }
+  html[data-sky="dusk"] #footer-desktop > div:last-child > div:last-child { color: #EEF4FA !important; }
+}
+
+/* ---------- C · night / D · black: tokens ---------- */
+html[data-sky="night"] {
+  --g: #0A1220; --menu: #13213A; --card: #16253D;
+  --hero: linear-gradient(180deg, #03060C 0%, #0A1220 34%, #0F1B2D 62%, #0A1220 100%);
+  --hero-lg: linear-gradient(180deg, #03060C 0%, #0A1220 30%, #0F1B2D 60%, #0A1220 100%);
+  --glow: radial-gradient(85% 26% at 50% 44%, rgba(30,58,138,.6) 0%, rgba(30,58,138,0) 72%);
+  --glow-lg: radial-gradient(55% 30% at 50% 62%, rgba(30,58,138,.6) 0%, rgba(30,58,138,0) 72%);
+  --feed: linear-gradient(180deg, #0A1220 0%, #0F1B2D 55%, #0A1220 100%);
+  --foot: linear-gradient(180deg, #0A1220 0%, #0F1B2D 55%, #1E3A8A 100%);
+  --cloud: #1E3A8A; --cloudo: .35;
+}
+html[data-sky="black"] {
+  --g: #050608; --menu: #0F1B2D; --card: #101521;
+  --hero: linear-gradient(180deg, #000000 0%, #030407 45%, #050608 100%);
+  --hero-lg: linear-gradient(180deg, #000000 0%, #030407 45%, #050608 100%);
+  --glow: radial-gradient(85% 24% at 50% 44%, rgba(30,58,138,.4) 0%, rgba(30,58,138,0) 72%);
+  --glow-lg: radial-gradient(55% 28% at 50% 62%, rgba(30,58,138,.4) 0%, rgba(30,58,138,0) 72%);
+  --feed: #050608;
+  --foot: linear-gradient(180deg, #050608 0%, #050608 45%, #0F1B2D 100%);
+  --cloud: #0F1B2D; --cloudo: .5;
+}
+
+/* ---------- C + D: shared dark mapping ---------- */
+html:is([data-sky="night"],[data-sky="black"]) body { background: var(--g) !important; color: #EEF4FA !important; }
+html:is([data-sky="night"],[data-sky="black"]) .hero-section { background: var(--hero) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .hero-vignette { background: var(--glow) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .cloud { background: var(--cloud) !important; opacity: var(--cloudo) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .hero-sub p { color: #EEF4FA !important; }
+html:is([data-sky="night"],[data-sky="black"]) #story,
+html:is([data-sky="night"],[data-sky="black"]) #visit-desktop { background: var(--g) !important; }
+html:is([data-sky="night"],[data-sky="black"]) #feed { background: var(--feed) !important; }
+html:is([data-sky="night"],[data-sky="black"]) #menu { background: var(--menu) !important; box-shadow: inset 0 0 0 1px rgba(169,205,240,.14); }
+html:is([data-sky="night"],[data-sky="black"]) #footer-desktop,
+html:is([data-sky="night"],[data-sky="black"]) #footer-mobile { background: var(--foot) !important; }
+@media (min-width: 1024px) {
+  html:is([data-sky="night"],[data-sky="black"]) .hero-section { background: var(--hero-lg) !important; }
+  html:is([data-sky="night"],[data-sky="black"]) .hero-vignette { background: var(--glow-lg) !important; }
+}
+
+/* text: dark-on-light inks become light-on-dark inks */
+html:is([data-sky="night"],[data-sky="black"]) [style*="color:#0F1B2D"] { color: #EEF4FA !important; }
+html:is([data-sky="night"],[data-sky="black"]) [style*="color:#26344A"] { color: #C9D6E8 !important; }
+html:is([data-sky="night"],[data-sky="black"]) [style*="color:#3E4C63"] { color: #9FB0C8 !important; }
+html:is([data-sky="night"],[data-sky="black"]) [style*="color:#1E3A8A"],
+html:is([data-sky="night"],[data-sky="black"]) [style*="color:#12326E"] { color: #A9CDF0 !important; }
+
+/* rules and tracks */
+html:is([data-sky="night"],[data-sky="black"]) [style*="solid #0F1B2D"] { border-color: rgba(238,244,250,.8) !important; }
+html:is([data-sky="night"],[data-sky="black"]) [style*="rgba(15,27,45,.18)"] { border-color: rgba(238,244,250,.18) !important; }
+html:is([data-sky="night"],[data-sky="black"]) [style*="rgba(15,27,45,.16)"] { border-color: rgba(238,244,250,.16) !important; }
+html:is([data-sky="night"],[data-sky="black"]) [style*="rgba(15,27,45,.35)"] { border-color: rgba(238,244,250,.4) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .hours-track { background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.3) 0 1px, transparent 1px calc(100% / 24)) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .hours-bar { background: #A9CDF0 !important; }
+
+/* actions: sapphire lifted one step so it still reads against the dark (≥3:1), white label 4.5:1 */
+html:is([data-sky="night"],[data-sky="black"]) [style*="background:#1D4ED8"] { background: #3B6FE8 !important; }
+html:is([data-sky="night"],[data-sky="black"]) .hv-ghost { border-color: #A9CDF0 !important; color: #A9CDF0 !important; }
+html:is([data-sky="night"],[data-sky="black"]) .hv-ghost:hover { background: rgba(169,205,240,.1) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .hv-link:not(.hv-btn):hover { color: #A9CDF0 !important; }
+
+/* info cards go dark with the page */
+html:is([data-sky="night"],[data-sky="black"]) #feed [style*="background:#FBFCFD"],
+html:is([data-sky="night"],[data-sky="black"]) #visit [style*="background:#FBFCFD"] { background: var(--card) !important; }
+
+/* things that stay light: header pill, hours pill, founder card, active language pill */
+html:is([data-sky="night"],[data-sky="black"]) .site-header [style*="color:#0F1B2D"],
+html:is([data-sky="night"],[data-sky="black"]) .hero-pill [style*="color:#0F1B2D"],
+html:is([data-sky="night"],[data-sky="black"]) [role="group"] a[aria-current] { color: #0F1B2D !important; }
+html:is([data-sky="night"],[data-sky="black"]) .site-header [style*="color:#3E4C63"] { color: #3E4C63 !important; }
+html:is([data-sky="night"],[data-sky="black"]) .site-header [style*="background:#1D4ED8"] { background: #1D4ED8 !important; }
+html:is([data-sky="night"],[data-sky="black"]) #story [style*="background:#FBFCFD"] { color: #0F1B2D !important; }
+html:is([data-sky="night"],[data-sky="black"]) #story [style*="background:#FBFCFD"] [style*="color:#3E4C63"] { color: #3E4C63 !important; }
+
+/* mobile drawer */
+html:is([data-sky="night"],[data-sky="black"]) .staggered-menu-panel { background: var(--g) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .staggered-menu-item { color: #EEF4FA !important; border-bottom-color: rgba(238,244,250,.1) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .staggered-menu-num { color: #A9CDF0 !important; }
+html:is([data-sky="night"],[data-sky="black"]) .staggered-menu-socials a { color: #9FB0C8 !important; }
+
+/* ---------- C + D: sections and parts added after the sky options were drawn ---------- */
+html:is([data-sky="night"],[data-sky="black"]) {
+  /* Find us, Good to know and the phone action bar are token-driven; re-point the tokens. */
+  --find-bg: #0F1B2D; --find-ink: #EEF4FA; --find-muted: #9FB0C8; --find-kicker: #A9CDF0;
+  --find-accent: #3B6FE8; --find-photo-bg: #16253D;
+  --good-chip-bg: var(--card); --good-chip-line: rgba(238,244,250,.2); --good-ink: #EEF4FA; --good-icon: #A9CDF0;
+  --bar-bg: rgba(10,18,32,.94); --bar-ink: #EEF4FA; --bar-accent: #3B6FE8;
+}
+html:is([data-sky="night"],[data-sky="black"]) .truths-section { background: var(--g) !important; }
+html:is([data-sky="night"],[data-sky="black"]) .other-maps { color: #C9D6E8; }
+html:is([data-sky="night"],[data-sky="black"]) .other-maps a { color: #A9CDF0; }
+/* The header pill is translucent; over a dark page it turned grey and its small "coffee" fell under 4.5:1. */
+html:is([data-sky="night"],[data-sky="black"]) .site-header { background: rgba(251,252,253,.94) !important; }

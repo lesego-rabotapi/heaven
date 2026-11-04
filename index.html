@@ -449,6 +449,15 @@
   </style>
   <!-- Utilities are precompiled: edit tailwind.config.js / the classes in this file, then run `npm run build:css`. -->
   <link rel="stylesheet" href="tailwind.css"/>
+  <link rel="stylesheet" href="assets/sky.css"/>
+  <script>
+    // Night theme: follows the visitor's dark-mode setting. ?sky=night|black|dusk|now previews or forces a sky.
+    (function () {
+      var q = /[?&]sky=(night|black|dusk|now)/.exec(location.search);
+      var sky = q ? q[1] : (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'now');
+      if (sky !== 'now') { document.documentElement.setAttribute('data-sky', sky); }
+    })();
+  </script>
   <script src="assets/open-state.js" defer></script>
   <script src="assets/directions.js" defer></script>
   <!-- Without JavaScript the feed strip and its pause button would be an empty gap and a
