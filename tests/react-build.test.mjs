@@ -27,8 +27,8 @@ test('every section is in the prerendered HTML, so it reads with JavaScript off'
   for (const id of ['hero', 'find-the-door', 'story', 'menu', 'feed', 'visit-desktop', 'footer-desktop', 'footer-mobile', 'action-bar', 'nav-drawer']) {
     assert.match(html, new RegExp(`id="${id}"`), id);
   }
-  // the marquee tiles and the hours rows are rendered, not filled in by script
-  assert.equal((html.match(/class="feed-tile tile"/g) || []).length, 20, '10 photos, shown once and once as the loop copy');
+  // the photo strip and the hours rows are rendered, not filled in by script
+  assert.equal((html.match(/class="feed-tile tile"/g) || []).length, 10, 'ten photos, once each: no looped copy');
   assert.match(html, /class="hours-bar"/);
   // the menu is plain HTML with real prices
   assert.match(html, /Flat White/);
@@ -71,6 +71,22 @@ test('the bundle loads as a module, and its stylesheet carries Tailwind, the dar
 
 test('typed sources compile', () => {
   execSync('npm run typecheck', { cwd: root, stdio: 'pipe' });
+});
+
+test('every image states its size, so nothing shifts as it loads', () => {
+  const imgs = html.match(/<img\b[^>]*>/g) || [];
+  assert.ok(imgs.length >= 20, 'found the images');
+  for (const tag of imgs) {
+    assert.match(tag, /\swidth="\d+"/, tag.slice(0, 90));
+    assert.match(tag, /\sheight="\d+"/, tag.slice(0, 90));
+  }
+});
+
+test('the photo strip does not move by itself: no loop copy, no animation, scrolled by hand', () => {
+  assert.doesNotMatch(html, /feed-track l/);
+  const css = readFileSync(join(root, 'dist', html.match(/href="\.\/(assets\/app-[\w-]+\.css)"/)[1]), 'utf8');
+  assert.doesNotMatch(css, /feed-left|px-per-s/);
+  assert.match(css, /\.feed-row\{[^}]*overflow-x:auto/);
 });
 
 test('the Instagram cards are in the prerendered HTML with the handle, photos and no counts', () => {

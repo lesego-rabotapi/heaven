@@ -56,7 +56,7 @@ test('the React app themes itself from tokens: no sky.css, no attribute selector
 
 test('component styles name tokens, not colours (the few exceptions are listed)', () => {
   // exceptions: the feed tile's placeholder behind its photo, the white label on it, and the printed dot's colour
-  const allowed = new Set(['src/components/FeedMarquee.tsx:#A9CDF0', 'src/components/FeedMarquee.tsx:#fff', 'src/components/Hero.tsx:#1D4ED8']);
+  const allowed = new Set(['src/components/FeedStrip.tsx:#A9CDF0', 'src/components/FeedStrip.tsx:#fff']);
   for (const f of readdirSync(join(root, 'src/components')).filter((n) => n.endsWith('.tsx'))) {
     const hexes = read('src/components/' + f).match(/(?<!href=")#[0-9A-Fa-f]{3,6}\b/g) || [];
     for (const h of hexes) assert.ok(allowed.has(`src/components/${f}:${h}`), `${f} hard-codes ${h}`);
@@ -68,6 +68,6 @@ test('light surfaces inside the night page are scoped with .on-light, not specia
   for (const f of ['Header', 'Story']) assert.match(read(`src/components/${f}.tsx`), /on-light/, f);
 });
 
-test('the feed has no play/pause button', () => {
-  assert.doesNotMatch(read('src/components/FeedMarquee.tsx'), /feed-pause|aria-pressed|Pause feed/);
+test('the feed has no play/pause button, and nothing in it moves by itself', () => {
+  assert.doesNotMatch(read('src/components/FeedStrip.tsx'), /feed-pause|aria-pressed|Pause feed|setInterval|requestAnimationFrame/);
 });

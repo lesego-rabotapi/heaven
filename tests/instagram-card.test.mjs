@@ -43,8 +43,8 @@ test('the card is styled from tokens, with no hard-coded colours', () => {
   assert.doesNotMatch(css, /#[0-9A-Fa-f]{3,8}\b|rgba?\(/);
 });
 
-test('the cards are shown under the marquee', () => {
-  assert.match(feedSection, /<FeedMarquee \/>\s*<InstagramCards/);
+test('the cards are shown under the photo strip', () => {
+  assert.match(feedSection, /<FeedStrip \/>\s*<InstagramCards/);
 });
 
 test('the handle link in the card header meets the target size (24px, 44px on touch)', () => {
