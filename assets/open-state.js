@@ -57,7 +57,7 @@
         .filter(function (g) { return ahead > 0 || toMinutes(g.open) > clock.minutes; })
         .sort(function (a, b) { return toMinutes(a.open) - toMinutes(b.open); })[0];
       if (opens) {
-        var when = ahead === 0 ? '' : ahead === 1 ? ' tomorrow' : ' on ' + DAY_NAMES[day];
+        var when = ahead === 0 ? '' : ahead === 1 ? ' tomorrow' : ahead === 7 ? ' next ' + DAY_NAMES[day] : ' on ' + DAY_NAMES[day];
         return { open: false, label: 'Closed · opens ' + opens.open + when };
       }
     }

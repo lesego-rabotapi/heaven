@@ -68,7 +68,7 @@ test('the near-midnight edge: 23:59 closed, opens tomorrow; 00:00 closed, opens 
 
 test('a single-weekday schedule, after closing, names the same weekday a week later', () => {
   const wednesdays = { groups: [{ label: 'Wednesdays', days: [3], open: '07:00', close: '18:00' }] };
-  assert.equal(getOpenState(at('19:00'), wednesdays).label, 'Closed · opens 07:00 on Wednesday');
+  assert.equal(getOpenState(at('19:00'), wednesdays).label, 'Closed · opens 07:00 next Wednesday');
   assert.equal(getOpenState(at('06:00'), wednesdays).label, 'Closed · opens 07:00');
 });
 
@@ -92,3 +92,4 @@ test('no hours at all gives a neutral, non-throwing answer', () => {
   assert.equal(s.open, false);
   assert.equal(s.label, '');
 });
+
