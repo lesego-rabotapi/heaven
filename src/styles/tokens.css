@@ -4,6 +4,15 @@
 :root {
   color-scheme: dark;
 
+  /* type: the wordmark and the small functional labels use the brand face; reading text uses the body face;
+     big headings keep the heavy display face; the italic serif is for rare expressive lines */
+  --font-brand: 'Josefin Sans', 'Segoe UI', sans-serif;
+  --font-body: 'Manrope', 'Segoe UI', sans-serif;
+  --font-display: 'Archivo', sans-serif;
+  --font-quote: 'Instrument Serif', serif;
+  --brand-weight: 300;
+  --brand-letter-spacing: 0.18em;
+
   /* ground */
   --ground: #0A1220;
   --ground-raised: #0F1B2D;

@@ -1,11 +1,12 @@
 import { DirectionsLink } from './DirectionsLink';
+import { HeavenWordmark } from './HeavenWordmark';
 export function FooterDesktop() {
   return (
     <footer id="footer-desktop" className="hidden lg:flex flex-col relative overflow-hidden" style={{ padding: "72px 56px 40px" }}>
       <div className="cloud" style={{ width: "700px", height: "160px", left: "380px", top: "40px" }} aria-hidden="true" />
       <div className="relative grid grid-cols-4" style={{ gap: "24px", fontSize: "15px" }}>
         <div className="flex flex-col" style={{ gap: "10px" }}>
-          <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
+          <span style={{ fontSize: "12px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
             Visit
           </span>
           <span>
@@ -23,7 +24,7 @@ export function FooterDesktop() {
           </DirectionsLink>
         </div>
         <nav aria-label="Footer" className="flex flex-col" style={{ gap: "10px" }}>
-          <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
+          <span style={{ fontSize: "12px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
             Explore
           </span>
           {' '}
@@ -44,7 +45,7 @@ export function FooterDesktop() {
           </a>
         </nav>
         <div className="flex flex-col" style={{ gap: "10px" }}>
-          <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
+          <span style={{ fontSize: "12px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
             Say hello
           </span>
           <span data-phone-placeholder style={{ color: "var(--ink-muted)" }}>
@@ -55,7 +56,7 @@ export function FooterDesktop() {
           </a>
         </div>
         <div className="flex flex-col" style={{ gap: "10px" }}>
-          <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
+          <span style={{ fontSize: "12px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
             In our words
           </span>
           <span className="font-quote italic" style={{ fontSize: "24px", lineHeight: "1.15", color: "var(--ink)" }}>
@@ -64,9 +65,7 @@ export function FooterDesktop() {
         </div>
       </div>
       <div className="relative flex flex-col" style={{ gap: "20px", marginTop: "40px" }}>
-        <div className="footer-heaven text-center" style={{ fontFamily: "'Poppins',sans-serif", fontWeight: "300", lineHeight: "0.8", letterSpacing: "-0.06em", color: "var(--ink-bright)" }}>
-          heaven
-        </div>
+        <HeavenWordmark as="div" className="footer-heaven text-center" style={{ lineHeight: "0.8", color: "var(--ink-bright)" }} />
         <p className="m-0" style={{ fontSize: "13px", color: "var(--ink)" }}>
           Heaven Coffee · Central Methodist Mission, Greenmarket Square
         </p>

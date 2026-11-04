@@ -1,0 +1,6 @@
+/* The Heaven wordmark, as lettered on the awning over the door: "heaven" thin, upright, lower case and widely
+   spaced, with "coffee" small and lower case beneath it. Weight, spacing and face come from the tokens. */
+.heaven-wordmark-wrap { display: inline-flex; align-items: baseline; gap: .375rem; }
+div.heaven-wordmark-wrap { display: block; }
+.heaven-wordmark { font-family: var(--font-brand); font-weight: var(--brand-weight); font-style: normal; letter-spacing: var(--brand-letter-spacing); text-transform: none; line-height: 1; margin-right: calc(var(--brand-letter-spacing) * -1); }
+.heaven-wordmark-sub { font-family: var(--font-brand); font-weight: 400; letter-spacing: .14em; text-transform: none; color: var(--ink-muted); }

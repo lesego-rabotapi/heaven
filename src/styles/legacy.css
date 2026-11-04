@@ -15,7 +15,7 @@
      tokens; nothing moves. */
   .find-section { background: var(--find-bg); color: var(--find-ink); padding: 2.5rem 5% 3rem; }
   .find-head { display: flex; flex-direction: column; gap: .75rem; max-width: 40rem; }
-  .find-kicker { font-size: .8125rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--find-kicker); }
+  .find-kicker { font-family: var(--font-brand); font-size: .8125rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--find-kicker); }
   .find-h2 { font-stretch: 70%; font-weight: 900; line-height: .9; letter-spacing: -.02em; font-size: clamp(2.25rem, 11vw, 4.5rem); }
   .find-lede { font-size: clamp(1rem, 2.4vw, 1.125rem); line-height: 1.55; color: var(--find-muted); }
   .find-steps { list-style: none; margin: 1.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
@@ -32,7 +32,7 @@
      whose fact is unknown is hidden by applyFacts(); the group hides if fewer than two
      are left. rem and tokens only; the chips are labels, not controls. */
   .good { margin-top: 2rem; }
-  .good-kicker { display: block; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--find-kicker); }
+  .good-kicker { display: block; font-family: var(--font-brand); font-size: .75rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--find-kicker); }
   .good-list { list-style: none; margin: .75rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .625rem; }
   .good-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem .875rem .5rem .75rem; border-radius: 999px; background: var(--good-chip-bg); border: 1px solid var(--good-chip-line); color: var(--good-ink); font-size: .9375rem; font-weight: 600; line-height: 1.2; }
   .good-chip svg { flex: none; width: 1.125rem; height: 1.125rem; color: var(--good-icon); }
@@ -86,6 +86,7 @@
   @media (prefers-reduced-motion: reduce) { html.scroll-smooth { scroll-behavior: auto; } }
   ::-webkit-scrollbar { display: none; }
   a { text-decoration: none; }
+  .hv-btn, .find-cta, .action-bar-go { font-family: var(--font-brand); }
   .hv-btn { transition: background-color .2s ease, transform .2s ease, filter .2s ease; }
   .hv-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
   .hv-ghost:hover { background-color: rgba(242,166,90,.12) !important; }
@@ -164,10 +165,10 @@
   #nav-drawer.is-open .staggered-menu-layer { transform: translateX(0); }
   .staggered-menu-panel { position: relative; height: 100%; overflow-y: auto; background: var(--ground); transform: translateX(100%); transition: transform .5s cubic-bezier(.4,0,.2,1); transition-delay: .12s; }
   #nav-drawer.is-open .staggered-menu-panel { transform: translateX(0); }
-  .staggered-menu-item { display: flex; align-items: baseline; gap: .75rem; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: -.01em; color: var(--ink); padding: .7rem 0; border-bottom: 1px solid rgba(238,244,250,.1); text-decoration: none; opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
+  .staggered-menu-item { display: flex; align-items: baseline; gap: .75rem; font-family: var(--font-display); font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: -.01em; color: var(--ink); padding: .7rem 0; border-bottom: 1px solid rgba(238,244,250,.1); text-decoration: none; opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
   .staggered-menu-num { font-size: 13px; font-weight: 600; color: var(--ink-accent); letter-spacing: .08em; }
   .staggered-menu-socials { opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
-  .staggered-menu-socials a { display: inline-flex; align-items: center; min-height: 44px; font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-muted); text-decoration: none; }
+  .staggered-menu-socials a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-brand); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-muted); text-decoration: none; }
   #nav-drawer.is-open .staggered-menu-item, #nav-drawer.is-open .staggered-menu-socials { opacity: 1; transform: translateX(0); }
   /* Closing: drop the opening stagger so the drawer leaves in one beat. */
   #nav-drawer.is-closing { pointer-events: none; }
@@ -203,8 +204,8 @@
   .hero-section { height: 1040px; background: var(--hero-sky); }
   .hero-vignette { background: var(--hero-halo); }
   .site-header { top: 16px; left: 16px; right: 16px; padding: 6px 6px 6px 20px; }
-  .site-header .logo-word { font-size: 22px; }
-  .site-header .logo-sub { font-size: 10px; }
+  .site-header .heaven-wordmark { font-size: 22px; }
+  .site-header .heaven-wordmark-sub { font-size: 12px; }
   .hero-est { top: 108px; font-size: 12px; gap: 22px; text-shadow: 0 1px 8px rgba(12,40,84,.6); }
   /* Fluid caps: the widest headline line is ~2.85em wide, so below ~377px the
      fixed 116px overflowed the 20px gutters. min() keeps the source's 116px
@@ -237,7 +238,7 @@
   .feed-section { padding: 88px 0 72px; }
   .feed-h2 { font-size: 64px; }
   .feed-tile { width: 280px; height: 280px; border-radius: 16px; }
-  .footer-heaven { font-size: min(86px, calc((100vw - 64px) / 3.4)); }
+  .footer-heaven { font-size: min(86px, calc((100vw - 64px) / 4.2)); }
   .visit-photo { margin-top: 32px; height: 300px; }
   .visit-card { margin-top: 14px; }
   /* Header is a fixed floating pill (~58px tall, sitting 16px from top).
@@ -266,8 +267,8 @@
     .hero-section { --hero-h1-top: 352px; --hero-fs: max(150px, min(250px, calc((100vh - 420px) / 1.64))); height: calc(832px + 1.64 * var(--hero-fs)); background: var(--hero-sky); }
     .hero-vignette { background: var(--hero-halo); }
     .site-header { top: 28px; left: 40px; right: 40px; padding: 10px 10px 10px 28px; }
-    .site-header .logo-word { font-size: 26px; }
-    .site-header .logo-sub { font-size: 13px; }
+    .site-header .heaven-wordmark { font-size: 26px; }
+    .site-header .heaven-wordmark-sub { font-size: 15px; }
     html { scroll-padding-top: 116px; }
     .hero-est { top: 150px; font-size: 13px; gap: 28px; text-shadow: 0 1px 8px rgba(12,40,84,.6); }
     .hero-h1 { top: var(--hero-h1-top); font-size: var(--hero-fs); }
@@ -303,7 +304,7 @@
     /* "heaven" is ~3.37em wide; the footer's 56px side padding leaves
        100vw - 112px, so 360px only fit from ~1340px up and clipped the
        last letter on common laptops. */
-    .footer-heaven { font-size: min(360px, calc((100vw - 112px) / 3.4)); }
+    .footer-heaven { font-size: min(360px, calc((100vw - 112px) / 4.2)); }
   }
 
   /* Tablet tier (768-1023px). These widths get the mobile DOM, which was a
@@ -362,7 +363,7 @@
     .visit-photo { height: clamp(380px, 52vw, 520px); }
     .visit-card { margin-top: 32px; align-self: start; }
     /* 100vw minus the footer's and the visit block's 16px padding on each side. */
-    .footer-heaven { font-size: min(300px, calc((100vw - 64px) / 3.4)); }
+    .footer-heaven { font-size: min(300px, calc((100vw - 64px) / 4.2)); }
   }
   @media (min-width: 768px) and (max-width: 1023.98px) {
     .feed-row { scroll-padding-inline: 32px; }

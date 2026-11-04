@@ -1,18 +1,13 @@
 import type { Drawer } from '../lib/useDrawer';
 import { DirectionsLink } from './DirectionsLink';
+import { HeavenWordmark } from './HeavenWordmark';
 export function Header({ drawer }: { drawer: Drawer }) {
   return (
     <header className="site-header on-light fixed z-50 flex items-center justify-between gap-3 rounded-full" style={{ background: "var(--surface-light)", border: "1px solid rgba(255,255,255,.9)", WebkitBackdropFilter: "blur(14px)", backdropFilter: "blur(14px)" }}>
-      <a href="#top" onClick={() => drawer.close(false)} className="inline-flex items-baseline gap-1.5" style={{ color: "var(--ink)", fontFamily: "'Poppins',sans-serif", fontWeight: "300", letterSpacing: "-0.02em" }}>
-        <span className="logo-word">
-          heaven
-        </span>
-        {' '}
-        <span className="logo-sub" style={{ fontWeight: "400", letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
-          coffee
-        </span>
+      <a href="#top" onClick={() => drawer.close(false)} className="inline-flex items-baseline gap-1.5" style={{ color: "var(--ink)" }}>
+        <HeavenWordmark withSub />
       </a>
-      <nav aria-label="Primary" className="hidden lg:flex items-center" style={{ gap: "36px", fontSize: "14px", fontWeight: "600", letterSpacing: "0.02em" }}>
+      <nav aria-label="Primary" className="hidden lg:flex items-center" style={{ gap: "36px", fontFamily: "var(--font-brand)", fontSize: "15px", fontWeight: "400", letterSpacing: "0.04em" }}>
         <a href="#find-the-door" className="hv-link" style={{ color: "var(--ink)" }}>
           Find us
         </a>

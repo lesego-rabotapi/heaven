@@ -18,7 +18,7 @@ export function Story() {
         </div>
       </div>
       <div className="lg:col-span-7 flex flex-col lg:pt-[30px]" style={{ gap: "22px" }}>
-        <span style={{ fontSize: "13px", fontWeight: "700", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
+        <span style={{ fontSize: "13px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
           Our story
         </span>
         <h2 className="story-h2 font-display uppercase m-0" style={{ fontStretch: "70%", fontWeight: "900", lineHeight: "0.88", letterSpacing: "-0.02em" }}>

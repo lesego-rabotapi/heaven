@@ -7,7 +7,7 @@ export function Feed() {
     <section id="feed" className="feed-section relative overflow-hidden">
       <div className="feed-head flex flex-col lg:flex-row lg:items-end justify-between px-4 lg:px-14" style={{ gap: "24px" }}>
         <div className="flex flex-col" style={{ gap: "12px" }}>
-          <span style={{ fontSize: "13px", fontWeight: "700", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
+          <span style={{ fontSize: "13px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
             A look around
           </span>
           <h2 className="feed-h2 font-display uppercase m-0" style={{ fontStretch: "70%", fontWeight: "900", lineHeight: "0.86", letterSpacing: "-0.02em" }}>
@@ -33,7 +33,7 @@ export function Feed() {
       <div className="hidden lg:block px-14 mt-12">
         <div className="rounded-2xl flex flex-col" style={{ background: "var(--card)", padding: "28px", gap: "18px" }}>
           <div className="flex flex-col" style={{ gap: "4px" }}>
-            <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
+            <span style={{ fontSize: "12px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
               Find us
             </span>
             {' '}

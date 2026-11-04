@@ -53,7 +53,7 @@ export function Hero() {
           </picture>
         </div>
       </div>
-      <div className="hero-est absolute left-5 right-5 lg:left-14 lg:right-14 z-[5] pointer-events-none flex items-center justify-center text-white uppercase" style={{ fontWeight: "700", letterSpacing: "0.22em" }}>
+      <div className="hero-est absolute left-5 right-5 lg:left-14 lg:right-14 z-[5] pointer-events-none flex items-center justify-center text-white uppercase" style={{ fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.22em" }}>
         <span className="hidden lg:inline-block" style={{ width: "32px", height: "1px", background: "var(--ink-bright)", marginRight: "12px" }} />
         {' '}
         <span className="lg:hidden">

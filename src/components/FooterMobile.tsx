@@ -1,11 +1,12 @@
 import { HoursRows } from './HoursRows';
 import { DirectionsLink, OtherMaps } from './DirectionsLink';
+import { HeavenWordmark } from './HeavenWordmark';
 export function FooterMobile() {
   return (
     <footer id="footer-mobile" className="lg:hidden relative overflow-hidden flex flex-col" style={{ padding: "48px 16px 28px", gap: "32px" }}>
       <div className="footer-links grid grid-cols-2" style={{ gap: "24px", fontSize: "14px" }}>
         <nav aria-label="Footer" className="flex flex-col" style={{ gap: "10px" }}>
-          <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
+          <span style={{ fontSize: "12px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
             Explore
           </span>
           {' '}
@@ -26,7 +27,7 @@ export function FooterMobile() {
           </a>
         </nav>
         <div className="flex flex-col" style={{ gap: "10px" }}>
-          <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
+          <span style={{ fontSize: "12px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
             Say hello
           </span>
           <span data-phone-placeholder style={{ color: "var(--ink-muted)" }}>
@@ -66,7 +67,7 @@ export function FooterMobile() {
           </picture>
         </div>
         <div className="visit-card flex flex-col" style={{ padding: "22px", borderRadius: "18px", background: "var(--card)", gap: "14px" }}>
-          <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
+          <span style={{ fontSize: "12px", fontFamily: "var(--font-brand)", fontWeight: "500", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
             Find us
           </span>
           {' '}
@@ -92,9 +93,7 @@ export function FooterMobile() {
         <p className="visit-foot text-center font-quote italic m-0" style={{ marginTop: "32px", fontSize: "1.5rem", lineHeight: "1.15", color: "var(--ink)" }}>
           born in love, by love, for love
         </p>
-        <div className="visit-foot footer-heaven text-center" style={{ marginTop: "16px", fontFamily: "'Poppins',sans-serif", fontWeight: "300", lineHeight: "0.9", letterSpacing: "-0.06em", color: "var(--ink-bright)" }}>
-          heaven
-        </div>
+        <HeavenWordmark as="div" className="visit-foot footer-heaven text-center" style={{ marginTop: "16px", lineHeight: "0.9", color: "var(--ink-bright)" }} />
       </section>
     </footer>
   );
