@@ -6,6 +6,8 @@ import react from '@vitejs/plugin-react';
 // HTML at build time and writes dist/index.html: content and the night theme show without JavaScript.
 export default defineConfig({
   plugins: [react()],
+  // Relative asset paths, so the built site works from any folder or sub-path, not only from a domain root.
+  base: './',
   build: {
     outDir: 'dist',
     rollupOptions: { input: 'app.html' },

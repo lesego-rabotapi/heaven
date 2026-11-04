@@ -1,6 +1,0 @@
-.hero { position: relative; overflow: hidden; background: var(--hero-sky); }
-.hero::before { content: ''; position: absolute; inset: 0; background: var(--hero-halo); pointer-events: none; }
-.hero-inner { position: relative; max-width: 48rem; margin: 0 auto; padding: 7rem 1rem 4rem; text-align: center; }
-.hero-est { margin: 0; font-size: .8125rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); }
-.hero-title { margin: 1rem 0 0; font-stretch: 62%; font-weight: 900; text-transform: uppercase; line-height: .86; font-size: clamp(4rem, 22vw, 11rem); color: var(--ink); }
-.hero-line { margin: 1.5rem 0 0; font-size: 1rem; color: var(--ink-soft); }
