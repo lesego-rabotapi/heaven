@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html class="scroll-smooth" lang="en">
+<html class="scroll-smooth" lang="en" data-sky="night">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="color-scheme" content="dark"/>
+  <meta name="theme-color" content="#0A1220"/>
   <title>Heaven Coffee | A café inside a church, Cape Town</title>
   <meta name="description" content="Coffee inside a working 19th-century church on Greenmarket Square, Cape Town. Open daily 07:00 to 18:00. 38 Burg Street."/>
   <!-- Share preview. TODO(content): og:image, twitter:image and the JSON-LD image are relative
@@ -450,14 +452,6 @@
   <!-- Utilities are precompiled: edit tailwind.config.js / the classes in this file, then run `npm run build:css`. -->
   <link rel="stylesheet" href="tailwind.css"/>
   <link rel="stylesheet" href="assets/sky.css"/>
-  <script>
-    // Night theme: always on, for every visitor. ?sky=black|dusk|now previews another sky (now is the old light page).
-    (function () {
-      var q = /[?&]sky=(night|black|dusk|now)/.exec(location.search);
-      var sky = q ? q[1] : 'night';
-      if (sky !== 'now') { document.documentElement.setAttribute('data-sky', sky); }
-    })();
-  </script>
   <script src="assets/open-state.js" defer></script>
   <script src="assets/directions.js" defer></script>
   <!-- Without JavaScript the feed strip and its pause button would be an empty gap and a
