@@ -66,3 +66,11 @@ test('the bundle loads as a module, and its stylesheet carries Tailwind, the dar
 test('typed sources compile', () => {
   execSync('npm run typecheck', { cwd: root, stdio: 'pipe' });
 });
+
+test('the Instagram cards are in the prerendered HTML with the handle, photos and no counts', () => {
+  assert.equal((html.match(/class="igc reveal"/g) || []).length, 3);
+  assert.match(html, /@heavencoffeect/);
+  assert.doesNotMatch(html, /igc-actions/);
+  assert.doesNotMatch(html, /\d+\s*(likes|comments|followers)/i);
+  assert.equal((html.match(/View on Instagram/g) || []).length >= 3, true);
+});

@@ -1,4 +1,6 @@
 import { FeedMarquee } from './FeedMarquee';
+import { InstagramCards } from './InstagramCard';
+import { feed } from '../lib/content';
 import { DirectionsLink, OtherMaps } from './DirectionsLink';
 export function Feed() {
   return (
@@ -27,6 +29,7 @@ export function Feed() {
         </a>
       </div>
       <FeedMarquee />
+      <InstagramCards posts={[feed[0], feed[1], feed[9]].filter((p): p is (typeof feed)[number] => Boolean(p))} />
       <div className="hidden lg:block px-14 mt-12">
         <div className="rounded-2xl flex flex-col" style={{ background: "var(--card)", padding: "28px", gap: "18px" }}>
           <div className="flex flex-col" style={{ gap: "4px" }}>
