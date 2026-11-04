@@ -22,19 +22,20 @@ test('the built page is night and has its content in the HTML itself', () => {
   assert.doesNotMatch(html, /<!--app-html-->/);
 });
 
-test('reveal items are hidden only by a class that script adds, never by markup', () => {
-  assert.match(html, /html\.js-motion \[data-reveal\]\s*\{\s*opacity:\s*0/);
-  assert.doesNotMatch(html, /data-reveal[^>]*style="[^"]*opacity/);
+test('hero intro items are hidden only by a class that script adds, never by markup', () => {
+  assert.match(html, /html\.js-motion \[data-intro\]\s*\{\s*opacity:\s*0/);
+  assert.doesNotMatch(html, /data-intro[^>]*style="[^"]*opacity/);
   assert.match(html, /prefers-reduced-motion: reduce/);
   assert.match(html, /__motionFailsafe/);
 });
 
-test('the bundle loads as a module, and its stylesheet carries Tailwind and the night sky', () => {
+test('the bundle loads as a module, and its stylesheet carries Tailwind, the dark tokens and the reveals', () => {
   assert.match(html, /<script type="module"[^>]*src="\/assets\/app-[\w-]+\.js"/);
   const css = readFileSync(join(root, 'dist', html.match(/href="(\/assets\/app-[\w-]+\.css)"/)[1]), 'utf8');
-  assert.match(css, /data-sky=["']?night/);
+  assert.match(css, /--ground:\s*#0a1220/i);
   assert.match(css, /color-scheme:\s*dark/);
-  assert.match(css, /\.hero-section/);
+  assert.match(css, /\.hero-title/);
+  assert.match(css, /animation-timeline:\s*view\(\)/);
 });
 
 test('typed sources compile', () => {
