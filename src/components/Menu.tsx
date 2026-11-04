@@ -1,12 +1,12 @@
 export function Menu() {
   return (
-    <section id="menu" className="menu-section on-dark" style={{ background: "#0F1B2D", color: "#EEF4FA" }}>
-      <div className="flex items-end justify-between" style={{ borderBottom: "2px solid #EEF4FA", paddingBottom: "8px" }}>
+    <section id="menu" className="menu-section on-dark">
+      <div className="flex items-end justify-between" style={{ borderBottom: "2px solid var(--ink)", paddingBottom: "8px" }}>
         <h2 className="menu-h2 font-display uppercase m-0" style={{ fontStretch: "62%", fontWeight: "900", letterSpacing: "-0.03em", lineHeight: "0.76" }}>
           The Menu
         </h2>
         <div className="flex flex-col items-end" style={{ gap: "6px", paddingBottom: "18px", textAlign: "right" }}>
-          <span className="menu-tag font-quote italic" style={{ color: "#A9CDF0" }}>
+          <span className="menu-tag font-quote italic" style={{ color: "var(--ink-accent)" }}>
             poured daily
           </span>
         </div>

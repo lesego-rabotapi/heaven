@@ -15,11 +15,11 @@ export function Hero() {
           <path d="M0 .9632 L0 .7637 A.9 .8526 0 0 1 .5 0 A.9 .8526 0 0 1 1 .7637 L1 .9632 Q1 1 .9611 1 L.0389 1 Q0 1 0 .9632 Z" />
         </clipPath>
       </svg>
-      <div className="cloud d lg:hidden" style={{ width: "320px", height: "110px", left: "-90px", top: "300px", opacity: ".9" }} aria-hidden="true" />
-      <div className="cloud lg:hidden" style={{ width: "420px", height: "140px", left: "-20px", top: "900px", opacity: ".95" }} aria-hidden="true" />
-      <div className="cloud d hidden lg:block" style={{ width: "620px", height: "180px", left: "-420px", top: "320px", opacity: ".9" }} aria-hidden="true" />
-      <div className="cloud d hidden lg:block" style={{ width: "520px", height: "150px", right: "-380px", top: "230px", opacity: ".8", animationDelay: "-6s" }} aria-hidden="true" />
-      <div className="cloud hidden lg:block" style={{ width: "900px", height: "220px", left: "270px", top: "1040px", opacity: ".95" }} aria-hidden="true" />
+      <div className="cloud d lg:hidden" style={{ width: "320px", height: "110px", left: "-90px", top: "300px" }} aria-hidden="true" />
+      <div className="cloud lg:hidden" style={{ width: "420px", height: "140px", left: "-20px", top: "900px" }} aria-hidden="true" />
+      <div className="cloud d hidden lg:block" style={{ width: "620px", height: "180px", left: "-420px", top: "320px" }} aria-hidden="true" />
+      <div className="cloud d hidden lg:block" style={{ width: "520px", height: "150px", right: "-380px", top: "230px", animationDelay: "-6s" }} aria-hidden="true" />
+      <div className="cloud hidden lg:block" style={{ width: "900px", height: "220px", left: "270px", top: "1040px" }} aria-hidden="true" />
       <div className="hero-vignette absolute inset-0 pointer-events-none" aria-hidden="true" />
       <div className="absolute z-[2] flex justify-center lg:hidden" style={{ left: "20px", right: "20px", top: "300px" }}>
         <div className="tile arch-frame arch-m" style={{ width: "240px", height: "340px" }}>
@@ -46,7 +46,7 @@ export function Hero() {
         </div>
       </div>
       <div className="hero-est absolute left-5 right-5 lg:left-14 lg:right-14 z-[5] pointer-events-none flex items-center justify-center text-white uppercase" style={{ fontWeight: "700", letterSpacing: "0.22em" }}>
-        <span className="hidden lg:inline-block" style={{ width: "32px", height: "1px", background: "#FBFCFD", marginRight: "12px" }} />
+        <span className="hidden lg:inline-block" style={{ width: "32px", height: "1px", background: "var(--ink-bright)", marginRight: "12px" }} />
         {' '}
         <span className="lg:hidden">
           Est. 2017 · Burg Street
@@ -56,7 +56,7 @@ export function Hero() {
           Est. 2017 · 38 Burg Street, Cape Town
         </span>
         {' '}
-        <span className="hidden lg:inline-block" style={{ width: "32px", height: "1px", background: "#FBFCFD", marginLeft: "12px" }} />
+        <span className="hidden lg:inline-block" style={{ width: "32px", height: "1px", background: "var(--ink-bright)", marginLeft: "12px" }} />
       </div>
       <h1 className="hero-h1 absolute left-5 right-5 lg:left-14 lg:right-14 z-[5] pointer-events-none font-display text-white uppercase text-center m-0" style={{ marginTop: "44px", fontStretch: "62%", fontWeight: "900", letterSpacing: "-0.02em", lineHeight: "0.82", textShadow: "0 6px 34px rgba(12,40,84,.5)" }}>
         heaven
@@ -65,13 +65,13 @@ export function Hero() {
         Coffee
       </h1>
       <div className="hero-sub absolute left-5 right-5 lg:left-14 lg:right-14 z-[9] flex flex-col items-center">
-        <p data-intro className="font-quote italic text-center m-0" style={{ color: "#0F1B2D" }}>
+        <p data-intro className="font-quote italic text-center m-0" style={{ color: "var(--ink)" }}>
           Sanctuary coffee at Greenmarket Square, inside a working 19th-century church.
         </p>
-        <div data-intro className="hero-pill inline-flex items-center gap-2.5 rounded-full mt-5" style={{ background: "#FBFCFD", boxShadow: "0 10px 30px -18px rgba(15,27,45,.6)" }}>
+        <div data-intro className="hero-pill on-light inline-flex items-center gap-2.5 rounded-full mt-5" style={{ background: "var(--card)", boxShadow: "0 10px 30px -18px rgba(15,27,45,.6)" }}>
           <span style={{ width: "9px", height: "9px", borderRadius: "50%", background: dot }} />
           {' '}
-          <span style={{ fontWeight: "700", color: "#0F1B2D" }}>
+          <span style={{ fontWeight: "700", color: "var(--ink)" }}>
             {label}
           </span>
         </div>

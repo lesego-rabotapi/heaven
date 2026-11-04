@@ -13,7 +13,6 @@
      indented a little more than the one above, like treads; from 1024px the four columns
      rise left to right, so the page itself climbs. rem, % and clamp() only; colours are
      tokens; nothing moves. */
-  :root { --find-bg: #EEF4FA; --find-ink: #0F1B2D; --find-muted: #3E4C63; --find-kicker: #1E3A8A; --find-accent: #1D4ED8; --find-photo-bg: #A9CDF0; }
   .find-section { background: var(--find-bg); color: var(--find-ink); padding: 2.5rem 5% 3rem; }
   .find-head { display: flex; flex-direction: column; gap: .75rem; max-width: 40rem; }
   .find-kicker { font-size: .8125rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--find-kicker); }
@@ -32,7 +31,6 @@
   /* Good to know (B4): small chips for facts a photo or the client has confirmed. A chip
      whose fact is unknown is hidden by applyFacts(); the group hides if fewer than two
      are left. rem and tokens only; the chips are labels, not controls. */
-  :root { --good-chip-bg: #FBFCFD; --good-chip-line: rgba(15,27,45,.16); --good-ink: #0F1B2D; --good-icon: #1D4ED8; }
   .good { margin-top: 2rem; }
   .good-kicker { display: block; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--find-kicker); }
   .good-list { list-style: none; margin: .75rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .625rem; }
@@ -70,7 +68,6 @@
      are tokens so the night theme can re-point them. The bar sits under the drawer (z 35
      < 40), which covers it while the menu is open, and the page gets matching bottom
      padding so the last footer link is never behind it. */
-  :root { --bar-bg: rgba(251,252,253,.94); --bar-ink: #0F1B2D; --bar-accent: #1D4ED8; }
   .action-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; display: flex; align-items: center; gap: .75rem; padding: .625rem 4% calc(.625rem + env(safe-area-inset-bottom)); background: var(--bar-bg); -webkit-backdrop-filter: blur(.875rem); backdrop-filter: blur(.875rem); box-shadow: 0 -.5rem 1.5rem -1rem rgba(15,27,45,.5); }
   .action-bar-go { flex: none; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding-inline: 1.25rem; border-radius: 999px; background: var(--bar-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
   .action-bar-open { flex: 1; min-width: 0; display: flex; align-items: center; gap: .5rem; color: var(--bar-ink); font-size: .8125rem; font-weight: 700; line-height: 1.25; }
@@ -78,9 +75,9 @@
   /* The same height again as scroll padding, so a link reached by keyboard or an anchor
      scrolls clear of the bar instead of landing behind it (WCAG 2.2 Focus Not Obscured). */
   @media (max-width: 1023.98px) { html { scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); } body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); } }
-  .other-maps { font-size: .875rem; color: #26344A; }
+  .other-maps { font-size: .875rem; color: var(--ink-soft); }
   .other-maps summary { display: flex; align-items: center; min-height: 2.75rem; padding-inline: .25rem; font-weight: 700; cursor: pointer; }
-  .other-maps a { display: flex; align-items: center; min-height: 2.75rem; padding-inline: .25rem; font-weight: 600; color: #1E3A8A; text-decoration: underline; }
+  .other-maps a { display: flex; align-items: center; min-height: 2.75rem; padding-inline: .25rem; font-weight: 600; color: var(--ink-accent); text-decoration: underline; }
   /* <main> takes focus when the skip link is used (tabindex="-1"). A mouse click on
      text inside it focuses it too, which should show nothing; a keyboard jump should,
      so the user can see the skip worked. The ring is inset: <main> is the whole page. */
@@ -93,8 +90,10 @@
   a { text-decoration: none; }
   .hv-btn { transition: background-color .2s ease, transform .2s ease, filter .2s ease; }
   .hv-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
-  .hv-ghost:hover { background-color: rgba(29,78,216,0.08) !important; }
+  .hv-ghost:hover { background-color: rgba(169,205,240,.1) !important; }
+  .hv-ghost { border-color: var(--ink-accent) !important; color: var(--ink-accent) !important; }
   .hv-link:hover { color: #1D4ED8 !important; }
+  .hv-link:not(.hv-btn):hover { color: var(--ink-accent) !important; }
   /* Keyboard focus ring. Two-tone (navy ring over a white gap) so it reads on the
      light sections, the blue sky, the gradient footer and photos alike; it only
      shows for keyboard focus, never for a mouse or tap. */
@@ -113,7 +112,7 @@
     .feed-tile:focus-visible { outline: 3px solid CanvasText; outline-offset: -9px; }
     .feed-tile:focus-visible::after { display: none; }
   }
-  .cloud { position: absolute; border-radius: 50%; background: #FBFCFD; filter: blur(38px); pointer-events: none; }
+  .cloud { position: absolute; border-radius: 50%; background: var(--cloud); opacity: var(--cloud-o); filter: blur(38px); pointer-events: none; }
   /* Hero arch frame (D1). The photo is clipped to a pointed arch (clipPath in the hero's svg
      defs); the white edge is an svg stroke drawn above it, 6px wide, so it follows the point
      exactly. The shadow is a drop-shadow, which follows the clipped shape; a box-shadow would
@@ -156,7 +155,6 @@
     .feed-track { padding: 0 16px 14px; }
     .feed-track > [aria-hidden="true"] { display: none !important; }
     .feed-tile { scroll-snap-align: start; }
-    #feed-controls { display: none; }
   }
   @media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
     .feed-row { scroll-padding-inline: 56px; }
@@ -170,12 +168,12 @@
      leaving the button non-functional). */
   .staggered-menu-layer { position: absolute; inset: 0; transform: translateX(100%); transition: transform .5s cubic-bezier(.4,0,.2,1); }
   #nav-drawer.is-open .staggered-menu-layer { transform: translateX(0); }
-  .staggered-menu-panel { position: relative; height: 100%; overflow-y: auto; background: #EEF4FA; transform: translateX(100%); transition: transform .5s cubic-bezier(.4,0,.2,1); transition-delay: .12s; }
+  .staggered-menu-panel { position: relative; height: 100%; overflow-y: auto; background: var(--ground); transform: translateX(100%); transition: transform .5s cubic-bezier(.4,0,.2,1); transition-delay: .12s; }
   #nav-drawer.is-open .staggered-menu-panel { transform: translateX(0); }
-  .staggered-menu-item { display: flex; align-items: baseline; gap: .75rem; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: -.01em; color: #0F1B2D; padding: .7rem 0; border-bottom: 1px solid rgba(15,27,45,.08); text-decoration: none; opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
-  .staggered-menu-num { font-size: 13px; font-weight: 600; color: #1D4ED8; letter-spacing: .08em; }
+  .staggered-menu-item { display: flex; align-items: baseline; gap: .75rem; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: -.01em; color: var(--ink); padding: .7rem 0; border-bottom: 1px solid rgba(238,244,250,.1); text-decoration: none; opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
+  .staggered-menu-num { font-size: 13px; font-weight: 600; color: var(--ink-accent); letter-spacing: .08em; }
   .staggered-menu-socials { opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
-  .staggered-menu-socials a { display: inline-flex; align-items: center; min-height: 44px; font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: #3E4C63; text-decoration: none; }
+  .staggered-menu-socials a { display: inline-flex; align-items: center; min-height: 44px; font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-muted); text-decoration: none; }
   #nav-drawer.is-open .staggered-menu-item, #nav-drawer.is-open .staggered-menu-socials { opacity: 1; transform: translateX(0); }
   /* Closing: drop the opening stagger so the drawer leaves in one beat. */
   #nav-drawer.is-closing { pointer-events: none; }
@@ -208,8 +206,8 @@
      default (matches the 390px export); the min-width:1024px block
      overrides to the 1440px export's own literal numbers. A tablet block
      (768-1023px) comes after both and re-sets some of the same classes. ===== */
-  .hero-section { height: 1040px; background: linear-gradient(180deg, #2F6FBC 0%, #4E93D8 26%, #79B1E6 48%, #A9CDF0 66%, #D6E7F7 86%, #EEF4FA 100%); }
-  .hero-vignette { background: radial-gradient(76% 20% at 50% 19%, rgba(16,54,108,.5) 0%, rgba(16,54,108,0) 72%); }
+  .hero-section { height: 1040px; background: var(--hero-sky); }
+  .hero-vignette { background: var(--hero-halo); }
   .site-header { top: 16px; left: 16px; right: 16px; padding: 6px 6px 6px 20px; }
   .site-header .logo-word { font-size: 22px; }
   .site-header .logo-sub { font-size: 10px; }
@@ -231,7 +229,7 @@
   .story-h2 { font-size: 58px; }
   .story-p { font-size: 16px; }
   .story-quote { font-size: 34px; padding-top: 22px; }
-  .menu-section { margin: 0 8px; padding: 40px 20px 32px; border-radius: 24px; }
+  .menu-section { margin: 0 8px; padding: 40px 20px 32px; border-radius: 24px; background: var(--menu-board); color: var(--ink); box-shadow: inset 0 0 0 1px rgba(169,205,240,.14); }
   /* "MENU" is ~2.09em wide and the "poured daily" tag beside it needs ~61px,
      so the pair needed 356px and pushed the page sideways on narrow phones. */
   .menu-h2 { font-size: min(128px, calc((100vw - 120px) / 2.1)); }
@@ -275,8 +273,8 @@
        shrinks to 1078px at 666px of viewport height) it keeps at least ~130px of
        fade before the two palest stops, which are anchored to the bottom so the hero
        still fades exactly into the page colour. */
-    .hero-section { --hero-h1-top: 352px; --hero-fs: max(150px, min(250px, calc((100vh - 420px) / 1.64))); height: calc(832px + 1.64 * var(--hero-fs)); background: linear-gradient(180deg, #2F6FBC 0px, #4E93D8 calc(var(--hero-h1-top) + 162px), #79B1E6 calc(var(--hero-h1-top) + 402px), #A9CDF0 min(calc(var(--hero-h1-top) + 618px), calc(100% - 230px)), #D6E7F7 calc(100% - 100px), #EEF4FA 100%); }
-    .hero-vignette { background: radial-gradient(60% 28% at 50% 25%, rgba(16,54,108,.5) 0%, rgba(16,54,108,0) 72%); }
+    .hero-section { --hero-h1-top: 352px; --hero-fs: max(150px, min(250px, calc((100vh - 420px) / 1.64))); height: calc(832px + 1.64 * var(--hero-fs)); background: var(--hero-sky); }
+    .hero-vignette { background: var(--hero-halo); }
     .site-header { top: 28px; left: 40px; right: 40px; padding: 10px 10px 10px 28px; }
     .site-header .logo-word { font-size: 26px; }
     .site-header .logo-sub { font-size: 13px; }
@@ -288,7 +286,7 @@
     /* Up here the tagline sits on the dark vignette behind the white headline
        (navy was ~2.7:1 there), so it takes the eyebrow's white like the rest of
        the top zone. Mobile keeps navy: its tagline is still on the light sky. */
-    .hero-sub p { font-size: 34px; max-width: 600px; color: #fff !important; text-shadow: 0 1px 14px rgba(12,40,84,.5); }
+    .hero-sub p { font-size: 34px; max-width: 600px; text-shadow: 0 1px 14px rgba(12,40,84,.5); }
     .hero-pill { padding: 12px 20px; }
     .hero-pill span:last-child { font-size: 14px; }
     .truths-section { padding: 60px 56px 120px; }
@@ -363,7 +361,6 @@
     /* Heading and Follow button on one row (the phone stacks them, which turned
        the button into a 700px-wide bar). */
     .feed-head.feed-head { flex-direction: row; align-items: flex-end; padding-inline: 32px; }
-    #feed-controls { padding-inline: 32px; }
     .feed-h2 { font-size: 88px; }
     .feed-tile { width: 320px; height: 320px; }
     .footer-links { padding-inline: 16px; }
@@ -384,5 +381,11 @@
   }
 
 
-  .hours-track { position: relative; height: 14px; border-radius: 2px; background-image: repeating-linear-gradient(90deg, rgba(15,27,45,.28) 0 1px, transparent 1px calc(100% / 24)); }
-  .hours-bar { position: absolute; top: 0; bottom: 0; background: #1D4ED8; border-radius: 2px; }
+  .hours-track { position: relative; height: 14px; border-radius: 2px; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.3) 0 1px, transparent 1px calc(100% / 24)); }
+  .hours-bar { position: absolute; top: 0; bottom: 0; background: var(--ink-accent); border-radius: 2px; }
+
+/* Page surfaces, painted from the tokens. */
+#feed { background: var(--feed-sky); }
+#footer-desktop, #footer-mobile { background: var(--footer-sky); }
+.truths-section { background: var(--ground); }
+.site-header { background: var(--surface-light); }

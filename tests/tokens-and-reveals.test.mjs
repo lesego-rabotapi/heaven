@@ -47,3 +47,28 @@ test('scroll reveals are CSS only and cannot leave content hidden', () => {
   assert.doesNotMatch(outside, /opacity:\s*0/);
   assert.equal(readdirSync(join(root, 'src/lib')).some((n) => /reveal/i.test(n)), false, 'no reveal script');
 });
+
+test('the React app themes itself from tokens: no sky.css, no attribute selectors on inline colours', () => {
+  assert.doesNotMatch(read('src/main.tsx'), /sky\.css/);
+  assert.doesNotMatch(read('src/styles/legacy.css'), /\[style\*=/);
+  assert.doesNotMatch(read('src/styles/tokens.css'), /\[style\*=|data-sky/);
+});
+
+test('component styles name tokens, not colours (the few exceptions are listed)', () => {
+  // exceptions: the feed tile's placeholder behind its photo, the white label on it, and the printed dot's colour
+  const allowed = new Set(['src/components/FeedMarquee.tsx:#A9CDF0', 'src/components/FeedMarquee.tsx:#fff', 'src/components/Hero.tsx:#1D4ED8']);
+  for (const f of readdirSync(join(root, 'src/components')).filter((n) => n.endsWith('.tsx'))) {
+    const hexes = read('src/components/' + f).match(/(?<!href=")#[0-9A-Fa-f]{3,6}\b/g) || [];
+    for (const h of hexes) assert.ok(allowed.has(`src/components/${f}:${h}`), `${f} hard-codes ${h}`);
+  }
+});
+
+test('light surfaces inside the night page are scoped with .on-light, not special-cased', () => {
+  assert.match(read('src/styles/tokens.css'), /\.on-light \{[^}]*--ink: #0F1B2D/);
+  for (const f of ['Header', 'Story']) assert.match(read(`src/components/${f}.tsx`), /on-light/, f);
+  assert.match(read('src/components/Hero.tsx'), /hero-pill on-light/);
+});
+
+test('the feed has no play/pause button', () => {
+  assert.doesNotMatch(read('src/components/FeedMarquee.tsx'), /feed-pause|aria-pressed|Pause feed/);
+});
