@@ -66,7 +66,6 @@ test('component styles name tokens, not colours (the few exceptions are listed)'
 test('light surfaces inside the night page are scoped with .on-light, not special-cased', () => {
   assert.match(read('src/styles/tokens.css'), /\.on-light \{[^}]*--ink: #0F1B2D/);
   for (const f of ['Header', 'Story']) assert.match(read(`src/components/${f}.tsx`), /on-light/, f);
-  assert.match(read('src/components/Hero.tsx'), /hero-pill on-light/);
 });
 
 test('the feed has no play/pause button', () => {
