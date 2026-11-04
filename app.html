@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en" data-sky="night">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="color-scheme" content="dark"/>
+  <meta name="theme-color" content="#0A1220"/>
+  <title>Heaven Coffee | A café inside a church, Cape Town</title>
+  <meta name="description" content="Coffee inside a working 19th-century church on Greenmarket Square, Cape Town. Open daily 07:00 to 18:00. 38 Burg Street."/>
+  <meta name="robots" content="noindex"/>
+  <link rel="stylesheet" href="/tailwind.css"/>
+  <style>html.js-motion [data-intro] { opacity: 0; }</style>
+  <script>
+    // Motion is an enhancement: this class lets the CSS hide the hero [data-intro] items until the bundle animates
+    // them in. It is never added for reduced motion, and a 4 s failsafe drops it if the bundle never starts,
+    // so content cannot stay hidden. The theme and the content never depend on this script.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('js-motion');
+      window.__motionFailsafe = setTimeout(function () { document.documentElement.classList.remove('js-motion'); }, 4000);
+    }
+  </script>
+</head>
+<body>
+  <div id="root"><!--app-html--></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

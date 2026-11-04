@@ -1,0 +1,45 @@
+/* Design tokens. Dark is the base: there is only one theme, so components use
+   these variables directly (no attribute selectors, no overrides). Values come from the night sky
+   in assets/sky.css, which the legacy index.html still uses until it is retired. */
+:root {
+  color-scheme: dark;
+
+  /* ground */
+  --ground: #0A1220;
+  --ground-raised: #0F1B2D;
+  --card: #16253D;
+  --menu-board: #13213A;
+
+  /* ink: all on --ground at 4.5:1 or better */
+  --ink: #EEF4FA;
+  --ink-soft: #C9D6E8;
+  --ink-muted: #9FB0C8;
+  --ink-accent: #A9CDF0;
+
+  /* actions: white label on --action is 4.5:1; --action on --ground is 3:1 or better */
+  --action: #3B6FE8;
+  --action-ink: #FFFFFF;
+
+  /* rules and tracks */
+  --rule: rgba(238, 244, 250, .16);
+  --rule-strong: rgba(238, 244, 250, .8);
+
+  /* focus ring: visible on --ground, and on the lighter photo areas */
+  --focus-ring: #A9CDF0;
+
+  /* sky and halo */
+  --hero-sky: linear-gradient(180deg, #03060C 0%, #0A1220 34%, #0F1B2D 62%, #0A1220 100%);
+  --hero-halo: radial-gradient(85% 26% at 50% 44%, rgba(30, 58, 138, .6) 0%, rgba(30, 58, 138, 0) 72%);
+  --footer-sky: linear-gradient(180deg, #0A1220 0%, #0F1B2D 55%, #1E3A8A 100%);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --hero-sky: linear-gradient(180deg, #03060C 0%, #0A1220 30%, #0F1B2D 60%, #0A1220 100%);
+    --hero-halo: radial-gradient(55% 30% at 50% 62%, rgba(30, 58, 138, .6) 0%, rgba(30, 58, 138, 0) 72%);
+  }
+}
+
+html { background: var(--ground); }
+body { margin: 0; background: var(--ground); color: var(--ink); overscroll-behavior: none; font-optical-sizing: auto; }
+:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }

@@ -2,3 +2,5 @@
 node_modules/
 # Original photos (full size, with EXIF and GPS). Never commit; see docs/LAUNCH.md.
 incoming/
+dist/
+dist-server/

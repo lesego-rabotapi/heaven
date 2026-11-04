@@ -10,13 +10,28 @@
     "watch:css": "tailwindcss -c tailwind.config.js -i src/tailwind.input.css -o tailwind.css --watch",
     "check:css": "npm run build:css && git diff --exit-code tailwind.css",
     "check:launch": "node scripts/check-launch.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "app:dev": "vite --open /app.html",
+    "typecheck": "tsc",
+    "build": "npm run build:css && vite build && vite build --ssr src/entry-server.tsx --outDir dist-server && node scripts/prerender.mjs",
+    "preview": "npx --yes serve dist -l 4173"
   },
   "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
     "sharp": "^0.35.5",
-    "tailwindcss": "3.4.17"
+    "tailwindcss": "3.4.17",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
   },
   "engines": {
     "node": ">=20.9"
+  },
+  "dependencies": {
+    "animejs": "^4.5.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   }
 }
