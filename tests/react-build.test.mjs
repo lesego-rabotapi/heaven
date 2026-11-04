@@ -55,8 +55,8 @@ test('hero intro items are hidden only by a class that script adds, never by mar
 });
 
 test('the bundle loads as a module, and its stylesheet carries Tailwind, the dark tokens and the reveals', () => {
-  assert.match(html, /<script type="module"[^>]*src="\/assets\/app-[\w-]+\.js"/);
-  const css = readFileSync(join(root, 'dist', html.match(/href="(\/assets\/app-[\w-]+\.css)"/)[1]), 'utf8');
+  assert.match(html, /<script type="module"[^>]*src="\.\/assets\/app-[\w-]+\.js"/);
+  const css = readFileSync(join(root, 'dist', html.match(/href="\.\/(assets\/app-[\w-]+\.css)"/)[1]), 'utf8');
   assert.match(css, /--ground:\s*#0a1220/i);
   assert.match(css, /color-scheme:\s*dark/);
   assert.match(css, /\.hero-section/);
