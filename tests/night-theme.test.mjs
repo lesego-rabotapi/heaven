@@ -10,13 +10,13 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const html = readFileSync(join(root, 'index.html'), 'utf8');
 const css = readFileSync(join(root, 'assets', 'sky.css'), 'utf8');
 
-test('the page links sky.css and the light page carries no data-sky of its own', () => {
+test('the page links sky.css and carries no data-sky of its own (the script sets it)', () => {
   assert.match(html, /<link rel="stylesheet" href="assets\/sky\.css"\/>/);
   assert.doesNotMatch(html, /<html[^>]*data-sky/);
 });
 
-test('the sky follows the visitor\'s dark mode, and ?sky= can force one', () => {
-  assert.match(html, /prefers-color-scheme: dark/);
+test('the night sky is the default for everyone, and ?sky= can preview another', () => {
+  assert.doesNotMatch(html, /prefers-color-scheme: dark/);
   assert.match(html, /sky=\(night\|black\|dusk\|now\)/);
 });
 
@@ -43,12 +43,12 @@ test('the activation script picks the right sky (run against stubbed browsers)',
     vm.runInNewContext(src, ctx);
     return attr;
   };
-  assert.equal(run('', false), null, 'light phone stays light');
-  assert.equal(run('', true), 'night', 'dark phone gets night');
-  assert.equal(run('?sky=now', true), null, '?sky=now forces light');
+  assert.equal(run('', false), 'night', 'a light-mode phone still gets night');
+  assert.equal(run('', true), 'night', 'a dark-mode phone gets night');
+  assert.equal(run('?sky=now', true), null, '?sky=now is the old light page, for comparison only');
   assert.equal(run('?sky=black', false), 'black');
   assert.equal(run('?a=1&sky=dusk', false), 'dusk');
-  assert.equal(run('?sky=evil', false), null, 'unknown values are ignored');
+  assert.equal(run('?sky=evil', false), 'night', 'unknown values are ignored');
 });
 
 test('index.html has no stray control characters', () => {

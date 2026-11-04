@@ -451,10 +451,10 @@
   <link rel="stylesheet" href="tailwind.css"/>
   <link rel="stylesheet" href="assets/sky.css"/>
   <script>
-    // Night theme: follows the visitor's dark-mode setting. ?sky=night|black|dusk|now previews or forces a sky.
+    // Night theme: always on, for every visitor. ?sky=black|dusk|now previews another sky (now is the old light page).
     (function () {
       var q = /[?&]sky=(night|black|dusk|now)/.exec(location.search);
-      var sky = q ? q[1] : (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'now');
+      var sky = q ? q[1] : 'night';
       if (sky !== 'now') { document.documentElement.setAttribute('data-sky', sky); }
     })();
   </script>
