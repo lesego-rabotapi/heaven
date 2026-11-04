@@ -46,7 +46,7 @@ test('there is no open/closed tag anywhere on the page', () => {
   assert.doesNotMatch(html, /Open now|Closed ·|opens 07:00|hero-pill|action-bar-open|action-bar-dot/);
 });
 
-test('the arch portal markup is in the page, switched on only by ?journey=on', () => {
+test('the arch portal markup is in the page, switched on by script (so the page reads fine without it)', () => {
   assert.equal((html.match(/journey-tile/g) || []).length, 2);
   assert.equal((html.match(/journey-door/g) || []).length, 2);
   assert.equal((html.match(/class="journey-nave"/g) || []).length, 2);

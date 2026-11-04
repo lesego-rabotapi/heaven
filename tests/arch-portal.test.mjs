@@ -1,5 +1,5 @@
 // node --test tests/arch-portal.test.mjs
-// The arch portal (restored): off unless ?journey=on, never under reduced motion, and it cleans up after itself.
+// The arch portal: on by default, off with ?journey=off, never under reduced motion, and it cleans up after itself.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -12,8 +12,9 @@ const hook = read('src/lib/useArchPortal.ts');
 const hero = read('src/components/Hero.tsx');
 const css = read('src/styles/legacy.css');
 
-test('it runs only with ?journey=on, without reduced motion, and where IntersectionObserver exists', () => {
-  assert.match(hook, /journey=on/);
+test('it runs by default, is switched off by ?journey=off, and needs no reduced motion and IntersectionObserver', () => {
+  assert.match(hook, /journey=off/);
+  assert.doesNotMatch(hook, /journey=on/);
   assert.match(hook, /prefers-reduced-motion: reduce/);
   assert.match(hook, /'IntersectionObserver' in window/);
 });

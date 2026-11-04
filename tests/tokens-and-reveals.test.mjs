@@ -71,3 +71,35 @@ test('light surfaces inside the night page are scoped with .on-light, not specia
 test('the feed has no play/pause button, and nothing in it moves by itself', () => {
   assert.doesNotMatch(read('src/components/FeedStrip.tsx'), /feed-pause|aria-pressed|Pause feed|setInterval|requestAnimationFrame/);
 });
+
+// The accent is warm (amber, the colour of the crema and the café's lamplight) against the navy sky.
+const hue = (hex) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const max = Math.max(r, g, b), d = max - Math.min(r, g, b);
+  if (!d) return 0;
+  const h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return (h * 60 + 360) % 360;
+};
+
+test('the accent is warm: buttons, kickers and prices are amber, not blue', () => {
+  for (const name of ['action', 'ink-accent', 'find-accent', 'bar-accent']) {
+    const h = hue(token(name));
+    assert.ok(h >= 20 && h <= 45, name + ' hue ' + h.toFixed(0));
+  }
+  assert.doesNotMatch(tokens, /#3B6FE8/i, 'the old blue accent is gone');
+  assert.match(read('src/styles/legacy.css'), /--menu-accent: var\(--ink-accent\)/);
+});
+
+test('inside the light surfaces the accent is a deep amber that still reads at 4.5:1', () => {
+  const onLight = tokens.match(/\.on-light \{[^}]*--ink-accent: (#[0-9A-Fa-f]{6})/)[1];
+  assert.ok(hue(onLight) >= 15 && hue(onLight) <= 45, 'warm');
+  assert.ok(ratio(onLight, '#FBFCFD') >= 4.5, 'accent on the light card');
+});
+
+test('every amber button takes its label from --action-ink, never a hard-coded white', () => {
+  const css = read('src/styles/legacy.css');
+  for (const sel of ['find-cta', 'action-bar-go']) {
+    const rule = css.match(new RegExp('\\.' + sel + ' \\{[^}]*\\}'))[0];
+    assert.match(rule, /color: var\(--action-ink\)/, sel);
+  }
+});

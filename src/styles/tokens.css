@@ -14,11 +14,11 @@
   --ink: #EEF4FA;
   --ink-soft: #C9D6E8;
   --ink-muted: #9FB0C8;
-  --ink-accent: #A9CDF0;
+  --ink-accent: #F2A65A;   /* amber: the crema and the café's lamplight, against the navy sky */
 
-  /* actions: white label on --action is 4.5:1; --action on --ground is 3:1 or better */
-  --action: #3B6FE8;
-  --action-ink: #FFFFFF;
+  /* actions: the dark label on amber is 9:1; --action on --ground is 9:1 */
+  --action: #F2A65A;
+  --action-ink: #0A1220;
 
   /* rules and tracks */
   --rule: rgba(238, 244, 250, .16);
@@ -29,7 +29,7 @@
 
   /* sky and halo */
   --hero-sky: linear-gradient(180deg, #03060C 0%, #0A1220 34%, #0F1B2D 62%, #0A1220 100%);
-  --hero-halo: radial-gradient(85% 26% at 50% 44%, rgba(30, 58, 138, .6) 0%, rgba(30, 58, 138, 0) 72%);
+  --hero-halo: radial-gradient(45% 15% at 50% 60%, rgba(242, 166, 90, .16) 0%, rgba(242, 166, 90, 0) 100%), radial-gradient(85% 26% at 50% 44%, rgba(30, 58, 138, .6) 0%, rgba(30, 58, 138, 0) 72%);
   --footer-sky: linear-gradient(180deg, #0A1220 0%, #0F1B2D 55%, #1E3A8A 100%);
   --feed-sky: linear-gradient(180deg, #0A1220 0%, #0F1B2D 55%, #0A1220 100%);
   --cloud: #1E3A8A;
@@ -41,17 +41,17 @@
   --accent-deep: #1E3A8A;
 
   /* Find us, Good to know and the phone action bar */
-  --find-bg: #0F1B2D; --find-ink: #EEF4FA; --find-muted: #9FB0C8; --find-kicker: #A9CDF0;
-  --find-accent: #3B6FE8; --find-photo-bg: #16253D;
-  --good-chip-bg: var(--card); --good-chip-line: rgba(238, 244, 250, .2); --good-ink: #EEF4FA; --good-icon: #A9CDF0;
-  --bar-bg: rgba(10, 18, 32, .94); --bar-ink: #EEF4FA; --bar-accent: #3B6FE8;
+  --find-bg: #0F1B2D; --find-ink: #EEF4FA; --find-muted: #9FB0C8; --find-kicker: #F2A65A;
+  --find-accent: #F2A65A; --find-photo-bg: #16253D;
+  --good-chip-bg: var(--card); --good-chip-line: rgba(238, 244, 250, .2); --good-ink: #EEF4FA; --good-icon: #F2A65A;
+  --bar-bg: rgba(10, 18, 32, .94); --bar-ink: #EEF4FA; --bar-accent: #F2A65A;
   --surface-light: rgba(251, 252, 253, .94);
 }
 
 @media (min-width: 1024px) {
   :root {
     --hero-sky: linear-gradient(180deg, #03060C 0%, #0A1220 30%, #0F1B2D 60%, #0A1220 100%);
-    --hero-halo: radial-gradient(55% 30% at 50% 62%, rgba(30, 58, 138, .6) 0%, rgba(30, 58, 138, 0) 72%);
+    --hero-halo: radial-gradient(30% 20% at 50% 68%, rgba(242, 166, 90, .16) 0%, rgba(242, 166, 90, 0) 100%), radial-gradient(55% 30% at 50% 62%, rgba(30, 58, 138, .6) 0%, rgba(30, 58, 138, 0) 72%);
   }
 }
 
@@ -62,7 +62,7 @@ body { margin: 0; background: var(--ground); color: var(--ink); overscroll-behav
 /* A light surface inside the night page (the header pill, the hours pill, the story card): the same
    token names, light values, so the components inside need no special cases. */
 .on-light {
-  --ink: #0F1B2D; --ink-soft: #26344A; --ink-muted: #3E4C63; --ink-accent: #1E3A8A;
-  --action: #1D4ED8; --card: #FBFCFD;
+  --ink: #0F1B2D; --ink-soft: #26344A; --ink-muted: #3E4C63; --ink-accent: #8A4B0F;
+  --card: #FBFCFD;
   --rule: rgba(15, 27, 45, .16); --rule-faint: rgba(15, 27, 45, .18);
 }

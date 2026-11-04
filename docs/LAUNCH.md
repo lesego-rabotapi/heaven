@@ -82,7 +82,7 @@ A word in a script or comment can add an unused rule to `tailwind.css`; if `chec
 - [ ] Windows High Contrast / forced colours: links, the open-now chip and the arch edge are visible.
 - [ ] A phone in sunlight: the "COFFEE" headline (about 2.4 to 2.9 : 1 on the sky) and small text.
 - [ ] A mid-range Android on mobile data: the hero loads fast (aim LCP <= 2.5 s on 4G) and the
-      page scrolls smoothly; try `?journey=on` (the optional arch portal) and be ready to drop it.
+      page scrolls smoothly; the arch portal is on by default; add `?journey=off` to compare, and be ready to drop it.
 - [ ] An iPad in both orientations (the 768 to 1023 px tablet layout).
 - [ ] A screen reader (VoiceOver or NVDA) through the first screen, Find us and the menu.
 - [ ] The Directions links on an iPhone (Apple Maps first) and on Android (Google Maps).

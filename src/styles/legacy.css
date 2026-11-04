@@ -27,7 +27,7 @@
   .find-h3 { margin-top: .25rem; font-stretch: 80%; font-weight: 800; font-size: clamp(1.25rem, 5vw, 1.5rem); line-height: 1.05; }
   .find-text p { margin: .375rem 0 0; font-size: .9375rem; line-height: 1.5; color: var(--find-muted); }
   .find-foot { margin-top: 1.5rem; }
-  .find-cta { display: inline-flex; align-items: center; justify-content: center; gap: .625rem; min-height: 3rem; padding-inline: 1.5rem; border-radius: 999px; background: var(--find-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
+  .find-cta { display: inline-flex; align-items: center; justify-content: center; gap: .625rem; min-height: 3rem; padding-inline: 1.5rem; border-radius: 999px; background: var(--find-accent); color: var(--action-ink); font-size: .9375rem; font-weight: 700; }
   /* Good to know (B4): small chips for facts a photo or the client has confirmed. A chip
      whose fact is unknown is hidden by applyFacts(); the group hides if fewer than two
      are left. rem and tokens only; the chips are labels, not controls. */
@@ -47,7 +47,7 @@
   }
   /* The menu board (B5). Plain HTML, so it reads without script and search engines see it.
      The board is dark in every theme, so these tokens only need re-pointing if it ever isn't. */
-  :root { --menu-ink: #EEF4FA; --menu-muted: #9FB0C8; --menu-accent: #A9CDF0; --menu-rule: rgba(238,244,250,.16); --menu-rule-strong: rgba(238,244,250,.9); --menu-dots: rgba(238,244,250,.35); }
+  :root { --menu-ink: #EEF4FA; --menu-muted: #9FB0C8; --menu-accent: var(--ink-accent); --menu-rule: rgba(238,244,250,.16); --menu-rule-strong: rgba(238,244,250,.9); --menu-dots: rgba(238,244,250,.35); }
   .menu-group { display: flex; flex-direction: column; }
   .menu-group-head { display: flex; align-items: baseline; gap: .625rem; padding-bottom: .75rem; border-bottom: 1px solid var(--menu-rule-strong); }
   .menu-cat-no { color: var(--menu-accent); }
@@ -69,7 +69,7 @@
      < 40), which covers it while the menu is open, and the page gets matching bottom
      padding so the last footer link is never behind it. */
   .action-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; display: flex; align-items: center; gap: .75rem; padding: .625rem 4% calc(.625rem + env(safe-area-inset-bottom)); background: var(--bar-bg); -webkit-backdrop-filter: blur(.875rem); backdrop-filter: blur(.875rem); box-shadow: 0 -.5rem 1.5rem -1rem rgba(15,27,45,.5); }
-  .action-bar-go { flex: 1; justify-content: center; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding-inline: 1.25rem; border-radius: 999px; background: var(--bar-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
+  .action-bar-go { flex: 1; justify-content: center; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding-inline: 1.25rem; border-radius: 999px; background: var(--bar-accent); color: var(--action-ink); font-size: .9375rem; font-weight: 700; }
   /* The same height again as scroll padding, so a link reached by keyboard or an anchor
      scrolls clear of the bar instead of landing behind it (WCAG 2.2 Focus Not Obscured). */
   @media (max-width: 1023.98px) { html { scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); } body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); } }
@@ -88,9 +88,8 @@
   a { text-decoration: none; }
   .hv-btn { transition: background-color .2s ease, transform .2s ease, filter .2s ease; }
   .hv-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
-  .hv-ghost:hover { background-color: rgba(169,205,240,.1) !important; }
+  .hv-ghost:hover { background-color: rgba(242,166,90,.12) !important; }
   .hv-ghost { border-color: var(--ink-accent) !important; color: var(--ink-accent) !important; }
-  .hv-link:hover { color: #1D4ED8 !important; }
   .hv-link:not(.hv-btn):hover { color: var(--ink-accent) !important; }
   /* Keyboard focus ring. Two-tone (navy ring over a white gap) so it reads on the
      light sections, the blue sky, the gradient footer and photos alike; it only
@@ -123,7 +122,7 @@
   .arch-edge path { fill: none; stroke: #FBFCFD; stroke-width: 6px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
   .tile img { transition: transform .6s ease; }
   .tile:hover img { transform: scale(1.05); }
-  /* Arch portal (D2b), off unless <html data-journey="on"> (set by ?journey=on). As the
+  /* Arch portal (D2b), on by default: the script sets <html data-journey="on"> (not set with ?journey=off or reduced motion). As the
      hero's door photo scrolls out, its frame grows and the door gives way to the nave
      behind it. --journey runs 0 to 1 and is written by the script from an
      IntersectionObserver; transform and opacity only. Reduced motion: the script

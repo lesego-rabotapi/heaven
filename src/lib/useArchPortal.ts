@@ -2,7 +2,7 @@ import { useEffect, type RefObject } from 'react';
 
 // The arch portal: as the hero photo scrolls away through the top of the screen, the door photo fades
 // out while the stone nave behind it fades in and the arch grows a little, so it feels like walking
-// through the door. Off unless the address has ?journey=on, never under reduced motion, and it stops
+// through the door. On by default (add ?journey=off to the address to see the page without it), never under reduced motion, and it stops
 // at once if reduced motion is turned on while the page is open. The markup is always in the page (the
 // nave image is display:none, so it is never fetched); this hook only switches it on and feeds it a
 // number: --journey, 0 while the arch is whole and 1 once it has left through the top.
@@ -11,7 +11,7 @@ export function useArchPortal(ref: RefObject<HTMLElement | null>) {
     const root = ref.current;
     if (!root) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!/[?&]journey=on(&|$)/.test(window.location.search) || reduce.matches || !('IntersectionObserver' in window)) return;
+    if (/[?&]journey=off(&|$)/.test(window.location.search) || reduce.matches || !('IntersectionObserver' in window)) return;
 
     const html = document.documentElement;
     html.setAttribute('data-journey', 'on');
