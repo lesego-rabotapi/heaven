@@ -1,5 +1,5 @@
 // node --test tests/night-theme.test.mjs
-// The night theme (assets/sky.css) is switched by html[data-sky]; light is the default.
+// The night theme (assets/sky.css) is the only theme and is set in the markup, not by a script.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -10,45 +10,36 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const html = readFileSync(join(root, 'index.html'), 'utf8');
 const css = readFileSync(join(root, 'assets', 'sky.css'), 'utf8');
 
-test('the page links sky.css and carries no data-sky of its own (the script sets it)', () => {
+test('the page links sky.css and is night in the markup, so it is dark with JavaScript off', () => {
   assert.match(html, /<link rel="stylesheet" href="assets\/sky\.css"\/>/);
-  assert.doesNotMatch(html, /<html[^>]*data-sky/);
+  assert.match(html, /<html[^>]*data-sky="night"/);
 });
 
-test('the night sky is the default for everyone, and ?sky= can preview another', () => {
-  assert.doesNotMatch(html, /prefers-color-scheme: dark/);
-  assert.match(html, /sky=\(night\|black\|dusk\|now\)/);
+test('no script switches the theme, and nothing follows prefers-color-scheme', () => {
+  assert.doesNotMatch(html, /setAttribute\('data-sky'/);
+  assert.doesNotMatch(html, /prefers-color-scheme/);
 });
 
-test('night and black re-point the tokens of Find us, Good to know and the action bar', () => {
+test('the browser is told the page is dark (scrollbars, form controls, phone status bar)', () => {
+  assert.match(html, /<meta name="color-scheme" content="dark"\/>/);
+  assert.match(html, /<meta name="theme-color" content="#0A1220"\/>/);
+  assert.match(css, /color-scheme: dark;/);
+});
+
+test('sky.css holds the night sky only', () => {
+  assert.doesNotMatch(css.replace(/\/\*[\s\S]*?\*\//g, ''), /black|dusk/);
+});
+
+test('night re-points the tokens of Find us, Good to know and the action bar', () => {
   for (const token of ['--find-bg', '--find-ink', '--find-muted', '--good-chip-bg', '--good-ink', '--bar-bg', '--bar-ink']) {
-    assert.ok(css.includes(token + ':'), token + ' is set for the dark skies');
+    assert.ok(css.includes(token + ':'), token + ' is set for night');
   }
-  // every token that sky.css re-points is one the page really defines
   for (const token of ['--find-bg', '--good-chip-bg', '--bar-bg']) assert.ok(html.includes(token + ':'), token);
 });
 
 test('the sections that have their own light background are covered', () => {
   assert.match(css, /\.truths-section \{ background: var\(--g\) !important; \}/);
   assert.match(css, /\.other-maps a \{ color: #A9CDF0; \}/);
-});
-
-test('the activation script picks the right sky (run against stubbed browsers)', async () => {
-  const vm = await import('node:vm');
-  const src = html.match(/<script>\s*\/\/ Night theme[\s\S]*?<\/script>/)[0].replace(/<\/?script>/g, '');
-  const run = (search, dark) => {
-    let attr = null;
-    const ctx = { location: { search }, matchMedia: () => ({ matches: dark }), document: { documentElement: { setAttribute: (k, v) => { attr = v; } } } };
-    ctx.window = ctx;
-    vm.runInNewContext(src, ctx);
-    return attr;
-  };
-  assert.equal(run('', false), 'night', 'a light-mode phone still gets night');
-  assert.equal(run('', true), 'night', 'a dark-mode phone gets night');
-  assert.equal(run('?sky=now', true), null, '?sky=now is the old light page, for comparison only');
-  assert.equal(run('?sky=black', false), 'black');
-  assert.equal(run('?a=1&sky=dusk', false), 'dusk');
-  assert.equal(run('?sky=evil', false), 'night', 'unknown values are ignored');
 });
 
 test('index.html has no stray control characters', () => {
