@@ -3,7 +3,7 @@ const path = require('path');
 /**
  * Tailwind build config (npm run build:css -> tailwind.css).
  *
- * Only index.html is scanned. If the page's script moves to its own file, or a
+ * index.html (legacy page), app.html and the .tsx files under src (the React rebuild) are scanned. If the page's script moves to its own file, or a
  * second page appears, add it to `content`: classes that live only in an
  * unscanned file get no CSS and fail silently.
  *
@@ -19,7 +19,7 @@ const path = require('path');
  */
 module.exports = {
   content: {
-    files: [path.join(__dirname, 'index.html')],
+    files: [path.join(__dirname, 'index.html'), path.join(__dirname, 'app.html'), path.join(__dirname, 'src/**/*.tsx')],
     transform: {
       html: (source) => source.replace(/<!--[\s\S]*?-->/g, '').replace(/<style[\s\S]*?<\/style>/g, ''),
     },
