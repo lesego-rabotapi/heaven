@@ -1,7 +1,5 @@
-import { useOpenChip } from '../lib/useOpenChip';
 import { DirectionsLink } from './DirectionsLink';
 export function ActionBar() {
-  const { label, dot } = useOpenChip();
   return (
     <div id="action-bar" className="action-bar lg:hidden">
       <DirectionsLink className="action-bar-go hv-btn hv-link">
@@ -11,13 +9,6 @@ export function ActionBar() {
         {' '}
         Directions
       </DirectionsLink>
-      {' '}
-      <span className="action-bar-open">
-        <span className="action-bar-dot" style={dot ? { background: dot } : undefined} />
-        <span>
-          {label}
-        </span>
-      </span>
     </div>
   );
 }

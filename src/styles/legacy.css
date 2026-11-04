@@ -69,9 +69,7 @@
      < 40), which covers it while the menu is open, and the page gets matching bottom
      padding so the last footer link is never behind it. */
   .action-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; display: flex; align-items: center; gap: .75rem; padding: .625rem 4% calc(.625rem + env(safe-area-inset-bottom)); background: var(--bar-bg); -webkit-backdrop-filter: blur(.875rem); backdrop-filter: blur(.875rem); box-shadow: 0 -.5rem 1.5rem -1rem rgba(15,27,45,.5); }
-  .action-bar-go { flex: none; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding-inline: 1.25rem; border-radius: 999px; background: var(--bar-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
-  .action-bar-open { flex: 1; min-width: 0; display: flex; align-items: center; gap: .5rem; color: var(--bar-ink); font-size: .8125rem; font-weight: 700; line-height: 1.25; }
-  .action-bar-dot { flex: none; width: .5625rem; height: .5625rem; border-radius: 50%; background: var(--bar-accent); }
+  .action-bar-go { flex: 1; justify-content: center; display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding-inline: 1.25rem; border-radius: 999px; background: var(--bar-accent); color: #fff; font-size: .9375rem; font-weight: 700; }
   /* The same height again as scroll padding, so a link reached by keyboard or an anchor
      scrolls clear of the bar instead of landing behind it (WCAG 2.2 Focus Not Obscured). */
   @media (max-width: 1023.98px) { html { scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); } body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); } }

@@ -19,7 +19,7 @@ test('the built page is night and has its content in the HTML itself', () => {
   assert.match(html, /<html[^>]*data-sky="night"/);
   // React marks the text node boundary with a comment, so "heaven" and the line break are separate.
   assert.match(html, /<h1[^>]*>heaven(<!-- -->)? <br\/>Coffee<\/h1>/);
-  assert.match(html, /Open daily 07:00 — 18:00/);
+  assert.match(html, /07:00 — 18:00/);
   assert.doesNotMatch(html, /<!--app-html-->/);
 });
 
@@ -42,9 +42,15 @@ test('unknown facts are not rendered, and the phone stays a placeholder, never a
   assert.match(html, /Tables outside/);
 });
 
-test('the open-now chip is printed hours in the HTML and goes live only after hydration', () => {
-  assert.doesNotMatch(html, /Open now ·/);
-  assert.doesNotMatch(html, /Closed ·/);
+test('there is no open/closed tag anywhere on the page', () => {
+  assert.doesNotMatch(html, /Open now|Closed ·|opens 07:00|hero-pill|action-bar-open|action-bar-dot/);
+});
+
+test('the arch portal markup is in the page, switched on only by ?journey=on', () => {
+  assert.equal((html.match(/journey-tile/g) || []).length, 2);
+  assert.equal((html.match(/journey-door/g) || []).length, 2);
+  assert.equal((html.match(/class="journey-nave"/g) || []).length, 2);
+  assert.doesNotMatch(html, /<html[^>]*data-journey/);
 });
 
 test('hero intro items are hidden only by a class that script adds, never by markup', () => {

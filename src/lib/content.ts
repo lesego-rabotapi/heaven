@@ -4,10 +4,10 @@
 // TODO(content): confirm public-holiday hours with Heaven before launch.
 // TODO(content): the footer used to say "As seen on: Cape Town CCID (2021)"; not confirmed with the
 // client, so it was removed. Add a press column back once it is.
-import type { Hours } from './open-state';
 
 export const brand = { name: 'Heaven Coffee', instagram: 'heavencoffeect', tagline: 'born in love, by love, for love' } as const;
-export const hours: Hours = { groups: [{ label: 'Every day', open: '07:00', close: '18:00' }] };
+export type HoursGroup = { label: string; open: string; close: string };
+export const hours: { groups: HoursGroup[] } = { groups: [{ label: 'Every day', open: '07:00', close: '18:00' }] };
 export const address = '38 Burg Street, corner of Burg & Longmarket, Cape Town 8000';
 // What the map apps search for: the name and street find the place; "corner of ..." does not.
 export const mapQuery = 'Heaven Coffee, 38 Burg Street, Cape Town 8000';
