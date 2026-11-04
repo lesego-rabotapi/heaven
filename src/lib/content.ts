@@ -27,16 +27,16 @@ export const facts: Record<string, { status: FactStatus; source: string }> = {
 };
 export const isKnown = (key: string): boolean => (facts[key]?.status ?? 'unknown') !== 'unknown';
 
-export type FeedPost = { image: string; alt: string; place: string };
+export type FeedPost = { image: string; alt: string; place: string; width: number; height: number };
 export const feed: FeedPost[] = [
-  { image: 'images/storefront-entrance.jpg', alt: 'Heaven Coffee storefront on Burg Street, navy umbrellas and a dog on the steps', place: 'Burg Street' },
-  { image: 'images/cup-handover.jpg', alt: 'A barista handing over a to-go cup with the heaven coffee wordmark', place: 'The counter' },
-  { image: 'images/stone-arch-interior.jpg', alt: 'Gothic stone arches, pews and stained glass inside Central Methodist Mission', place: 'The nave' },
-  { image: 'images/puppy-entrance-door.jpg', alt: 'A couple holding a puppy at the Gothic entrance', place: 'The front door' },
-  { image: 'images/tourist-pastry-umbrella.jpg', alt: 'A visitor with a pastry and coffee under a navy Heaven umbrella', place: 'Greenmarket Sq.' },
-  { image: 'images/interior-signage.jpg', alt: 'The heaven coffee sign board above framed quotes and macramé', place: 'The wall' },
-  { image: 'images/dog-petting-outdoor.jpg', alt: 'Two customers petting a dog at the outdoor tables', place: 'Outside' },
-  { image: 'images/interior-counter.jpg', alt: 'The wooden counter with the sign board and people at the bar', place: 'The bar' },
-  { image: 'images/three-friends-coffee.jpg', alt: 'Three friends sharing coffee under the umbrellas', place: 'Greenmarket Sq.' },
-  { image: 'images/mondli-coco-480.jpg', alt: 'Mondli Mahamba holding his dog, Coco, in the doorway', place: 'The doorway' },
+  { image: 'images/storefront-entrance.jpg', alt: 'Heaven Coffee storefront on Burg Street, navy umbrellas and a dog on the steps', place: 'Burg Street', width: 690, height: 768 },
+  { image: 'images/cup-handover.jpg', alt: 'A barista handing over a to-go cup with the heaven coffee wordmark', place: 'The counter', width: 446, height: 448 },
+  { image: 'images/stone-arch-interior.jpg', alt: 'Gothic stone arches, pews and stained glass inside Central Methodist Mission', place: 'The nave', width: 662, height: 823 },
+  { image: 'images/puppy-entrance-door.jpg', alt: 'A couple holding a puppy at the Gothic entrance', place: 'The front door', width: 652, height: 867 },
+  { image: 'images/tourist-pastry-umbrella.jpg', alt: 'A visitor with a pastry and coffee under a navy Heaven umbrella', place: 'Greenmarket Sq.', width: 697, height: 875 },
+  { image: 'images/interior-signage.jpg', alt: 'The heaven coffee sign board above framed quotes and macramé', place: 'The wall', width: 1280, height: 853 },
+  { image: 'images/dog-petting-outdoor.jpg', alt: 'Two customers petting a dog at the outdoor tables', place: 'Outside', width: 657, height: 873 },
+  { image: 'images/interior-counter.jpg', alt: 'The wooden counter with the sign board and people at the bar', place: 'The bar', width: 800, height: 600 },
+  { image: 'images/three-friends-coffee.jpg', alt: 'Three friends sharing coffee under the umbrellas', place: 'Greenmarket Sq.', width: 656, height: 856 },
+  { image: 'images/mondli-coco-480.jpg', alt: 'Mondli Mahamba holding his dog, Coco, in the doorway', place: 'The doorway', width: 480, height: 628 },
 ];

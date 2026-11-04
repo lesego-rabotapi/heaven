@@ -137,22 +137,19 @@
     html[data-journey="on"] .journey-tile { transition: transform .25s linear; }
     html[data-journey="on"] .journey-door, html[data-journey="on"] .journey-nave { transition: opacity .25s linear; }
   }
-  @keyframes feed-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(24px,-10px); } }
   @media (prefers-reduced-motion: no-preference) {
-    .feed-track.l { animation: feed-left var(--speed, 60s) linear infinite; }
     .cloud.d { animation: drift 18s ease-in-out infinite; }
   }
-  /* Reduced motion: no marquee, so the feed becomes a normal scrollable strip
-     (it used to sit clipped at ~1.3 tiles with no way to reach the rest).
-     The looping duplicate set is hidden, and the pause control has nothing to do. */
-  @media (prefers-reduced-motion: reduce) {
-    .feed-row { overflow-x: auto !important; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: 16px; scrollbar-width: thin; }
-    .feed-row::-webkit-scrollbar { display: block; height: 8px; }
-    .feed-row::-webkit-scrollbar-thumb { background: rgba(15,27,45,.3); border-radius: 4px; }
-    .feed-track { padding: 0 16px 14px; }
-    .feed-track > [aria-hidden="true"] { display: none !important; }
-    .feed-tile { scroll-snap-align: start; }
+  /* The feed is a strip you scroll by hand; nothing in it moves by itself. */
+  .feed-row { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: 16px; scrollbar-width: thin; }
+  .feed-row::-webkit-scrollbar { display: block; height: 8px; }
+  .feed-row::-webkit-scrollbar-thumb { background: rgba(238,244,250,.3); border-radius: 4px; }
+  .feed-track { padding: 0 16px 14px; }
+  .feed-tile { scroll-snap-align: start; }
+  @media (min-width: 1024px) {
+    .feed-row { scroll-padding-inline: 56px; }
+    .feed-track { padding-left: 56px; padding-right: 56px; }
   }
   @media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
     .feed-row { scroll-padding-inline: 56px; }
@@ -241,10 +238,6 @@
   .feed-section { padding: 88px 0 72px; }
   .feed-h2 { font-size: 64px; }
   .feed-tile { width: 280px; height: 280px; border-radius: 16px; }
-  /* Marquee pace in px per second (the script divides one set of tiles by it, so the
-     loop time follows the tile size). 22.4 and 24.8 are what the old fixed 130s /
-     150s loops came to at 280px and 360px tiles. */
-  .feed-track { --px-per-s: 22.4; }
   .footer-heaven { font-size: min(86px, calc((100vw - 64px) / 3.4)); }
   .visit-photo { margin-top: 32px; height: 300px; }
   .visit-card { margin-top: 14px; }
@@ -308,7 +301,6 @@
     .feed-h2 { font-size: 120px; }
     .feed-tile { width: 360px; height: 360px; border-radius: 20px; }
     .feed-tile:focus-visible::after { border-radius: 11px; }
-    .feed-track { --px-per-s: 24.8; }
     /* "heaven" is ~3.37em wide; the footer's 56px side padding leaves
        100vw - 112px, so 360px only fit from ~1340px up and clipped the
        last letter on common laptops. */
@@ -373,7 +365,7 @@
     /* 100vw minus the footer's and the visit block's 16px padding on each side. */
     .footer-heaven { font-size: min(300px, calc((100vw - 64px) / 3.4)); }
   }
-  @media (prefers-reduced-motion: reduce) and (min-width: 768px) and (max-width: 1023.98px) {
+  @media (min-width: 768px) and (max-width: 1023.98px) {
     .feed-row { scroll-padding-inline: 32px; }
     .feed-track { padding-left: 32px; padding-right: 32px; }
   }

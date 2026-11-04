@@ -45,7 +45,7 @@ export function InstagramCard({ post, stats, index = 0 }: { post: FeedPost; stat
   );
 }
 
-// A short row of cards under the marquee. Photos are the café's own; the captions describe what is in
+// A short row of cards under the photo strip. Photos are the café's own; the captions describe what is in
 // them, they are not claimed to be posts.
 export function InstagramCards({ posts }: { posts: FeedPost[] }) {
   return (
