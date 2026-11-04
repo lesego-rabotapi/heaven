@@ -4,7 +4,6 @@ import { App } from './App';
 import './styles/tokens.css';
 import './styles/legacy.css';
 import '../tailwind.css';
-import '../assets/sky.css';
 import './styles/reveal.css';
 
 const root = document.getElementById('root')!;

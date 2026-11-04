@@ -3,8 +3,8 @@ export function NavDrawer({ drawer }: { drawer: Drawer }) {
   const cls = ["lg:hidden fixed inset-0 z-40 overflow-hidden", drawer.visible ? "" : "hidden", drawer.shown ? "is-open" : "", drawer.closing ? "is-closing" : ""].filter(Boolean).join(" ");
   return (
     <div id="nav-drawer" ref={drawer.drawerRef} role="dialog" aria-label="Menu" className={cls}>
-      <div className="staggered-menu-layer" style={{ background: "#1E3A8A" }} />
-      <div className="staggered-menu-layer" style={{ background: "#0F1B2D", transitionDelay: "80ms" }} />
+      <div className="staggered-menu-layer" style={{ background: "var(--accent-deep)" }} />
+      <div className="staggered-menu-layer" style={{ background: "var(--ground-raised)", transitionDelay: "80ms" }} />
       <div className="staggered-menu-panel">
         <nav aria-label="Menu" className="flex flex-col px-6 pt-24">
           <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "160ms" }} href="#find-the-door">

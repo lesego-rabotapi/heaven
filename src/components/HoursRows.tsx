@@ -21,7 +21,7 @@ export function HoursRows({ compact }: { compact: boolean }) {
               gridTemplateColumns: `auto minmax(0,1fr) ${compact ? '118px' : '150px'}`,
               columnGap: compact ? '12px' : '20px',
               padding: `${compact ? '14px' : '16px'} 0`,
-              borderBottom: '1px solid rgba(15,27,45,.16)',
+              borderBottom: '1px solid var(--rule)',
             }}
           >
             <span className="font-display uppercase" style={{ fontStretch: '80%', fontWeight: 800, fontSize: compact ? '20px' : '22px', whiteSpace: 'nowrap' }}>

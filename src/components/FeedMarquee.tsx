@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { feed, type FeedPost } from '../lib/content';
 
-const PATH_PAUSE = 'M7 5h3.5v14H7zM13.5 5H17v14h-3.5z';
-const PATH_PLAY = 'M8 5.5v13l11-6.5z';
-
 // The pointer, a keyboard user and the page itself can each want the marquee stopped: a tile is a link,
 // so it can be tabbed to. The second set is a visual copy (aria-hidden, out of the tab order) that
 // makes the loop seamless; CSS hides it on phones, where the row scrolls by hand instead.
@@ -32,7 +29,6 @@ function FeedTile({ post, hidden }: { post: FeedPost; hidden?: boolean }) {
 export function FeedMarquee() {
   const rowRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [userPaused, setUserPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [offScreen, setOffScreen] = useState(false);
@@ -81,7 +77,7 @@ export function FeedMarquee() {
     return () => { io.disconnect(); document.removeEventListener('visibilitychange', onVis); };
   }, []);
 
-  const paused = userPaused || hovered || focused || offScreen || tabHidden;
+  const paused = hovered || focused || offScreen || tabHidden;
   useEffect(() => {
     if (trackRef.current) trackRef.current.style.animationPlayState = paused ? 'paused' : 'running';
   }, [paused]);
@@ -107,13 +103,6 @@ export function FeedMarquee() {
           {feed.map((p) => <FeedTile key={p.image} post={p} />)}
           {feed.map((p) => <FeedTile key={"copy-" + p.image} post={p} hidden />)}
         </div>
-      </div>
-      <div id="feed-controls" className="flex justify-end px-4 lg:px-14 mt-4">
-        <button id="feed-pause" type="button" className="hv-ghost flex items-center justify-center flex-shrink-0" aria-pressed={userPaused} onClick={() => setUserPaused((v) => !v)} aria-label="Pause feed scrolling" title="Pause feed scrolling" style={{ width: "48px", height: "48px", borderRadius: "50%", border: "1.5px solid #1D4ED8", background: "transparent", color: "#1D4ED8", cursor: "pointer" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d={userPaused ? PATH_PLAY : PATH_PAUSE} />
-          </svg>
-        </button>
       </div>
     </>
   );
