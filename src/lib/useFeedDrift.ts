@@ -1,11 +1,11 @@
 import { useEffect, useState, type RefObject } from 'react';
 import { nextScroll, passSeconds } from './feedDriftMath';
 
-const RESUME_AFTER_MS = 3000;
+const RESUME_AFTER_MS = 2250;
 
 // The feed drifts sideways by itself and stays an ordinary scrolling row, so a hand can take over at any
 // time. Drifting moves scrollLeft, not a transform, which is what lets the two share the row. It holds
-// still under a pointer, a finger or keyboard focus, off screen and in a hidden tab, picks up 3 s after a
+// still under a pointer, a finger or keyboard focus, off screen and in a hidden tab, picks up 2.25 s after a
 // hand scroll, and never starts under reduced motion. Returns whether the tiles should be doubled for the
 // loop: not in the prerendered HTML, so without script the row is simply ten photos to scroll.
 export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
