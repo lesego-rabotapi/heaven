@@ -40,6 +40,9 @@ export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
       row.scrollLeft = pos;
     };
 
+    // Phones fire mouseenter on a tap with no mouseleave after it, which would leave the row stopped.
+    const canHover = window.matchMedia('(hover: hover)');
+    const hover = () => { if (canHover.matches) held = true; };
     const hold = () => { held = true; };
     const release = () => { held = false; resumeAt = performance.now() + RESUME_AFTER_MS; };
     // A scroll that is not where drifting left the row came from a hand: wheel, swipe, keys or scrollbar.
@@ -52,7 +55,7 @@ export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
       if (entry?.isIntersecting) { last = performance.now(); frame = requestAnimationFrame(tick); }
     });
     seen.observe(row);
-    row.addEventListener('mouseenter', hold);
+    row.addEventListener('mouseenter', hover);
     row.addEventListener('mouseleave', release);
     row.addEventListener('focusin', hold);
     row.addEventListener('focusout', release);
@@ -64,7 +67,7 @@ export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
     return () => {
       cancelAnimationFrame(frame);
       seen.disconnect();
-      row.removeEventListener('mouseenter', hold);
+      row.removeEventListener('mouseenter', hover);
       row.removeEventListener('mouseleave', release);
       row.removeEventListener('focusin', hold);
       row.removeEventListener('focusout', release);

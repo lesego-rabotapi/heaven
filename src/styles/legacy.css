@@ -69,12 +69,12 @@
   @media (prefers-reduced-motion: no-preference) {
     .cloud.d { animation: drift 18s ease-in-out infinite; }
   }
-  /* The feed drifts by itself (useFeedDrift moves scrollLeft) and stays a row you can scroll by hand. No
-     scroll snapping: it would pull against the drift. */
-  .feed-row { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
-  .feed-row::-webkit-scrollbar { display: block; height: 8px; }
-  .feed-row::-webkit-scrollbar-thumb { background: rgba(238,244,250,.3); border-radius: 4px; }
-  .feed-track { padding: 0 16px 14px; }
+  /* The feed drifts by itself (useFeedDrift moves scrollLeft) and is moved by dragging it (useDragScroll)
+     or swiping, so it has no scrollbar. No scroll snapping: it would pull against the drift. */
+  .feed-row { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; }
+  .feed-row.is-dragging, .feed-row.is-dragging a { cursor: grabbing; user-select: none; }
+  .feed-row .feed-tile { cursor: inherit; }
+  .feed-track { padding: 0 16px; }
   @media (min-width: 1024px) {
     .feed-track { padding-left: 56px; padding-right: 56px; }
   }

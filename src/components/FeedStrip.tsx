@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import { feed, type FeedPost } from '../lib/content';
+import { useDragScroll } from '../lib/useDragScroll';
 import { useFeedDrift } from '../lib/useFeedDrift';
 
-// A row of square photos that drifts by itself and can be scrolled by hand (swipe, trackpad, scrollbar,
+// A row of square photos that drifts by itself and can be moved by hand (mouse drag, swipe, trackpad,
 // arrow keys on the focused row, or Tab through the tiles). Each tile is a link to the Instagram profile.
 // The copies exist only to make the loop seamless, so assistive tech and the keyboard skip them.
 function FeedTile({ post, copy = false }: { post: FeedPost; copy?: boolean }) {
@@ -33,6 +34,7 @@ function FeedTile({ post, copy = false }: { post: FeedPost; copy?: boolean }) {
 export function FeedStrip() {
   const row = useRef<HTMLDivElement>(null);
   const looped = useFeedDrift(row);
+  useDragScroll(row);
   return (
     <div id="feed-row" ref={row} className="feed-row mt-9 lg:mt-16" tabIndex={0} role="region" aria-label="From the feed, scroll sideways">
       <div id="feed-track" className="feed-track flex" style={{ gap: '12px', width: 'max-content' }}>

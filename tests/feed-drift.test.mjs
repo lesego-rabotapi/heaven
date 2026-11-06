@@ -49,3 +49,25 @@ test('the page HTML has ten tiles; the copies arrive with script and are hidden 
   assert.match(strip, /tabIndex=\{copy \? -1 : undefined\}/);
   assert.match(strip, /alt=\{copy \? '' : post\.alt\}/);
 });
+
+test('the row shows no scrollbar', () => {
+  assert.match(css, /\.feed-row \{[^}]*scrollbar-width: none/);
+  assert.doesNotMatch(css, /\.feed-row::-webkit-scrollbar/);
+});
+
+test('a mouse drags the row, and a drag does not open the tile under it', () => {
+  const drag = read('src/lib/useDragScroll.ts');
+  for (const event of ['pointerdown', 'pointermove', 'pointerup', 'pointercancel', 'dragstart', 'click']) {
+    assert.ok(drag.includes(`'${event}'`), event);
+  }
+  assert.match(drag, /pointerType !== 'mouse'/, 'touch keeps its native swipe');
+  assert.match(drag, /setPointerCapture/);
+  assert.match(drag, /stopPropagation|preventDefault/);
+  assert.match(strip, /useDragScroll\(row\)/);
+  assert.match(css, /\.feed-row \{[^}]*cursor: grab/);
+  assert.match(css, /\.feed-row\.is-dragging[^{]*\{[^}]*cursor: grabbing/);
+});
+
+test('hover pauses only where there is a real hover, so a tap on a phone cannot leave it stuck', () => {
+  assert.match(hook, /\(hover: hover\)/);
+});
