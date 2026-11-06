@@ -68,6 +68,6 @@ test('light surfaces inside the night page are scoped with .on-light, not specia
   for (const f of ['Header', 'Story']) assert.match(read(`src/components/${f}.tsx`), /on-light/, f);
 });
 
-test('the feed has no play/pause button, and nothing in it moves by itself', () => {
-  assert.doesNotMatch(read('src/components/FeedStrip.tsx'), /feed-pause|aria-pressed|Pause feed|setInterval|requestAnimationFrame/);
+test('the feed has no play/pause button', () => {
+  assert.doesNotMatch(read('src/components/FeedStrip.tsx'), /feed-pause|aria-pressed|Pause feed/);
 });

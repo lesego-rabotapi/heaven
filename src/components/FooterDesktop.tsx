@@ -3,7 +3,7 @@ export function FooterDesktop() {
   return (
     <footer id="footer-desktop" className="hidden lg:flex flex-col relative overflow-hidden" style={{ padding: "72px 56px 40px" }}>
       <div className="cloud" style={{ width: "700px", height: "160px", left: "380px", top: "40px" }} aria-hidden="true" />
-      <div className="relative grid grid-cols-4" style={{ gap: "24px", fontSize: "15px" }}>
+      <div className="relative grid grid-cols-3" style={{ gap: "24px", fontSize: "15px" }}>
         <div className="flex flex-col" style={{ gap: "10px" }}>
           <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
             Visit
@@ -27,9 +27,6 @@ export function FooterDesktop() {
             Explore
           </span>
           {' '}
-          <a href="#find-the-door" className="hv-link" style={{ color: "var(--ink)" }}>
-            Find us
-          </a>
           <a href="#story" className="hv-link" style={{ color: "var(--ink)" }}>
             Story
           </a>
@@ -37,7 +34,7 @@ export function FooterDesktop() {
             Menu
           </a>
           <a href="#feed" className="hv-link" style={{ color: "var(--ink)" }}>
-            In pictures
+            From the feed
           </a>
           <a href="#visit-desktop" className="hv-link" style={{ color: "var(--ink)" }}>
             Hours &amp; visit
@@ -53,14 +50,6 @@ export function FooterDesktop() {
           <a href="https://instagram.com/heavencoffeect" rel="noopener noreferrer" target="_blank" className="hv-link" style={{ color: "var(--ink)" }}>
             @heavencoffeect
           </a>
-        </div>
-        <div className="flex flex-col" style={{ gap: "10px" }}>
-          <span style={{ fontSize: "12px", fontWeight: "700", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ink-accent)" }}>
-            In our words
-          </span>
-          <span className="font-quote italic" style={{ fontSize: "24px", lineHeight: "1.15", color: "var(--ink)" }}>
-            born in love, by love, for love
-          </span>
         </div>
       </div>
       <div className="relative flex flex-col" style={{ gap: "20px", marginTop: "40px" }}>

@@ -1,5 +1,5 @@
 import { HoursRows } from './HoursRows';
-import { DirectionsLink, OtherMaps } from './DirectionsLink';
+import { DirectionsLink } from './DirectionsLink';
 export function FooterMobile() {
   return (
     <footer id="footer-mobile" className="lg:hidden relative overflow-hidden flex flex-col" style={{ padding: "48px 16px 28px", gap: "32px" }}>
@@ -9,9 +9,6 @@ export function FooterMobile() {
             Explore
           </span>
           {' '}
-          <a href="#find-the-door" className="hv-link" style={{ color: "var(--ink)" }}>
-            Find us
-          </a>
           <a href="#story" className="hv-link" style={{ color: "var(--ink)" }}>
             Story
           </a>
@@ -19,7 +16,7 @@ export function FooterMobile() {
             Menu
           </a>
           <a href="#feed" className="hv-link" style={{ color: "var(--ink)" }}>
-            In pictures
+            From the feed
           </a>
           <a href="#visit" className="hv-link" style={{ color: "var(--ink)" }}>
             Hours &amp; visit
@@ -74,24 +71,15 @@ export function FooterMobile() {
             38 Burg Street, corner of Burg &amp; Longmarket, Cape Town 8000
           </span>
           <p className="m-0" style={{ fontSize: "14px", lineHeight: "1.55", color: "var(--ink-soft)" }}>
-            From the street it reads as a church, because it is. Look for the navy umbrellas and the chalkboard sign:
-            {' '}
-            <span className="font-quote italic">
-              Stairway to heaven in a cup.
-            </span>
+            From the street it reads as a church, because it is. Look for the navy umbrellas and the chalkboard sign.
           </p>
           <DirectionsLink className="hv-btn hv-link flex items-center justify-center" style={{ height: "50px", borderRadius: "999px", background: "var(--action)", color: "var(--action-ink)", fontSize: "14px", fontWeight: "700" }}>
             Get directions
           </DirectionsLink>
-          <OtherMaps />
-          {' '}
           <span data-phone-placeholder className="flex items-center justify-center" style={{ height: "50px", borderRadius: "999px", border: "1.5px dashed var(--ink-muted)", color: "var(--ink-muted)", fontSize: "14px", fontWeight: "700" }}>
             Call 0XX XXX XXXX
           </span>
         </div>
-        <p className="visit-foot text-center font-quote italic m-0" style={{ marginTop: "32px", fontSize: "1.5rem", lineHeight: "1.15", color: "var(--ink)" }}>
-          born in love, by love, for love
-        </p>
         <div className="visit-foot footer-heaven text-center" style={{ marginTop: "16px", fontFamily: "'Poppins',sans-serif", fontWeight: "300", lineHeight: "0.9", letterSpacing: "-0.06em", color: "var(--ink-bright)" }}>
           heaven
         </div>

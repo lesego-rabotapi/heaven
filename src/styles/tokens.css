@@ -40,11 +40,6 @@
   --rule-faint: rgba(238, 244, 250, .18);
   --accent-deep: #1E3A8A;
 
-  /* Find us, Good to know and the phone action bar */
-  --find-bg: #0F1B2D; --find-ink: #EEF4FA; --find-muted: #9FB0C8; --find-kicker: #A9CDF0;
-  --find-accent: #3B6FE8; --find-photo-bg: #16253D;
-  --good-chip-bg: var(--card); --good-chip-line: rgba(238, 244, 250, .2); --good-ink: #EEF4FA; --good-icon: #A9CDF0;
-  --bar-bg: rgba(10, 18, 32, .94); --bar-ink: #EEF4FA; --bar-accent: #3B6FE8;
   --surface-light: rgba(251, 252, 253, .94);
 }
 

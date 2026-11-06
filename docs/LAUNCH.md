@@ -79,15 +79,15 @@ A word in a script or comment can add an unused rule to `tailwind.css`; if `chec
 
 - [ ] Tab through the whole page with a keyboard: the focus ring is visible everywhere, nothing is
       skipped, nothing traps.
-- [ ] Windows High Contrast / forced colours: links, the open-now chip and the arch edge are visible.
+- [ ] Windows High Contrast / forced colours: links and the hours pill are visible.
 - [ ] A phone in sunlight: the "COFFEE" headline (about 2.4 to 2.9 : 1 on the sky) and small text.
 - [ ] A mid-range Android on mobile data: the hero loads fast (aim LCP <= 2.5 s on 4G) and the
-      page scrolls smoothly; try `?journey=on` (the optional arch portal) and be ready to drop it.
+      page scrolls smoothly, and the photo feed drifts without stutter and stops under a finger.
 - [ ] An iPad in both orientations (the 768 to 1023 px tablet layout).
 - [ ] A screen reader (VoiceOver or NVDA) through the first screen, Find us and the menu.
 - [ ] The Directions links on an iPhone (Apple Maps first) and on Android (Google Maps).
 - [ ] The shared link in WhatsApp/iMessage shows the door image (needs the real domain first).
-- [ ] The phone action bar and the menu drawer: nothing hides the last footer link at 320, 390, 768.
+- [ ] The menu drawer: nothing hides the last footer link at 320, 390, 768.
 - [ ] Lighthouse mobile before and after launch.
 
 ## 6. Known limits

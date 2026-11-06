@@ -7,42 +7,35 @@ export function NavDrawer({ drawer }: { drawer: Drawer }) {
       <div className="staggered-menu-layer" style={{ background: "var(--ground-raised)", transitionDelay: "80ms" }} />
       <div className="staggered-menu-panel">
         <nav aria-label="Menu" className="flex flex-col px-6 pt-24">
-          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "160ms" }} href="#find-the-door">
+          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "160ms" }} href="#story">
             <span className="staggered-menu-num">
               01
-            </span>
-            Find us
-          </a>
-          {' '}
-          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "220ms" }} href="#story">
-            <span className="staggered-menu-num">
-              02
             </span>
             Story
           </a>
           {' '}
-          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "280ms" }} href="#menu">
+          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "220ms" }} href="#menu">
             <span className="staggered-menu-num">
-              03
+              02
             </span>
             Menu
           </a>
           {' '}
-          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "340ms" }} href="#feed">
+          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "280ms" }} href="#feed">
             <span className="staggered-menu-num">
-              04
+              03
             </span>
-            In pictures
+            From the feed
           </a>
           {' '}
-          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "400ms" }} href="#visit">
+          <a onClick={() => drawer.close(false)} className="staggered-menu-item" style={{ transitionDelay: "340ms" }} href="#visit">
             <span className="staggered-menu-num">
-              05
+              04
             </span>
             Hours &amp; visit
           </a>
         </nav>
-        <div className="staggered-menu-socials px-6 pt-8 mt-2" style={{ transitionDelay: "460ms" }}>
+        <div className="staggered-menu-socials px-6 pt-8 mt-2" style={{ transitionDelay: "400ms" }}>
           <a href="https://instagram.com/heavencoffeect" target="_blank" rel="noopener noreferrer">
             Instagram
           </a>
