@@ -1,55 +1,42 @@
 import { useRef } from 'react';
 import { useHeroIntro } from '../lib/useHeroIntro';
-import { useArchPortal } from '../lib/useArchPortal';
+import { DirectionsLink } from './DirectionsLink';
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   useHeroIntro(ref);
-  useArchPortal(ref);
   return (
     <section id="hero" ref={ref} className="hero-section relative w-full overflow-hidden">
-      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true" focusable="false">
-        <clipPath id="arch-clip-m" clipPathUnits="objectBoundingBox">
-          <path d="M0 .9647 L0 .6112 A1 .7059 0 0 1 .5 0 A1 .7059 0 0 1 1 .6112 L1 .9647 Q1 1 .95 1 L.05 1 Q0 1 0 .9647 Z" />
-        </clipPath>
-        <clipPath id="arch-clip-d" clipPathUnits="objectBoundingBox">
-          <path d="M0 .9632 L0 .7637 A.9 .8526 0 0 1 .5 0 A.9 .8526 0 0 1 1 .7637 L1 .9632 Q1 1 .9611 1 L.0389 1 Q0 1 0 .9632 Z" />
-        </clipPath>
-      </svg>
       <div className="cloud d lg:hidden" style={{ width: "320px", height: "110px", left: "-90px", top: "300px" }} aria-hidden="true" />
       <div className="cloud lg:hidden" style={{ width: "420px", height: "140px", left: "-20px", top: "900px" }} aria-hidden="true" />
-      <div className="cloud d hidden lg:block" style={{ width: "620px", height: "180px", left: "-420px", top: "320px" }} aria-hidden="true" />
-      <div className="cloud d hidden lg:block" style={{ width: "520px", height: "150px", right: "-380px", top: "230px", animationDelay: "-6s" }} aria-hidden="true" />
+      <div className="cloud d hidden lg:block" style={{ width: "620px", height: "180px", left: "-120px", top: "320px" }} aria-hidden="true" />
+      <div className="cloud d hidden lg:block" style={{ width: "520px", height: "150px", right: "-80px", top: "230px", animationDelay: "-6s" }} aria-hidden="true" />
       <div className="cloud hidden lg:block" style={{ width: "900px", height: "220px", left: "270px", top: "1040px" }} aria-hidden="true" />
       <div className="hero-vignette absolute inset-0 pointer-events-none" aria-hidden="true" />
       <div className="absolute z-[2] flex justify-center lg:hidden" style={{ left: "20px", right: "20px", top: "300px" }}>
-        <div className="tile journey-tile arch-frame arch-m" style={{ width: "240px", height: "340px" }}>
-          <picture className="block w-full h-full journey-door">
+        <div className="tile" style={{ width: "240px", height: "340px", borderRadius: "120px 120px 12px 12px", overflow: "hidden", border: "6px solid var(--ink-bright)", boxShadow: "0 30px 60px -26px rgba(15,27,45,.45)" }}>
+          <picture className="block w-full h-full">
             <source type="image/webp" sizes="240px" srcSet="images/door-arch-480.webp 480w, images/door-arch-800.webp 800w" />
             <img src="images/door-arch-480.jpg" srcSet="images/door-arch-480.jpg 480w, images/door-arch-800.jpg 800w" sizes="240px" alt="The Gothic stone entrance to Heaven Coffee: a pointed arch above a flight of steps, a navy umbrella and a chalkboard sign" width="480" height="640" className="w-full h-full object-cover block" style={{ objectPosition: "50% 28%" }} fetchPriority="high" decoding="async" />
           </picture>
-          {' '}
-          <svg className="arch-edge" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <path d="M0 .9647 L0 .6112 A1 .7059 0 0 1 .5 0 A1 .7059 0 0 1 1 .6112 L1 .9647 Q1 1 .95 1 L.05 1 Q0 1 0 .9647 Z" />
-          </svg>
-          <picture className="journey-nave" aria-hidden="true">
-            <source type="image/webp" srcSet="images/stone-arch-interior.webp" />
-            <img src="images/stone-arch-interior.jpg" alt="" width={662} height={823} loading="lazy" decoding="async" />
-          </picture>
         </div>
       </div>
-      <div className="hero-band absolute z-[2] hidden lg:flex justify-center items-start" style={{ left: "56px", right: "56px" }}>
-        <div className="tile journey-tile arch-frame arch-d" style={{ width: "360px", height: "380px" }}>
-          <picture className="block w-full h-full journey-door">
+      <div className="absolute z-[2] hidden lg:flex justify-center items-start" style={{ left: "56px", right: "56px", top: "560px", gap: "24px" }}>
+        <div className="tile" style={{ width: "320px", height: "260px", marginTop: "120px", borderRadius: "14px", overflow: "hidden", border: "6px solid var(--ink-bright)", boxShadow: "0 30px 60px -30px rgba(15,27,45,.42)" }}>
+          <picture className="block w-full h-full">
+            <source type="image/webp" srcSet="images/cup-handover.webp" />
+            <img src="images/cup-handover.jpg" alt="A barista handing over a heaven coffee to-go cup" width="446" height="448" className="w-full h-full object-cover block" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div className="tile" style={{ width: "360px", height: "380px", borderRadius: "180px 180px 14px 14px", overflow: "hidden", border: "6px solid var(--ink-bright)", boxShadow: "0 34px 70px -30px rgba(15,27,45,.45)" }}>
+          <picture className="block w-full h-full">
             <source type="image/webp" sizes="360px" srcSet="images/door-arch-480.webp 480w, images/door-arch-800.webp 800w" />
             <img src="images/door-arch-480.jpg" srcSet="images/door-arch-480.jpg 480w, images/door-arch-800.jpg 800w" sizes="360px" alt="The Gothic stone entrance to Heaven Coffee: a pointed arch above a flight of steps, a navy umbrella and a chalkboard sign" width="480" height="640" className="w-full h-full object-cover block" style={{ objectPosition: "50% 28%" }} fetchPriority="high" decoding="async" />
           </picture>
-          {' '}
-          <svg className="arch-edge" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <path d="M0 .9632 L0 .7637 A.9 .8526 0 0 1 .5 0 A.9 .8526 0 0 1 1 .7637 L1 .9632 Q1 1 .9611 1 L.0389 1 Q0 1 0 .9632 Z" />
-          </svg>
-          <picture className="journey-nave" aria-hidden="true">
-            <source type="image/webp" srcSet="images/stone-arch-interior.webp" />
-            <img src="images/stone-arch-interior.jpg" alt="" width={662} height={823} loading="lazy" decoding="async" />
+        </div>
+        <div className="tile" style={{ width: "320px", height: "260px", marginTop: "120px", borderRadius: "14px", overflow: "hidden", border: "6px solid var(--ink-bright)", boxShadow: "0 30px 60px -30px rgba(15,27,45,.42)" }}>
+          <picture className="block w-full h-full">
+            <source type="image/webp" srcSet="images/storefront-entrance.webp" />
+            <img src="images/storefront-entrance.jpg" alt="The Burg Street entrance with navy umbrellas" width="690" height="768" className="w-full h-full object-cover block" loading="lazy" decoding="async" />
           </picture>
         </div>
       </div>
@@ -76,6 +63,20 @@ export function Hero() {
         <p data-intro className="font-quote italic text-center m-0" style={{ color: "var(--ink)" }}>
           Sanctuary coffee at Greenmarket Square, inside a working 19th-century church.
         </p>
+        <div data-intro className="hero-pill on-light inline-flex items-center gap-2.5 rounded-full mt-5" style={{ background: "var(--card)", boxShadow: "0 10px 30px -18px rgba(15,27,45,.6)" }}>
+          <span style={{ width: "9px", height: "9px", borderRadius: "50%", background: "var(--action)" }} />
+          {' '}
+          <span style={{ fontWeight: "700", color: "var(--ink)" }}>
+            Open daily 07:00 — 18:00
+          </span>
+        </div>
+        <DirectionsLink className="hv-btn hv-link lg:hidden mt-6 w-full flex items-center justify-center gap-2.5" style={{ height: "52px", borderRadius: "999px", background: "var(--action)", color: "var(--action-ink)", fontSize: "15px", fontWeight: "700" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 11l19-9-9 19-2-8-8-2z" />
+          </svg>
+          {' '}
+          Get directions
+        </DirectionsLink>
       </div>
     </section>
   );

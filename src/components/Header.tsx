@@ -13,10 +13,6 @@ export function Header({ drawer }: { drawer: Drawer }) {
         </span>
       </a>
       <nav aria-label="Primary" className="hidden lg:flex items-center" style={{ gap: "36px", fontSize: "14px", fontWeight: "600", letterSpacing: "0.02em" }}>
-        <a href="#find-the-door" className="hv-link" style={{ color: "var(--ink)" }}>
-          Find us
-        </a>
-        {' '}
         <a href="#story" className="hv-link" style={{ color: "var(--ink)" }}>
           Story
         </a>
@@ -26,7 +22,7 @@ export function Header({ drawer }: { drawer: Drawer }) {
         </a>
         {' '}
         <a href="#feed" className="hv-link" style={{ color: "var(--ink)" }}>
-          In pictures
+          From the feed
         </a>
         {' '}
         <a href="#visit-desktop" className="hv-link" style={{ color: "var(--ink)" }}>

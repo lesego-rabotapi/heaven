@@ -24,11 +24,11 @@ test('the built page is night and has its content in the HTML itself', () => {
 });
 
 test('every section is in the prerendered HTML, so it reads with JavaScript off', () => {
-  for (const id of ['hero', 'find-the-door', 'story', 'menu', 'feed', 'visit-desktop', 'footer-desktop', 'footer-mobile', 'action-bar', 'nav-drawer']) {
+  for (const id of ['hero', 'story', 'menu', 'feed', 'visit-desktop', 'footer-desktop', 'footer-mobile', 'nav-drawer']) {
     assert.match(html, new RegExp(`id="${id}"`), id);
   }
   // the photo strip and the hours rows are rendered, not filled in by script
-  assert.equal((html.match(/class="feed-tile tile"/g) || []).length, 10, 'ten photos, once each: no looped copy');
+  assert.equal((html.match(/class="feed-tile tile"/g) || []).length, 10, 'ten photos, once each: the loop copies arrive with script');
   assert.match(html, /class="hours-bar"/);
   // the menu is plain HTML with real prices
   assert.match(html, /Flat White/);
@@ -39,18 +39,15 @@ test('unknown facts are not rendered, and the phone stays a placeholder, never a
   assert.doesNotMatch(html, /Wi-?Fi|Card payments|step-free/i);
   assert.doesNotMatch(html, /href="tel:/);
   assert.equal((html.match(/data-phone-placeholder/g) || []).length, 4);
-  assert.match(html, /Tables outside/);
 });
 
-test('there is no open/closed tag anywhere on the page', () => {
-  assert.doesNotMatch(html, /Open now|Closed ·|opens 07:00|hero-pill|action-bar-open|action-bar-dot/);
+test('the hero states the hours as a plain pill: there is no live open/closed tag', () => {
+  assert.doesNotMatch(html, /Open now|Closed ·|opens 07:00/);
+  assert.match(html, /Open daily 07:00 — 18:00/);
 });
 
-test('the arch portal markup is in the page, switched on only by ?journey=on', () => {
-  assert.equal((html.match(/journey-tile/g) || []).length, 2);
-  assert.equal((html.match(/journey-door/g) || []).length, 2);
-  assert.equal((html.match(/class="journey-nave"/g) || []).length, 2);
-  assert.doesNotMatch(html, /<html[^>]*data-journey/);
+test('nothing added after 21 October reaches the built page', () => {
+  assert.doesNotMatch(html, /find-the-door|action-bar|journey|arch-frame|class="igc/);
 });
 
 test('hero intro items are hidden only by a class that script adds, never by markup', () => {
@@ -82,17 +79,14 @@ test('every image states its size, so nothing shifts as it loads', () => {
   }
 });
 
-test('the photo strip does not move by itself: no loop copy, no animation, scrolled by hand', () => {
+test('the photo strip scrolls by hand as well as drifting: no CSS marquee holds the row', () => {
   assert.doesNotMatch(html, /feed-track l/);
   const css = readFileSync(join(root, 'dist', html.match(/href="\.\/(assets\/app-[\w-]+\.css)"/)[1]), 'utf8');
   assert.doesNotMatch(css, /feed-left|px-per-s/);
   assert.match(css, /\.feed-row\{[^}]*overflow-x:auto/);
 });
 
-test('the Instagram cards are in the prerendered HTML with the handle, photos and no counts', () => {
-  assert.equal((html.match(/class="igc reveal"/g) || []).length, 3);
+test('the feed shows no invented counts', () => {
   assert.match(html, /@heavencoffeect/);
-  assert.doesNotMatch(html, /igc-actions/);
   assert.doesNotMatch(html, /\d+\s*(likes|comments|followers)/i);
-  assert.equal((html.match(/View on Instagram/g) || []).length >= 3, true);
 });
