@@ -2,10 +2,16 @@
    scroll position (animation-timeline: view()), so there is no script and nothing to clean up.
    Where the browser lacks animation-timeline, or the visitor asks for reduced motion, the rule
    does not apply and the content is simply there. Nothing here ever sets opacity: 0 outside the
-   animation, so content cannot stay hidden. Stagger a group with style="--i: n" (0, 1, 2 ...). */
+   animation, so content cannot stay hidden. Stagger a group with style="--i: n" (0, 1, 2 ...).
+   A .settle element arrives a little tilted and straightens as it comes up the page. */
 @keyframes reveal-up {
   from { opacity: 0; transform: translateY(1.5rem); }
   to { opacity: 1; transform: none; }
+}
+
+@keyframes settle {
+  from { transform: rotate(-4deg) translateY(2rem); }
+  to { transform: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,6 +20,11 @@
       animation: reveal-up linear both;
       animation-timeline: view();
       animation-range: entry calc(var(--i, 0) * 6%) entry calc(45% + var(--i, 0) * 6%);
+    }
+    .settle {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
     }
   }
 }

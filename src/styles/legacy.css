@@ -1,32 +1,12 @@
-/* The page CSS carried over from index.html (its inline <style>), unchanged. Colours move to the
-   tokens in tokens.css as sections are tidied. */
-  body { margin: 0; padding: 0; overscroll-behavior: none; font-optical-sizing: auto; }
+/* The page's styles. Colours and fonts come from tokens.css. Sizes are fluid (clamp, svh, %), so one set of
+   markup serves every screen; the breakpoints only rearrange it. */
+  :root { --gutter: clamp(1.25rem, 4vw, 3.5rem); --section-y: clamp(4.5rem, 10vw, 9rem); }
+  body { margin: 0; padding: 0; overscroll-behavior: none; font-family: var(--font-brand); font-optical-sizing: auto; }
   /* Skip link: parked above the viewport, drops into view only when it has keyboard
      focus. Fixed, not absolute, so focusing it mid-page does not scroll the page
      back to the top to reveal it. */
   .skip-link { position: fixed; left: 16px; top: -120px; z-index: 100; padding: 12px 20px; border-radius: 999px; background: #0F1B2D; color: #fff; font-size: 14px; font-weight: 700; }
   .skip-link:focus { top: 12px; }
-  /* A utility such as .flex has the same specificity as [hidden] and would win; two attributes beat it. */
-  [data-fact][hidden], [data-fact-group][hidden] { display: none; }
-
-  /* The menu board (B5). Plain HTML, so it reads without script and search engines see it.
-     The board is dark in every theme, so these tokens only need re-pointing if it ever isn't. */
-  :root { --menu-ink: #EEF4FA; --menu-muted: #9FB0C8; --menu-accent: #A9CDF0; --menu-rule: rgba(238,244,250,.16); --menu-rule-strong: rgba(238,244,250,.9); --menu-dots: rgba(238,244,250,.35); }
-  .menu-group { display: flex; flex-direction: column; }
-  .menu-group-head { display: flex; align-items: baseline; gap: .625rem; padding-bottom: .75rem; border-bottom: 1px solid var(--menu-rule-strong); }
-  .menu-cat-no { color: var(--menu-accent); }
-  .menu-cat-h3 { font-stretch: 80%; font-weight: 800; }
-  .menu-list { list-style: none; margin: 0; padding: 0; }
-  .menu-item { padding: .875rem 0; border-bottom: 1px solid var(--menu-rule); }
-  .menu-item-row { display: flex; align-items: baseline; gap: .625rem; }
-  .menu-item-name { font-weight: 700; }
-  .menu-leader { flex: 1 1 auto; min-width: 1rem; border-bottom: 1px dotted var(--menu-dots); transform: translateY(-.25rem); }
-  .menu-item-price { font-stretch: 80%; font-weight: 700; color: var(--menu-accent); font-variant-numeric: tabular-nums; }
-  .menu-item-note { display: block; margin-top: .125rem; color: var(--menu-muted); }
-  .menu-counter { padding-top: .875rem; font-size: 1.375rem; line-height: 1.25; color: var(--menu-ink); }
-  .menu-note { color: var(--menu-muted); }
-  /* Four columns need about 1280px: at 1024 each is under 190px and every description wraps. */
-  @media (min-width: 1024px) and (max-width: 1279.98px) { #menu-cards { display: block; column-count: 2; column-gap: 40px; } #menu-cards > * { break-inside: avoid; margin-bottom: 36px; } }
 
   /* <main> takes focus when the skip link is used (tabindex="-1"). A mouse click on
      text inside it focuses it too, which should show nothing; a keyboard jump should,
@@ -37,61 +17,184 @@
      (the skip link included) must be instant for people who ask for reduced motion. */
   @media (prefers-reduced-motion: reduce) { html.scroll-smooth { scroll-behavior: auto; } }
   ::-webkit-scrollbar { display: none; }
-  a { text-decoration: none; }
-  .hv-btn { transition: background-color .2s ease, transform .2s ease, filter .2s ease; }
-  .hv-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
-  .hv-ghost:hover { background-color: rgba(169,205,240,.1) !important; }
-  .hv-ghost { border-color: var(--ink-accent) !important; color: var(--ink-accent) !important; }
-  .hv-link:hover { color: #1D4ED8 !important; }
-  .hv-link:not(.hv-btn):hover { color: var(--ink-accent) !important; }
+  a { text-decoration: none; color: inherit; }
   /* Keyboard focus ring. Two-tone (navy ring over a white gap) so it reads on the
-     light sections, the blue sky, the gradient footer and photos alike; it only
-     shows for keyboard focus, never for a mouse or tap. */
+     night sections, the blue block and photos alike; it only shows for keyboard
+     focus, never for a mouse or tap. */
   :root { --focus-ink: #0F1B2D; --focus-gap: #fff; }
   a:focus-visible, button:focus-visible { outline: 3px solid var(--focus-ink); outline-offset: 3px; box-shadow: 0 0 0 3px var(--focus-gap); }
-  /* Feed tiles sit in an overflow:hidden row that would clip an outer ring, so
-     theirs is drawn just inside the tile edge instead. The corner radius is the
-     tile's (16px, 20px from 1024px up) minus the 9px inset, so the ring stays
-     concentric with the tile. */
+
+  /* Type. Titles and labels take the logo's voice: lower case, light and spaced for titles, a little
+     heavier for small labels. Reading text stays at 400, because 300 is too thin at that size. */
+  .t-title { margin: 0; font-family: var(--font-brand); font-weight: var(--brand-weight); letter-spacing: .03em; line-height: 1.05; text-transform: lowercase; color: var(--ink-bright); }
+  .t-label { font-family: var(--font-brand); font-size: .875rem; font-weight: 500; letter-spacing: .08em; text-transform: lowercase; }
+  .t-accent { color: var(--ink-accent); }
+
+  /* The logo. --lockup-size is the height of "heaven"; everything else follows from it. */
+  .lockup { display: inline-flex; flex-direction: column; align-items: center; margin: 0; font-family: var(--font-brand); font-weight: var(--brand-weight); line-height: 1; color: var(--ink-bright); }
+  .lockup-heaven { font-size: var(--lockup-size); letter-spacing: var(--brand-letter-spacing); margin-right: calc(var(--brand-letter-spacing) * -1); }
+  .lockup-swoosh { display: block; width: 100%; height: calc(var(--lockup-size) * .1); margin-top: calc(var(--lockup-size) * .04); fill: currentColor; transform-origin: left center; }
+  .lockup-coffee { font-size: calc(var(--lockup-size) * .3); letter-spacing: .08em; margin-top: calc(var(--lockup-size) * .06); }
+  .lockup-header { --lockup-size: 1.375rem; flex-direction: row; align-items: baseline; gap: .4rem; color: var(--ink); }
+  .lockup-header .lockup-coffee { margin-top: 0; font-size: .8125rem; font-weight: 400; color: var(--ink-muted); }
+  .lockup-hero { --lockup-size: min(calc((100vw - 2 * var(--gutter)) / 4.5), 15svh); }
+  .lockup-footer { --lockup-size: calc((100vw - 2 * var(--gutter)) / 4.5); display: flex; }
+
+  /* Buttons. The label is a .roll: see the motion block further down. */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .625rem; min-height: 3.25rem; padding-inline: 1.625rem; border-radius: 999px; font-size: .9375rem; font-weight: 500; letter-spacing: .03em; text-transform: lowercase; white-space: nowrap; }
+  .btn-action { background: var(--action); color: var(--action-ink); }
+  .hv-btn { transition: background-color .2s ease, transform .2s ease, filter .2s ease; }
+  .hv-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
+  .hv-link:not(.hv-btn):hover { color: var(--ink-accent) !important; }
+  .roll { position: relative; display: inline-block; overflow: hidden; line-height: 1.4; }
+  .roll > span { display: block; }
+  .roll::after { content: attr(data-label); position: absolute; left: 0; top: 100%; white-space: nowrap; }
+
+  .tile img { transition: transform .6s ease; }
+  .tile:hover img { transform: scale(1.04); }
+  .cloud { position: absolute; border-radius: 50%; background: var(--cloud); opacity: var(--cloud-o); filter: blur(38px); pointer-events: none; }
+  @keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(24px,-10px); } }
+  @keyframes turn { to { transform: rotate(360deg); } }
+
+  /* Header: a fixed floating pill. scroll-padding-top keeps anchor jumps and keyboard
+     focus from landing underneath it. */
+  html { scroll-padding-top: 90px; }
+  .site-header { top: 16px; left: 16px; right: 16px; padding: 6px 6px 6px 20px; background: var(--surface-light); color: var(--ink); }
+  .site-header > a:first-child { padding-block: 6px; margin-block: -6px; min-height: 44px; align-items: center; }
+  .site-header nav { gap: 2.25rem; font-size: .875rem; font-weight: 500; letter-spacing: .03em; text-transform: lowercase; }
+  .site-header nav a { padding: 12px 8px; margin: -12px -8px; min-height: 44px; }
+  .site-header .btn { min-height: 3rem; padding-inline: 1.375rem; font-size: .875rem; }
+
+  /* Hero. On a phone it stacks and the door takes whatever height is left, so the logo, the door and the
+     way there all fit the first screen; from 1024px the logo and the door sit side by side. */
+  .hero-section { position: relative; min-height: 100svh; display: flex; flex-direction: column; gap: 1rem; padding: 5.75rem var(--gutter) 1rem; background: var(--hero-sky); overflow: clip; }
+  .hero-vignette { position: absolute; inset: 0; background: var(--hero-halo); pointer-events: none; }
+  .hero-copy { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: .75rem; text-align: center; }
+  .hero-tagline { margin: 0; max-width: 34rem; font-size: clamp(1.25rem, 2.6vw, 2.125rem); line-height: 1.2; color: var(--ink); }
+  .hero-door { position: relative; z-index: 2; flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; min-height: 22rem; }
+  .hero-arch { position: relative; flex: 1 1 auto; width: min(100%, 24rem); min-height: 13rem; border-radius: 50% 50% 1rem 1rem / 34% 34% 1rem 1rem; overflow: hidden; box-shadow: 0 0 0 1px var(--rule-strong), 0 0 0 .625rem var(--ground), 0 0 0 calc(.625rem + 1px) var(--rule), 0 0 7rem 1rem rgba(169,205,240,.22); }
+  .hero-arch picture, .hero-arch img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
+  .sticker { position: absolute; z-index: 3; top: 3%; right: max(0%, calc(50% - 14rem)); width: clamp(5.25rem, 10vw, 9rem); aspect-ratio: 1; border-radius: 50%; background: var(--action); color: var(--action-ink); }
+  .sticker-ring { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sticker-ring text { font-family: var(--font-brand); font-size: 16px; font-weight: 500; fill: currentColor; }
+  .sticker-arch { position: absolute; inset: 0; margin: auto; width: 24%; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .hours-card { position: relative; z-index: 3; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .125rem 1rem; width: min(100%, 26rem); margin-top: -3.75rem; padding: .875rem 1rem; border-radius: 1.25rem; background: var(--card); color: var(--ink); box-shadow: 0 1.5rem 3rem -1.5rem rgba(3,6,12,.8); }
+  .hours-card-label { grid-column: 1; color: var(--ink-muted); }
+  .hours-card-time { grid-column: 1; font-size: 1.375rem; font-weight: var(--brand-weight); letter-spacing: .02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .hours-card-address { grid-column: 1; font-size: .8125rem; color: var(--ink-soft); }
+  .hours-card-go { grid-column: 2; grid-row: 1 / span 3; min-height: 2.75rem; padding-inline: 1rem; font-size: .875rem; }
+
+  /* Story */
+  .story-section { display: grid; gap: 3rem; padding: var(--section-y) var(--gutter); background: var(--ground); }
+  .story-photo { position: relative; }
+  .story-img { height: clamp(26rem, 60vw, 41rem); border-radius: 50% 50% 1.25rem 1.25rem / 30% 30% 1.25rem 1.25rem; overflow: hidden; }
+  .story-caption { position: absolute; left: 1.5rem; bottom: 1.5rem; padding: .875rem 1.125rem; border-radius: 1rem; background: var(--card); color: var(--ink); }
+  .story-caption-name { font-size: .9375rem; font-weight: 500; }
+  .story-caption-role { font-size: .8125rem; color: var(--ink-muted); }
+  .story-text { display: flex; flex-direction: column; gap: 1.375rem; }
+  .story-h2 { font-size: clamp(2.5rem, 6.4vw, 5.75rem); }
+  .story-p { margin: 0; max-width: 36rem; font-size: clamp(1rem, 1.3vw, 1.125rem); line-height: 1.7; color: var(--ink-soft); }
+  .story-quote { margin: 0; padding-top: 1.5rem; border-top: 1px solid var(--rule-faint); font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.1; color: var(--ink-accent); }
+  .truths { display: grid; gap: 1.5rem; margin: 0; padding: 0; list-style: none; }
+  .truth { padding-top: 1rem; border-top: 1px solid var(--rule-strong); }
+  .truth-h3 { font-size: clamp(1.5rem, 2.4vw, 2.125rem); }
+  .truth-p { margin: .625rem 0 0; max-width: 26rem; font-size: .9375rem; line-height: 1.6; color: var(--ink-muted); }
+
+  /* A scalloped edge along the top and bottom of a block, in the block's own colour. */
+  .scallop { --scallop: 1.25rem; position: relative; }
+  .scallop::before, .scallop::after { content: ''; position: absolute; left: 0; right: 0; height: var(--scallop); background-size: calc(var(--scallop) * 2) var(--scallop); background-repeat: repeat-x; pointer-events: none; }
+  .scallop::before { top: calc(var(--scallop) * -1 + 1px); background-image: radial-gradient(circle at 50% 100%, var(--scallop-fill) calc(var(--scallop) - .5px), transparent var(--scallop)); }
+  .scallop::after { bottom: calc(var(--scallop) * -1 + 1px); background-image: radial-gradient(circle at 50% 0, var(--scallop-fill) calc(var(--scallop) - .5px), transparent var(--scallop)); }
+
+  /* The menu board (B5). Plain HTML, so it reads without script and search engines see it. */
+  :root { --menu-ink: #EEF4FA; --menu-muted: #9FB0C8; --menu-accent: #A9CDF0; --menu-rule: rgba(238,244,250,.16); --menu-rule-strong: rgba(238,244,250,.9); --menu-dots: rgba(238,244,250,.35); }
+  .menu-section { --scallop-fill: var(--menu-board); padding: var(--section-y) var(--gutter); background: var(--menu-board); color: var(--ink); }
+  .menu-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0 1rem; padding-bottom: .5rem; border-bottom: 2px solid var(--ink); }
+  .menu-h2 { font-size: clamp(3rem, 14vw, 14rem); line-height: .95; white-space: nowrap; }
+  .menu-tag { padding-bottom: .5em; font-size: clamp(1.125rem, 2.6vw, 2.25rem); white-space: nowrap; color: var(--menu-accent); }
+  .menu-ruler { height: .75rem; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.5) 0 1px, transparent 1px 1.25rem); }
+  .menu-grid { display: grid; gap: 3rem 4rem; margin-top: 3rem; }
+  .menu-group { display: flex; flex-direction: column; min-width: 0; }
+  .menu-group-head { display: flex; align-items: baseline; gap: .625rem; padding-bottom: .75rem; border-bottom: 1px solid var(--menu-rule-strong); }
+  .menu-cat-no { font-size: 1.375rem; color: var(--menu-accent); }
+  .menu-cat-h3 { font-size: clamp(1.625rem, 2.6vw, 2.25rem); }
+  .menu-list { list-style: none; margin: 0; padding: 0; }
+  .menu-item { padding: 1rem 0; border-bottom: 1px solid var(--menu-rule); }
+  .menu-item-row { display: flex; align-items: baseline; gap: .625rem; }
+  .menu-item-name { font-size: clamp(1.125rem, 1.6vw, 1.375rem); font-weight: 400; }
+  .menu-leader { flex: 1 1 auto; min-width: 1rem; border-bottom: 1px dotted var(--menu-dots); transform: translateY(-.25rem); }
+  .menu-item-price { font-size: clamp(1.125rem, 1.6vw, 1.375rem); font-weight: 500; color: var(--menu-accent); font-variant-numeric: tabular-nums; }
+  .menu-item-note { display: block; margin-top: .125rem; font-size: .875rem; color: var(--menu-muted); }
+  .menu-counter { padding-top: .875rem; font-size: 1.5rem; line-height: 1.25; color: var(--menu-ink); }
+  .menu-note { margin: 3rem 0 0; padding-top: 1rem; border-top: 1px solid var(--menu-ink); font-size: .8125rem; color: var(--menu-muted); }
+
+  /* Feed */
+  .feed-section { padding: var(--section-y) 0; background: var(--feed-sky); }
+  .feed-head { display: flex; flex-direction: column; gap: 1.5rem; padding-inline: var(--gutter); }
+  .feed-title { display: flex; flex-direction: column; gap: .75rem; }
+  .feed-h2 { font-size: clamp(2.75rem, 8vw, 7.5rem); }
+  .feed-h2-quote { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--ink-accent); }
+  .feed-head .btn { align-self: flex-start; }
+  /* The feed drifts by itself (useFeedDrift moves scrollLeft) and is moved by dragging it (useDragScroll)
+     or swiping, so it has no scrollbar. No scroll snapping: it would pull against the drift. */
+  .feed-row { margin-top: clamp(2.25rem, 4vw, 4rem); overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; }
+  .feed-row.is-dragging, .feed-row.is-dragging a { cursor: grabbing; user-select: none; }
+  .feed-row .feed-tile { cursor: inherit; }
+  .feed-track { padding: 1rem var(--gutter); }
+  .feed-tile { width: clamp(17rem, 29vw, 26rem); aspect-ratio: 1; border-radius: 1.25rem; transition: rotate .4s ease; }
+  .feed-tile:nth-child(odd) { rotate: -1.2deg; }
+  .feed-tile:nth-child(even) { rotate: 1.2deg; }
+  .feed-tile:hover, .feed-tile:focus-visible { rotate: 0deg; }
+  /* Feed tiles sit in a clipping row that would cut off an outer ring, so theirs is
+     drawn just inside the tile edge instead. */
   .feed-tile:focus-visible { outline: none; box-shadow: none; }
-  .feed-tile:focus-visible::after { content: ''; position: absolute; inset: 9px; border-radius: 7px; box-shadow: 0 0 0 3px var(--focus-gap), 0 0 0 6px var(--focus-ink); pointer-events: none; }
+  .feed-tile:focus-visible::after { content: ''; position: absolute; inset: 9px; border-radius: 11px; box-shadow: 0 0 0 3px var(--focus-gap), 0 0 0 6px var(--focus-ink); pointer-events: none; }
   /* Windows High Contrast / forced colours drop box-shadow but keep outlines, so a
-     tile's shadow-drawn ring would vanish there; give it a real outline instead,
-     inside the tile edge like the ring above. */
+     tile's shadow-drawn ring would vanish there; give it a real outline instead. */
   @media (forced-colors: active) {
     .feed-tile:focus-visible { outline: 3px solid CanvasText; outline-offset: -9px; }
     .feed-tile:focus-visible::after { display: none; }
   }
-  .cloud { position: absolute; border-radius: 50%; background: var(--cloud); opacity: var(--cloud-o); filter: blur(38px); pointer-events: none; }
-  .tile img { transition: transform .6s ease; }
-  .tile:hover img { transform: scale(1.05); }
-  @keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(24px,-10px); } }
-  @media (prefers-reduced-motion: no-preference) {
-    .cloud.d { animation: drift 18s ease-in-out infinite; }
-  }
-  /* The feed drifts by itself (useFeedDrift moves scrollLeft) and is moved by dragging it (useDragScroll)
-     or swiping, so it has no scrollbar. No scroll snapping: it would pull against the drift. */
-  .feed-row { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; }
-  .feed-row.is-dragging, .feed-row.is-dragging a { cursor: grabbing; user-select: none; }
-  .feed-row .feed-tile { cursor: inherit; }
-  .feed-track { padding: 0 16px; }
-  @media (min-width: 1024px) {
-    .feed-track { padding-left: 56px; padding-right: 56px; }
-  }
 
-  /* Staggered mobile nav drawer — mechanism carried over from the
-     previous design (mobile source export had no drawer markup at all,
-     just a bare hamburger button with no open-state shown — filled in
-     sensibly using the existing, already-working mechanism rather than
-     leaving the button non-functional). */
+  /* Visit: the bold block. Everything on it is white, the one ink that reads on the action blue, and its
+     button turns over to white with dark text. */
+  .on-action { --ink: #fff; --ink-soft: #fff; --ink-muted: #fff; --ink-accent: #fff; --ink-bright: #fff; --rule: rgba(255,255,255,.4); --rule-strong: #fff; --action: #fff; --action-ink: var(--ground-raised); }
+  .visit-section { display: grid; gap: 2.5rem; margin: 0 clamp(.5rem, 1.6vw, 1.5rem); padding: clamp(2.5rem, 6vw, 5.5rem) clamp(1.25rem, 4vw, 4rem); border-radius: clamp(1.5rem, 3vw, 2.5rem); background: var(--action-block); color: var(--ink); }
+  .visit-main { display: flex; flex-direction: column; min-width: 0; }
+  .visit-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0 1rem; padding-bottom: .5rem; border-bottom: 2px solid var(--rule-strong); }
+  .visit-h2 { font-size: clamp(3rem, 8.5vw, 8rem); line-height: 1; white-space: nowrap; }
+  .visit-tag { padding-bottom: .5em; font-size: clamp(1.25rem, 2.4vw, 2rem); white-space: nowrap; }
+  .hours-row { display: grid; grid-template-columns: auto minmax(2.5rem, 1fr) auto; align-items: center; column-gap: clamp(.75rem, 2vw, 1.25rem); padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+  .hours-day { font-size: clamp(1rem, 1.8vw, 1.375rem); font-weight: 400; white-space: nowrap; text-transform: lowercase; }
+  .hours-time { font-size: clamp(1rem, 1.8vw, 1.375rem); font-weight: 400; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .hours-track { position: relative; height: 14px; border-radius: 2px; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.3) 0 1px, transparent 1px calc(100% / 24)); }
+  .hours-bar { position: absolute; top: 0; bottom: 0; background: var(--ink-accent); border-radius: 2px; }
+  .visit-find { display: flex; flex-direction: column; gap: .75rem; margin-top: 2rem; }
+  .visit-address { margin: 0; font-size: clamp(1.25rem, 2.2vw, 1.75rem); font-weight: var(--brand-weight); line-height: 1.3; }
+  .visit-p { margin: 0; max-width: 34rem; font-size: 1rem; line-height: 1.6; }
+  .visit-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; margin-top: .5rem; }
+  .visit-phone { font-size: .9375rem; font-weight: 500; }
+  .visit-photo { height: clamp(22rem, 62vw, 34rem); border-radius: 50% 50% 1.25rem 1.25rem / 32% 32% 1.25rem 1.25rem; overflow: hidden; }
+
+  /* Footer */
+  .site-footer { display: flex; flex-direction: column; gap: clamp(2.5rem, 5vw, 4rem); padding: var(--section-y) var(--gutter) 1.75rem; background: var(--footer-sky); color: var(--ink); }
+  .footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; font-size: .9375rem; }
+  .footer-col { display: flex; flex-direction: column; gap: .625rem; min-width: 0; }
+  .footer-col:first-child { grid-column: 1 / -1; }
+  .footer-phone { color: var(--ink-muted); }
+  /* Touch targets: 44px rows, pulled together with a negative margin so the list keeps its rhythm. */
+  .site-footer .hv-link { display: flex; align-items: center; min-height: 44px; margin-block: -5px; }
+  .footer-line { margin: 0; font-size: .8125rem; color: var(--ink); }
+
+  /* Staggered mobile nav drawer */
   .staggered-menu-layer { position: absolute; inset: 0; transform: translateX(100%); transition: transform .5s cubic-bezier(.4,0,.2,1); }
   #nav-drawer.is-open .staggered-menu-layer { transform: translateX(0); }
   .staggered-menu-panel { position: relative; height: 100%; overflow-y: auto; background: var(--ground); transform: translateX(100%); transition: transform .5s cubic-bezier(.4,0,.2,1); transition-delay: .12s; }
   #nav-drawer.is-open .staggered-menu-panel { transform: translateX(0); }
-  .staggered-menu-item { display: flex; align-items: baseline; gap: .75rem; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: -.01em; color: var(--ink); padding: .7rem 0; border-bottom: 1px solid rgba(238,244,250,.1); text-decoration: none; opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
-  .staggered-menu-num { font-size: 13px; font-weight: 600; color: var(--ink-accent); letter-spacing: .08em; }
+  .staggered-menu-item { display: flex; align-items: baseline; gap: .75rem; font-family: var(--font-brand); font-weight: var(--brand-weight); font-size: 2rem; text-transform: lowercase; letter-spacing: .03em; color: var(--ink); padding: .7rem 0; border-bottom: 1px solid rgba(238,244,250,.1); text-decoration: none; opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
+  .staggered-menu-num { font-size: 13px; font-weight: 500; color: var(--ink-accent); letter-spacing: .08em; }
   .staggered-menu-socials { opacity: 0; transform: translateX(28px); transition: opacity .4s ease, transform .4s ease; }
-  .staggered-menu-socials a { display: inline-flex; align-items: center; min-height: 44px; font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-muted); text-decoration: none; }
+  .staggered-menu-socials a { display: inline-flex; align-items: center; min-height: 44px; font-size: .875rem; font-weight: 500; text-transform: lowercase; letter-spacing: .08em; color: var(--ink-muted); text-decoration: none; }
   #nav-drawer.is-open .staggered-menu-item, #nav-drawer.is-open .staggered-menu-socials { opacity: 1; transform: translateX(0); }
   /* Closing: drop the opening stagger so the drawer leaves in one beat. */
   #nav-drawer.is-closing { pointer-events: none; }
@@ -99,185 +202,64 @@
   #nav-drawer.is-closing .staggered-menu-item, #nav-drawer.is-closing .staggered-menu-socials { transition-delay: 0s !important; }
   @media (prefers-reduced-motion: reduce) {
     .staggered-menu-layer, .staggered-menu-panel, .staggered-menu-item, .staggered-menu-socials { transition: none !important; }
+    .feed-tile { transition: none; }
   }
 
-  /* Touch targets: 44px. Several text links were only ~21px tall. The negative
-     block margin gives each footer row a full 44px box while the row pitch stays
-     44px (link slot 34px + the column's 10px gap). The logo and header nav links
-     grow their hit area with padding that margin cancels out, so nothing moves.
-     Footer buttons (.hv-btn / .hv-ghost) already have explicit heights, so they
-     are excluded. The mobile footer is always touch. The desktop footer links get
-     the 24px WCAG 2.5.8 minimum for everyone (they were 23px, which moves the rows
-     by 1.5px), and the full 44px only where any attached pointer is coarse: a touch
-     laptop, or an iPad with a trackpad (whose primary pointer reports "fine"). The
-     44px is explicit min-height everywhere, so it does not depend on line-height. */
-  .site-header > a:first-child { padding-block: 6px; margin-block: -6px; min-height: 44px; }
-  .site-header nav a { padding: 12px 8px; margin: -12px -8px; min-height: 44px; }
-  #footer-mobile .hv-link:not(.hv-btn):not(.hv-ghost) { display: flex; align-items: center; min-height: 44px; margin-block: -5px; }
-  #footer-desktop .hv-link:not(.hv-btn):not(.hv-ghost) { display: flex; align-items: center; min-height: 24px; }
-  @media (any-pointer: coarse) {
-    #footer-desktop .hv-link:not(.hv-btn):not(.hv-ghost) { min-height: 44px; margin-block: -5px; }
+  /* Below 390px the button no longer fits beside the times, so it goes underneath. */
+  @media (max-width: 389.98px) {
+    .hours-card { grid-template-columns: 1fr; }
+    .hours-card-go { grid-column: 1; grid-row: auto; margin-top: .5rem; }
   }
 
-  /* ===== Exact per-breakpoint values, transcribed 1:1 from the two
-     source files rather than interpolated. Mobile is the unprefixed
-     default (matches the 390px export); the min-width:1024px block
-     overrides to the 1440px export's own literal numbers. A tablet block
-     (768-1023px) comes after both and re-sets some of the same classes. ===== */
-  .hero-section { height: 1040px; background: var(--hero-sky); }
-  .hero-vignette { background: var(--hero-halo); }
-  .site-header { top: 16px; left: 16px; right: 16px; padding: 6px 6px 6px 20px; }
-  .site-header .logo-word { font-size: 22px; }
-  .site-header .logo-sub { font-size: 10px; }
-  .hero-est { top: 108px; font-size: 12px; gap: 22px; text-shadow: 0 1px 8px rgba(12,40,84,.6); }
-  /* Fluid caps: the widest headline line is ~2.85em wide, so below ~377px the
-     fixed 116px overflowed the 20px gutters. min() keeps the source's 116px
-     everywhere it already fit and only shrinks on narrower phones. */
-  .hero-h1 { top: 108px; font-size: min(116px, calc((100vw - 40px) / 2.9)); }
-  .hero-sub { top: 690px; gap: 20px; }
-  .hero-sub p { font-size: 26px; min-width: 0; max-width: 100%; }
-  .story-quote, .hero-est { min-width: 0; }
-  .hero-pill { padding: 11px 16px; }
-  .hero-pill span:last-child { font-size: 13px; }
-  .truths-section { padding: 40px 16px 72px; gap: 40px; column-gap: 24px; }
-  .truths-tile { height: 260px; border-radius: 18px; }
-  .truths-h2 { font-size: 34px; }
-  .story-section { padding: 0 16px 80px; column-gap: 24px; }
-  .story-img { height: 420px; border-radius: 180px 180px 18px 18px; }
-  .story-h2 { font-size: 58px; }
-  .story-p { font-size: 16px; }
-  .story-quote { font-size: 34px; padding-top: 22px; }
-  .menu-section { margin: 0 8px; padding: 40px 20px 32px; border-radius: 24px; background: var(--menu-board); color: var(--ink); box-shadow: inset 0 0 0 1px rgba(169,205,240,.14); }
-  /* "MENU" is ~2.09em wide and the "poured daily" tag beside it needs ~61px,
-     so the pair needed 356px and pushed the page sideways on narrow phones. */
-  .menu-h2 { font-size: min(128px, calc((100vw - 120px) / 2.1)); }
-  .menu-tag { font-size: 24px; }
-  .menu-ruler { height: 10px; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.5) 0 1px, transparent 1px 16px); }
-  .menu-cat-h3 { font-size: 24px; }
-  .menu-cat-no { font-size: 20px; }
-  .menu-item-name { font-size: 16px; }
-  .menu-item-price { font-size: 15px; }
-  .menu-item-note { font-size: 13px; }
-  .feed-section { padding: 88px 0 72px; }
-  .feed-h2 { font-size: 64px; }
-  .feed-tile { width: 280px; height: 280px; border-radius: 16px; }
-  .footer-heaven { font-size: min(86px, calc((100vw - 64px) / 3.4)); }
-  .visit-photo { margin-top: 32px; height: 300px; }
-  .visit-card { margin-top: 14px; }
-  /* Header is a fixed floating pill (~58px tall, sitting 16px from top).
-     scroll-padding-top on the page keeps both a direct #hash landing / anchor
-     click and keyboard focus scrolling (Tab or Shift+Tab to an element near the
-     top edge) from parking content, or a focus ring, underneath it. It replaces
-     the per-section scroll-margin-top, which only covered the five jump targets. */
-  html { scroll-padding-top: 90px; }
-  @media (min-width: 1024px) {
-    .hero-section { height: 1200px; background: var(--hero-sky); }
-    .hero-vignette { background: var(--hero-halo); }
-    .site-header { top: 28px; left: 40px; right: 40px; padding: 10px 10px 10px 28px; }
-    .site-header .logo-word { font-size: 26px; }
-    .site-header .logo-sub { font-size: 13px; }
-    html { scroll-padding-top: 116px; }
-    .hero-est { top: 150px; font-size: 13px; gap: 28px; text-shadow: 0 1px 8px rgba(12,40,84,.6); }
-    .hero-h1 { top: 150px; font-size: 250px; }
-    .hero-sub { top: 1000px; gap: 24px; }
-    .hero-sub p { font-size: 34px; max-width: 760px; }
-    .hero-pill { padding: 12px 20px; }
-    .hero-pill span:last-child { font-size: 14px; }
-    .truths-section { padding: 60px 56px 120px; }
-    .truths-tile { height: 420px; border-radius: 20px; }
-    .truths-h2 { font-size: 44px; }
-    .story-section { padding: 40px 56px 140px; }
-    .story-img { height: 660px; border-radius: 280px 280px 20px 20px; }
-    .story-h2 { font-size: 104px; }
-    .story-p { font-size: 18px; max-width: 580px; }
-    .story-quote { font-size: 48px; padding-top: 32px; margin-top: 12px; }
-    .menu-section { margin: 0 24px; padding: 72px 56px 64px; border-radius: 32px; }
-    .menu-h2 { font-size: 300px; }
-    .menu-tag { font-size: 34px; }
-    .menu-ruler { height: 14px; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.5) 0 1px, transparent 1px 24px); }
-    .menu-cat-h3 { font-size: 26px; }
-    .menu-cat-no { font-size: 22px; }
-    .menu-item-name { font-size: 17px; }
-    .menu-item-price { font-size: 16px; }
-    .menu-item-note { font-size: 14px; }
-    .feed-section { padding: 140px 0 120px; }
-    .feed-h2 { font-size: 120px; }
-    .feed-tile { width: 360px; height: 360px; border-radius: 20px; }
-    .feed-tile:focus-visible::after { border-radius: 11px; }
-    /* "heaven" is ~3.37em wide; the footer's 56px side padding leaves
-       100vw - 112px, so 360px only fit from ~1340px up and clipped the
-       last letter on common laptops. */
-    .footer-heaven { font-size: min(360px, calc((100vw - 112px) / 3.4)); }
-  }
-
-  /* Tablet tier (768-1023px). These widths get the mobile DOM, which was a
-     phone column stretched to 750px: full-width photos 520px tall, a single
-     menu column, full-width buttons. This block only re-flows the sections
-     that wasted the most room; <768 and >=1024 are untouched, and the hero's
-     art direction is left as it is (only its gutter and CTA width change).
-     Everything is set on a semantic class or id, never on child position, and
-     no !important: Tailwind's flex/flex-col utilities are injected after this
-     stylesheet, hence the doubled class selectors where one has to be beaten.
-     Gutter is 32px; sections that nest inside another padded box (the visit
-     block inside the footer) add up to it. The upper bound is 1023.98px, not
-     1023px: browsers snap the viewport width to 1/64px, and 1023.98 is the largest
-     value that still stays below 1024 after snapping (1023.999 rounds up to 1024
-     and would put the tier on top of the desktop layout), so a fractional viewport
-     from browser zoom cannot fall between this tier and the desktop rules. */
-  @media (min-width: 768px) and (max-width: 1023.98px) {
+  /* Tablet: more room, so the lists go side by side. */
+  @media (min-width: 768px) {
     .site-header { top: 20px; left: 32px; right: 32px; }
-    .hero-est.hero-est, .hero-h1.hero-h1, .hero-sub.hero-sub { left: 32px; right: 32px; }
-    .hero-sub .hv-btn { max-width: 420px; }
-    .truths-section.truths-section { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 20px; padding: 56px 32px 88px; }
-    .truths-tile { height: 300px; }
-    .truths-h2 { font-size: 26px; }
-    /* minmax(0, ...) because plain fr tracks have a min-content floor: the 520px
-       tall photo would otherwise pin the first column at ~416px and squeeze the
-       heading. The arch uses elliptical radii (50% across, 220px up) so the top is
-       a true half-ellipse at any column width and the 18px bottom corners are not
-       scaled down by the browser's radius clamping. */
-    .story-section.story-section { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 32px; align-items: start; padding: 24px 32px 96px; }
-    .story-img { height: 520px; border-radius: 50% 50% 18px 18px / 220px 220px 18px 18px; }
-    .story-h2 { font-size: 52px; }
-    .story-p { font-size: 17px; }
-    .story-quote { font-size: 38px; }
-    .menu-section { margin: 0 16px; padding: 56px 40px 48px; border-radius: 28px; }
-    .menu-h2 { font-size: min(180px, calc((100vw - 280px) / 3.6)); }
-    .menu-tag { font-size: 30px; }
-    .menu-ruler { height: 12px; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.5) 0 1px, transparent 1px 20px); }
-    /* Two columns flowed top to bottom, not a 2-wide grid: the categories have 6, 2,
-       2 and 4 items, and a grid would pair the 6-item column with the 2-item one and
-       leave a wall of empty board under it. */
-    #menu-cards { display: block; column-count: 2; column-gap: 40px; }
-    #menu-cards > * { break-inside: avoid; margin-bottom: 36px; }
-    .feed-section { padding: 112px 0 96px; }
-    /* Heading and Follow button on one row (the phone stacks them, which turned
-       the button into a 700px-wide bar). */
-    .feed-head.feed-head { flex-direction: row; align-items: flex-end; padding-inline: 32px; }
-    .feed-h2 { font-size: 88px; }
-    .feed-tile { width: 320px; height: 320px; }
-    .footer-links { padding-inline: 16px; }
-    .footer-follow > a { max-width: 420px; margin-inline: auto; }
-    /* Photo and "Find us" card side by side under the hours. The photo has a
-       definite height (its h-full image needs one) and the card keeps its natural
-       height beside it instead of stretching into an empty box. */
-    #visit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 24px; }
-    .visit-head, #hours-rows-mobile, .visit-foot { grid-column: 1 / -1; }
-    .visit-photo { height: clamp(380px, 52vw, 520px); }
-    .visit-card { margin-top: 32px; align-self: start; }
-    /* 100vw minus the footer's and the visit block's 16px padding on each side. */
-    .footer-heaven { font-size: min(300px, calc((100vw - 64px) / 3.4)); }
-  }
-  @media (min-width: 768px) and (max-width: 1023.98px) {
-    .feed-track { padding-left: 32px; padding-right: 32px; }
+    .truths { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .feed-head { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+    .feed-head .btn { align-self: auto; }
+    .footer-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .footer-col:first-child { grid-column: auto; }
   }
 
+  @media (min-width: 1024px) {
+    html { scroll-padding-top: 116px; }
+    .site-header { top: 28px; left: 40px; right: 40px; padding: 10px 10px 10px 28px; }
+    .lockup-header { --lockup-size: 1.625rem; }
+    .lockup-header .lockup-coffee { font-size: .9375rem; }
+    .lockup-hero { --lockup-size: clamp(6rem, 11.2vw, 11.5rem); }
+    .hero-section { --door-h: clamp(30rem, calc(100svh - 8rem), 52rem); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: center; gap: 2rem; padding-top: 7rem; padding-bottom: 1.5rem; }
+    .hero-copy { gap: 1.5rem; padding-bottom: 7rem; }
+    .hero-door { display: block; min-height: 0; }
+    .hero-arch { width: min(100%, calc(var(--door-h) * .75)); height: auto; aspect-ratio: 3 / 4; margin-inline: auto; }
+    .sticker { top: 4%; right: 0; }
+    .hours-card { position: absolute; left: -1.5rem; bottom: 2rem; width: 19rem; margin: 0; padding: 1.25rem 1.5rem; gap: .25rem; grid-template-columns: 1fr; }
+    .hours-card-time { font-size: 2.125rem; }
+    .hours-card-address { font-size: .9375rem; }
+    .hours-card-go { grid-column: 1; grid-row: auto; margin-top: .75rem; min-height: 3rem; }
+    .story-section { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem; row-gap: 4.5rem; }
+    .story-photo { grid-column: span 5; }
+    .story-text { grid-column: 7 / span 6; align-self: center; }
+    .truths { grid-column: 1 / -1; }
+    .visit-section { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem; align-items: center; }
+    .visit-main { grid-column: span 8; }
+    .visit-photo { grid-column: 9 / span 4; height: clamp(26rem, 40vw, 36rem); }
+  }
 
-  .hours-track { position: relative; height: 14px; border-radius: 2px; background-image: repeating-linear-gradient(90deg, rgba(238,244,250,.3) 0 1px, transparent 1px calc(100% / 24)); }
-  .hours-bar { position: absolute; top: 0; bottom: 0; background: var(--ink-accent); border-radius: 2px; }
+  /* Only wide screens have room for the card to reach out past the door without touching the tagline. */
+  @media (min-width: 1360px) {
+    .hours-card { left: -7rem; width: 22rem; }
+  }
+
+  /* Everything that moves by itself or on hover, only for people who have not asked for less motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cloud.d { animation: drift 18s ease-in-out infinite; }
+    .sticker-ring { animation: turn 28s linear infinite; }
+    .roll > span, .roll::after { transition: transform .35s cubic-bezier(.65,0,.35,1); }
+    @media (hover: hover) {
+      .hv-btn:hover .roll > span, .hv-btn:hover .roll::after { transform: translateY(-100%); }
+    }
+  }
 
 /* Page surfaces, painted from the tokens. */
 #feed { background: var(--feed-sky); }
-#footer-desktop, #footer-mobile { background: var(--footer-sky); }
-.truths-section { background: var(--ground); }
-.site-header { background: var(--surface-light); }

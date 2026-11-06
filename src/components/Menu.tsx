@@ -1,24 +1,22 @@
 export function Menu() {
   return (
-    <section id="menu" className="menu-section on-dark">
-      <div className="flex items-end justify-between" style={{ borderBottom: "2px solid var(--ink)", paddingBottom: "8px" }}>
-        <h2 className="menu-h2 font-display uppercase m-0" style={{ fontStretch: "62%", fontWeight: "900", letterSpacing: "-0.03em", lineHeight: "0.76" }}>
+    <section id="menu" className="menu-section scallop">
+      <div className="menu-head reveal">
+        <h2 className="t-title menu-h2">
           The Menu
         </h2>
-        <div className="flex flex-col items-end" style={{ gap: "6px", paddingBottom: "18px", textAlign: "right" }}>
-          <span className="menu-tag font-quote italic" style={{ color: "var(--ink-accent)" }}>
-            poured daily
-          </span>
-        </div>
+        <span className="menu-tag font-quote italic">
+          poured daily
+        </span>
       </div>
       <div className="menu-ruler" />
-      <div id="menu-cards" className="flex flex-col lg:grid lg:grid-cols-4 mt-12" style={{ gap: "36px", columnGap: "40px" }}>
-        <div className="menu-group">
+      <div id="menu-cards" className="menu-grid">
+        <div className="menu-group reveal" style={{ '--i': 0 }}>
           <div className="menu-group-head">
             <span className="menu-cat-no font-quote italic">
               I
             </span>
-            <h3 className="menu-cat-h3 font-display uppercase m-0">
+            <h3 className="t-title menu-cat-h3">
               Coffee
             </h3>
           </div>
@@ -29,7 +27,7 @@ export function Menu() {
                   Espresso
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R42
                 </span>
               </div>
@@ -43,7 +41,7 @@ export function Menu() {
                   Americano
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R42
                 </span>
               </div>
@@ -57,7 +55,7 @@ export function Menu() {
                   Cortado
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R42
                 </span>
               </div>
@@ -71,7 +69,7 @@ export function Menu() {
                   Flat White
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R42
                 </span>
               </div>
@@ -85,7 +83,7 @@ export function Menu() {
                   Cappuccino
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R42
                 </span>
               </div>
@@ -99,7 +97,7 @@ export function Menu() {
                   Latte
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R42
                 </span>
               </div>
@@ -109,12 +107,12 @@ export function Menu() {
             </li>
           </ul>
         </div>
-        <div className="menu-group">
+        <div className="menu-group reveal" style={{ '--i': 1 }}>
           <div className="menu-group-head">
             <span className="menu-cat-no font-quote italic">
               II
             </span>
-            <h3 className="menu-cat-h3 font-display uppercase m-0">
+            <h3 className="t-title menu-cat-h3">
               Something different
             </h3>
           </div>
@@ -125,7 +123,7 @@ export function Menu() {
                   Mocha
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R60
                 </span>
               </div>
@@ -139,7 +137,7 @@ export function Menu() {
                   Matcha Latte
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R65
                 </span>
               </div>
@@ -153,7 +151,7 @@ export function Menu() {
                   Dirty Chai
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R60
                 </span>
               </div>
@@ -167,7 +165,7 @@ export function Menu() {
                   Hot Chocolate
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R50
                 </span>
               </div>
@@ -177,12 +175,12 @@ export function Menu() {
             </li>
           </ul>
         </div>
-        <div className="menu-group">
+        <div className="menu-group reveal" style={{ '--i': 2 }}>
           <div className="menu-group-head">
             <span className="menu-cat-no font-quote italic">
               III
             </span>
-            <h3 className="menu-cat-h3 font-display uppercase m-0">
+            <h3 className="t-title menu-cat-h3">
               Make it yours
             </h3>
           </div>
@@ -193,7 +191,7 @@ export function Menu() {
                   Almond / oat / soy milk
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R8
                 </span>
               </div>
@@ -204,7 +202,7 @@ export function Menu() {
                   Extra shot
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R8
                 </span>
               </div>
@@ -215,19 +213,19 @@ export function Menu() {
                   Vanilla / hazelnut
                 </span>
                 <span className="menu-leader" aria-hidden="true" />
-                <span className="menu-item-price font-display">
+                <span className="menu-item-price">
                   R8
                 </span>
               </div>
             </li>
           </ul>
         </div>
-        <div className="menu-group">
+        <div className="menu-group reveal" style={{ '--i': 3 }}>
           <div className="menu-group-head">
             <span className="menu-cat-no font-quote italic">
               IV
             </span>
-            <h3 className="menu-cat-h3 font-display uppercase m-0">
+            <h3 className="t-title menu-cat-h3">
               From the counter
             </h3>
           </div>
@@ -236,10 +234,7 @@ export function Menu() {
           </p>
         </div>
       </div>
-      <p className="menu-note hidden lg:block mt-14 pt-5 m-0" style={{ borderTop: "2px solid var(--menu-ink)", fontSize: "13px" }}>
-        Prices in rand (R)
-      </p>
-      <p className="menu-note lg:hidden mt-7 pt-3.5 m-0" style={{ borderTop: "1px solid var(--menu-ink)", fontSize: "12px", lineHeight: "1.5" }}>
+      <p className="menu-note">
         Prices in rand (R)
       </p>
     </section>

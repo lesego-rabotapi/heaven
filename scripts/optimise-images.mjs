@@ -12,7 +12,7 @@ import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const jobs = [
-  { from: 'incoming/door-and-steps.jpg', name: 'door-arch', widths: [480, 800], webp: 66, jpg: 70 },
+  { from: 'incoming/door-and-steps.jpg', name: 'door-arch', widths: [480, 800, 1600], webp: 66, jpg: 70 },
   { from: 'incoming/mondli-and-coco.jpg', name: 'mondli-coco', widths: [480, 800], webp: 78, jpg: 80 },
 ];
 
