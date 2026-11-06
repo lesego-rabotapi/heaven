@@ -1,5 +1,5 @@
 // Single source for what the page says. Moved from HEAVEN_CONTENT in the legacy index.html.
-// TODO(content): the phone number is not confirmed. The four phone placeholders are plain text, never
+// TODO(content): the phone number is not confirmed. The two phone placeholders are plain text, never
 // links, so nobody taps a fake number. To go live, turn each into <a href="tel:+27XXXXXXXXX">.
 // TODO(content): confirm public-holiday hours with Heaven before launch.
 // TODO(content): the footer used to say "As seen on: Cape Town CCID (2021)"; not confirmed with the

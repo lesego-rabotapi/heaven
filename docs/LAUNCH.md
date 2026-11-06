@@ -80,7 +80,7 @@ A word in a script or comment can add an unused rule to `tailwind.css`; if `chec
 - [ ] Tab through the whole page with a keyboard: the focus ring is visible everywhere, nothing is
       skipped, nothing traps.
 - [ ] Windows High Contrast / forced colours: links and the hours pill are visible.
-- [ ] A phone in sunlight: the "COFFEE" headline (about 2.4 to 2.9 : 1 on the sky) and small text.
+- [ ] A phone in sunlight: the light hero lockup, the sticker and small text.
 - [ ] A mid-range Android on mobile data: the hero loads fast (aim LCP <= 2.5 s on 4G) and the
       page scrolls smoothly, and the photo feed drifts without stutter and stops under a finger.
 - [ ] An iPad in both orientations (the 768 to 1023 px tablet layout).

@@ -4,6 +4,13 @@
 :root {
   color-scheme: dark;
 
+  /* type: titles, labels and reading text share the logo's face, set light and spaced for titles; the
+     italic serif is only for the tagline and quotes */
+  --font-brand: 'Poppins', 'Segoe UI', sans-serif;
+  --font-quote: 'Instrument Serif', serif;
+  --brand-weight: 300;
+  --brand-letter-spacing: 0.12em;
+
   /* ground */
   --ground: #0A1220;
   --ground-raised: #0F1B2D;
@@ -19,6 +26,7 @@
   /* actions: white label on --action is 4.5:1; --action on --ground is 3:1 or better */
   --action: #3B6FE8;
   --action-ink: #FFFFFF;
+  --action-block: #3B6FE8;
 
   /* rules and tracks */
   --rule: rgba(238, 244, 250, .16);

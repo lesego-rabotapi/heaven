@@ -47,26 +47,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>"/>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <!-- Literal transcription of two supplied Claude Design Canvas exports
-       (Mobile·390 and Desktop·1440 .dc.html files, not copied into this
-       repo) — a deliberate, exact recreation, not an adapted/simplified
-       version. Where the two source files genuinely diverge in structure
-       (not just size), this file carries BOTH literal structures,
-       switched at a single lg (1024px) breakpoint, rather than merging
-       them into one "improved" tree — including the mobile export's own
-       markup mistake (Hours/Visit content nested inside <footer>).
-       Deliberate departures from the source since: the duplicated
-       "Get directions" button was removed, the header is fixed, the
-       hours ruler collapses identical days into one row, and 768-1023px
-       (tablets, which get the mobile structure) has its own layout tier:
-       one @media block plus a reduced-motion companion, further down. -->
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62.5..100,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <!-- Without JavaScript the feed strip and its pause button would be an empty gap and a
-       dead control (the Instagram button above it still works), the hamburger has no
-       drawer to open, the drawer's own markup would sit in the page as invisible rows,
-       and the hours scale would label nothing. Ids beat the utility classes, so no
-       !important is needed. -->
-  <style>html.js-motion [data-intro] { opacity: 0; }</style>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>html.js-motion [data-intro] { opacity: 0; } html.js-motion [data-swoosh] { transform: scaleX(0); }</style>
   <script>
     // Motion is an enhancement: this class lets the CSS hide the hero [data-intro] items until the bundle animates
     // them in. It is never added for reduced motion, and a 4 s failsafe drops it if the bundle never starts,
