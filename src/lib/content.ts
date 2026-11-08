@@ -28,15 +28,18 @@ export const facts: Record<string, { status: FactStatus; source: string }> = {
 export const isKnown = (key: string): boolean => (facts[key]?.status ?? 'unknown') !== 'unknown';
 
 export type FeedPost = { image: string; alt: string; place: string; width: number; height: number };
+// From Heaven's own Instagram posts (@heavencoffeect), square crops made by scripts/optimise-instagram.mjs.
 export const feed: FeedPost[] = [
-  { image: 'images/storefront-entrance.jpg', alt: 'Heaven Coffee storefront on Burg Street, navy umbrellas and a dog on the steps', place: 'Burg Street', width: 690, height: 768 },
-  { image: 'images/cup-handover.jpg', alt: 'A barista handing over a to-go cup with the heaven coffee wordmark', place: 'The counter', width: 446, height: 448 },
-  { image: 'images/stone-arch-interior.jpg', alt: 'Gothic stone arches, pews and stained glass inside Central Methodist Mission', place: 'The nave', width: 662, height: 823 },
-  { image: 'images/puppy-entrance-door.jpg', alt: 'A couple holding a puppy at the Gothic entrance', place: 'The front door', width: 652, height: 867 },
-  { image: 'images/tourist-pastry-umbrella.jpg', alt: 'A visitor with a pastry and coffee under a navy Heaven umbrella', place: 'Greenmarket Sq.', width: 697, height: 875 },
-  { image: 'images/interior-signage.jpg', alt: 'The heaven coffee sign board above framed quotes and macramé', place: 'The wall', width: 1280, height: 853 },
-  { image: 'images/dog-petting-outdoor.jpg', alt: 'Two customers petting a dog at the outdoor tables', place: 'Outside', width: 657, height: 873 },
-  { image: 'images/interior-counter.jpg', alt: 'The wooden counter with the sign board and people at the bar', place: 'The bar', width: 800, height: 600 },
-  { image: 'images/three-friends-coffee.jpg', alt: 'Three friends sharing coffee under the umbrellas', place: 'Greenmarket Sq.', width: 656, height: 856 },
-  { image: 'images/mondli-coco-480.jpg', alt: 'Mondli Mahamba holding his dog, Coco, in the doorway', place: 'The doorway', width: 480, height: 628 },
+  { image: 'images/ig-latte.jpg', alt: 'A cappuccino with a leaf of latte art', place: 'The cup', width: 800, height: 800 },
+  { image: 'images/ig-church-front.jpg', alt: 'The stone front of Central Methodist Mission with its pointed-arch doorway', place: 'Burg Street', width: 800, height: 800 },
+  { image: 'images/ig-nave-table.jpg', alt: 'Friends at a round table in the nave, with pews and Gothic arches behind', place: 'The nave', width: 800, height: 800 },
+  { image: 'images/ig-bakes.jpg', alt: 'A loaf and a pile of biscuits, fresh from the oven', place: 'The counter', width: 800, height: 800 },
+  { image: 'images/ig-doorway.jpg', alt: 'The open door under the heaven coffee sign, with a visitor stepping inside', place: 'The front door', width: 800, height: 800 },
+  { image: 'images/ig-pavement-tables.jpg', alt: 'Tables along the pavement under navy umbrellas', place: 'Burg Street', width: 800, height: 800 },
+  { image: 'images/ig-nave-group.jpg', alt: 'A group around a table in the nave, under the organ and the arches', place: 'The nave', width: 800, height: 800 },
+  { image: 'images/ig-counter.jpg', alt: 'Two people at the counter under framed prints, one of them reading LOVE', place: 'The counter', width: 800, height: 800 },
+  { image: 'images/ig-reading-outside.jpg', alt: 'A man reading a book at an outside table under a heaven coffee umbrella', place: 'Outside', width: 800, height: 800 },
+  { image: 'images/ig-doorway-cup.jpg', alt: 'A visitor sipping coffee beside the carved wooden doors', place: 'The front door', width: 800, height: 800 },
+  { image: 'images/ig-outside-friends.jpg', alt: 'Friends with coffee at the outside tables under the umbrellas', place: 'Outside', width: 800, height: 800 },
+  { image: 'images/ig-nave-standing.jpg', alt: 'Four friends standing in the nave between the pews', place: 'The nave', width: 800, height: 800 },
 ];

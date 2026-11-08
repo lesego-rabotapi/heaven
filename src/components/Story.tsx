@@ -10,8 +10,8 @@ export function Story() {
       <div className="story-photo settle">
         <div className="story-img">
           <picture className="block w-full h-full">
-            <source type="image/webp" sizes="(min-width: 1024px) 40vw, 100vw" srcSet="images/mondli-coco-480.webp 480w, images/mondli-coco-800.webp 800w" />
-            <img src="images/mondli-coco-480.jpg" srcSet="images/mondli-coco-480.jpg 480w, images/mondli-coco-800.jpg 800w" sizes="(min-width: 1024px) 40vw, 100vw" alt="Mondli Mahamba, smiling, holding his brown and white collie, Coco, in the doorway of the café with the church nave behind" width="480" height="628" className="w-full h-full object-cover block" style={{ objectPosition: "50% 30%" }} loading="lazy" decoding="async" />
+            <source type="image/webp" sizes="(min-width: 1024px) 40vw, 100vw" srcSet="images/ig-mondli-coco-600.webp 600w, images/ig-mondli-coco-1200.webp 1200w" />
+            <img src="images/ig-mondli-coco-600.jpg" srcSet="images/ig-mondli-coco-600.jpg 600w, images/ig-mondli-coco-1200.jpg 1200w" sizes="(min-width: 1024px) 40vw, 100vw" alt="Mondli Mahamba, smiling, holding his brown and white collie, Coco, in the café" width="1200" height="1600" className="w-full h-full object-cover block" style={{ objectPosition: "50% 35%" }} loading="lazy" decoding="async" />
           </picture>
         </div>
         <div className="story-caption on-light">

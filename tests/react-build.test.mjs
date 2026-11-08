@@ -27,7 +27,7 @@ test('every section is in the prerendered HTML, so it reads with JavaScript off'
     assert.match(html, new RegExp(`id="${id}"`), id);
   }
   // the photo strip and the hours rows are rendered, not filled in by script
-  assert.equal((html.match(/class="feed-tile tile"/g) || []).length, 10, 'ten photos, once each: the loop copies arrive with script');
+  assert.equal((html.match(/class="feed-tile tile"/g) || []).length, 12, 'twelve photos, once each: the loop copies arrive with script');
   assert.match(html, /class="hours-bar"/);
   // the menu is plain HTML with real prices
   assert.match(html, /Flat White/);

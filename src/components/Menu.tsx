@@ -5,9 +5,15 @@ export function Menu() {
         <h2 className="t-title menu-h2">
           The Menu
         </h2>
-        <span className="menu-tag font-quote italic">
-          poured daily
-        </span>
+        <div className="menu-aside">
+          <picture className="menu-photo">
+            <source type="image/webp" srcSet="images/ig-latte-circle.webp" />
+            <img src="images/ig-latte-circle.jpg" alt="A cappuccino with a leaf of latte art" width="600" height="600" loading="lazy" decoding="async" />
+          </picture>
+          <span className="menu-tag font-quote italic">
+            poured daily
+          </span>
+        </div>
       </div>
       <div className="menu-ruler" />
       <div id="menu-cards" className="menu-grid">
