@@ -16,7 +16,7 @@ function FeedTile({ post, copy = false }: { post: FeedPost; copy?: boolean }) {
       title={copy ? undefined : 'View on Instagram'}
       aria-hidden={copy || undefined}
       tabIndex={copy ? -1 : undefined}
-      style={{ position: 'relative', display: 'block', flexShrink: 0, overflow: 'hidden', background: '#A9CDF0', color: '#fff' }}
+      style={{ position: 'relative', display: 'block', flexShrink: 0, overflow: 'hidden', background: 'var(--card)', color: '#fff' }}
     >
       <picture className="block w-full h-full">
         <source type="image/webp" srcSet={post.image.replace(/\.jpg$/, '.webp')} />
@@ -36,7 +36,7 @@ export function FeedStrip() {
   const looped = useFeedDrift(row);
   useDragScroll(row);
   return (
-    <div id="feed-row" ref={row} className="feed-row mt-9 lg:mt-16" tabIndex={0} role="region" aria-label="From the feed, scroll sideways">
+    <div id="feed-row" ref={row} className="feed-row reveal" tabIndex={0} role="region" aria-label="From the feed, scroll sideways">
       <div id="feed-track" className="feed-track flex" style={{ gap: '12px', width: 'max-content' }}>
         {feed.map((p) => <FeedTile key={p.image} post={p} />)}
         {looped && feed.map((p) => <FeedTile key={`copy-${p.image}`} post={p} copy />)}

@@ -1,13 +1,11 @@
 import { Header } from './components/Header';
 import { NavDrawer } from './components/NavDrawer';
 import { Hero } from './components/Hero';
-import { Truths } from './components/Truths';
 import { Story } from './components/Story';
 import { Menu } from './components/Menu';
 import { Feed } from './components/Feed';
-import { VisitDesktop } from './components/VisitDesktop';
-import { FooterDesktop } from './components/FooterDesktop';
-import { FooterMobile } from './components/FooterMobile';
+import { Visit } from './components/Visit';
+import { Footer } from './components/Footer';
 import { DirectionsProvider } from './components/DirectionsLink';
 import { useDrawer } from './lib/useDrawer';
 
@@ -20,14 +18,12 @@ export function App() {
       <NavDrawer drawer={drawer} />
       <main id="main" tabIndex={-1}>
         <Hero />
-        <Truths />
         <Story />
         <Menu />
         <Feed />
-        <VisitDesktop />
+        <Visit />
       </main>
-      <FooterDesktop />
-      <FooterMobile />
+      <Footer />
     </DirectionsProvider>
   );
 }

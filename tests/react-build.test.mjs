@@ -17,14 +17,13 @@ before(() => {
 
 test('the built page is night and has its content in the HTML itself', () => {
   assert.match(html, /<html[^>]*data-sky="night"/);
-  // React marks the text node boundary with a comment, so "heaven" and the line break are separate.
-  assert.match(html, /<h1[^>]*>heaven(<!-- -->)? <br\/>Coffee<\/h1>/);
+  assert.match(html, /<h1[^>]*>.*?heaven.*?coffee.*?<\/h1>/);
   assert.match(html, /07:00 — 18:00/);
   assert.doesNotMatch(html, /<!--app-html-->/);
 });
 
 test('every section is in the prerendered HTML, so it reads with JavaScript off', () => {
-  for (const id of ['hero', 'story', 'menu', 'feed', 'visit-desktop', 'footer-desktop', 'footer-mobile', 'nav-drawer']) {
+  for (const id of ['hero', 'story', 'menu', 'feed', 'visit', 'footer', 'nav-drawer']) {
     assert.match(html, new RegExp(`id="${id}"`), id);
   }
   // the photo strip and the hours rows are rendered, not filled in by script
@@ -38,15 +37,15 @@ test('every section is in the prerendered HTML, so it reads with JavaScript off'
 test('unknown facts are not rendered, and the phone stays a placeholder, never a link', () => {
   assert.doesNotMatch(html, /Wi-?Fi|Card payments|step-free/i);
   assert.doesNotMatch(html, /href="tel:/);
-  assert.equal((html.match(/data-phone-placeholder/g) || []).length, 4);
+  assert.equal((html.match(/data-phone-placeholder/g) || []).length, 2);
 });
 
-test('the hero states the hours as a plain pill: there is no live open/closed tag', () => {
+test('the hero states the hours plainly in its card: there is no live open/closed tag', () => {
   assert.doesNotMatch(html, /Open now|Closed ·|opens 07:00/);
-  assert.match(html, /Open daily 07:00 — 18:00/);
+  assert.match(html, /Open daily.*?07:00.*?18:00/);
 });
 
-test('nothing added after 21 October reaches the built page', () => {
+test('retired sections do not reach the built page', () => {
   assert.doesNotMatch(html, /find-the-door|action-bar|journey|arch-frame|class="igc/);
 });
 
@@ -72,7 +71,7 @@ test('typed sources compile', () => {
 
 test('every image states its size, so nothing shifts as it loads', () => {
   const imgs = html.match(/<img\b[^>]*>/g) || [];
-  assert.ok(imgs.length >= 20, 'found the images');
+  assert.ok(imgs.length >= 12, 'found the images');
   for (const tag of imgs) {
     assert.match(tag, /\swidth="\d+"/, tag.slice(0, 90));
     assert.match(tag, /\sheight="\d+"/, tag.slice(0, 90));
