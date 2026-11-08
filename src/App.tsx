@@ -1,8 +1,6 @@
 import { Header } from './components/Header';
 import { NavDrawer } from './components/NavDrawer';
 import { Hero } from './components/Hero';
-import { Facts } from './components/Facts';
-import { StepInside } from './components/StepInside';
 import { Story } from './components/Story';
 import { Words } from './components/Words';
 import { Menu } from './components/Menu';
@@ -22,8 +20,6 @@ export function App() {
       <NavDrawer drawer={drawer} />
       <main id="main" tabIndex={-1}>
         <Hero />
-        <Facts />
-        <StepInside />
         <Story />
         <Words />
         <Menu />

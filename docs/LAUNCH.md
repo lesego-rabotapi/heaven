@@ -83,7 +83,6 @@ A word in a script or comment can add an unused rule to `tailwind.css`; if `chec
 - [ ] A phone in sunlight: the light hero lockup, the sticker and small text.
 - [ ] A mid-range Android on mobile data: the hero loads fast (aim LCP <= 2.5 s on 4G) and the
       page scrolls smoothly, and the photo feed drifts without stutter and stops under a finger.
-- [ ] Step inside on a phone: the door zooms through to the nave as you scroll, without stutter, and the notes sit on the chalkboard, steps and arch.
 - [ ] An iPad in both orientations (the 768 to 1023 px tablet layout).
 - [ ] A screen reader (VoiceOver or NVDA) through the first screen, Find us and the menu.
 - [ ] The Directions links on an iPhone (Apple Maps first) and on Android (Google Maps).
