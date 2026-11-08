@@ -9,6 +9,8 @@
   --font-brand: 'Poppins', 'Segoe UI', sans-serif;
   --font-quote: 'Instrument Serif', serif;
   --brand-weight: 300;
+  /* the giant titles, thinner still, like the lettering on the sign */
+  --display-weight: 200;
   --brand-letter-spacing: 0.12em;
 
   /* ground */

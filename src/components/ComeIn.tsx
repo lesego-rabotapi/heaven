@@ -12,7 +12,7 @@ export function ComeIn() {
       <div className="come-in-copy reveal">
         <h2 id="come-in-title" className="t-title come-in-h2">Find the door</h2>
         <p className="come-in-p">38 Burg Street. Up the steps, under the pointed arch.</p>
-        <DirectionsLink className="hv-btn hv-link btn btn-accent">
+        <DirectionsLink data-magnet className="hv-btn hv-link btn btn-accent">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M3 11l19-9-9 19-2-8-8-2z" />
           </svg>
