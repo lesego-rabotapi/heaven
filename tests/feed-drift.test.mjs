@@ -71,3 +71,15 @@ test('a mouse drags the row, and a drag does not open the tile under it', () => 
 test('hover pauses only where there is a real hover, so a tap on a phone cannot leave it stuck', () => {
   assert.match(hook, /\(hover: hover\)/);
 });
+
+test('on a phone only a touch that moves the row pauses it: a tap leaves the drift running', () => {
+  assert.doesNotMatch(hook, /addEventListener\('touchstart', hold/, 'touching alone does not hold the row');
+  assert.doesNotMatch(hook, /addEventListener\('touchend', release/, 'lifting a finger after a tap sets no pause');
+  assert.match(hook, /touching/, 'while a finger is down the drift does not write, so it never fights the finger');
+  assert.match(hook, /RESUME_AFTER_MS = (2[0-9]{3}|3000);/, 'the pause after a swipe is 2 to 3 seconds');
+});
+
+test('focus holds the row only when it came from the keyboard, so a tap cannot freeze it', () => {
+  assert.match(hook, /:focus-visible/);
+  assert.doesNotMatch(hook, /addEventListener\('focusin', hold\)/);
+});
