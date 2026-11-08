@@ -134,3 +134,27 @@ test('the door photo has a large export, stripped by the same script', () => {
   assert.match(read('scripts/optimise-images.mjs'), /name: 'door-arch', widths: \[480, 800, 1600\]/);
   for (const f of ['images/door-arch-1600.webp', 'images/door-arch-1600.jpg']) assert.ok(has(f), f);
 });
+
+// The accent: Heaven Social's brick, the one hot colour against the blue. #B34E36 fills buttons and the
+// sticker under a white label; its lighter step #E07A5F is for small text on the night.
+const lum = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255)
+  .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4))
+  .reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0);
+const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+
+test('the accent is the brick, with a lighter step for text, and both read where they are used', () => {
+  assert.match(tokens, /--accent: #B34E36/);
+  assert.match(tokens, /--accent-ink: #FFFFFF/);
+  assert.match(tokens, /--accent-text: #E07A5F/);
+  assert.ok(contrast('#FFFFFF', '#B34E36') >= 4.5, 'white label on the brick');
+  for (const ground of ['#0A1220', '#0F1B2D', '#13213A']) assert.ok(contrast('#E07A5F', ground) >= 4.5, 'text step on ' + ground);
+});
+
+test('the brick goes on the main buttons, the sticker, the menu prices and "as posted", and stays off the blue block', () => {
+  assert.match(css, /\.btn-accent \{[^}]*background: var\(--accent\); color: var\(--accent-ink\)/);
+  for (const f of ['Header', 'HoursCard']) assert.match(read(`src/components/${f}.tsx`), /btn btn-accent/, f);
+  assert.match(css, /\.sticker \{[^}]*background: var\(--accent\); color: var\(--accent-ink\)/);
+  assert.match(css, /--menu-accent: var\(--accent-text\)/);
+  assert.match(css, /\.feed-h2-quote \{[^}]*color: var\(--accent-text\)/);
+  assert.doesNotMatch(read('src/components/Visit.tsx'), /accent/);
+});

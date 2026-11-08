@@ -43,6 +43,7 @@
   /* Buttons. The label is a .roll: see the motion block further down. */
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: .625rem; min-height: 3.25rem; padding-inline: 1.625rem; border-radius: 999px; font-size: .9375rem; font-weight: 500; letter-spacing: .03em; text-transform: lowercase; white-space: nowrap; }
   .btn-action { background: var(--action); color: var(--action-ink); }
+  .btn-accent { background: var(--accent); color: var(--accent-ink); }
   .hv-btn { transition: background-color .2s ease, transform .2s ease, filter .2s ease; }
   .hv-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
   .hv-link:not(.hv-btn):hover { color: var(--ink-accent) !important; }
@@ -74,7 +75,7 @@
   .hero-door { position: relative; z-index: 2; flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; min-height: 22rem; }
   .hero-arch { position: relative; flex: 1 1 auto; width: min(100%, 24rem); min-height: 13rem; border-radius: 50% 50% 1rem 1rem / 34% 34% 1rem 1rem; overflow: hidden; box-shadow: 0 0 0 1px var(--rule-strong), 0 0 0 .625rem var(--ground), 0 0 0 calc(.625rem + 1px) var(--rule), 0 0 7rem 1rem rgba(169,205,240,.22); }
   .hero-arch picture, .hero-arch img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
-  .sticker { position: absolute; z-index: 3; top: 3%; right: max(0%, calc(50% - 14rem)); width: clamp(5.25rem, 10vw, 9rem); aspect-ratio: 1; border-radius: 50%; background: var(--action); color: var(--action-ink); }
+  .sticker { position: absolute; z-index: 3; top: 3%; right: max(0%, calc(50% - 14rem)); width: clamp(5.25rem, 10vw, 9rem); aspect-ratio: 1; border-radius: 50%; background: var(--accent); color: var(--accent-ink); }
   .sticker-ring { position: absolute; inset: 0; width: 100%; height: 100%; }
   .sticker-ring text { font-family: var(--font-brand); font-size: 16px; font-weight: 500; fill: currentColor; }
   .sticker-arch { position: absolute; inset: 0; margin: auto; width: 24%; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
@@ -107,7 +108,7 @@
   .scallop::after { bottom: calc(var(--scallop) * -1 + 1px); background-image: radial-gradient(circle at 50% 0, var(--scallop-fill) calc(var(--scallop) - .5px), transparent var(--scallop)); }
 
   /* The menu board (B5). Plain HTML, so it reads without script and search engines see it. */
-  :root { --menu-ink: #EEF4FA; --menu-muted: #9FB0C8; --menu-accent: #A9CDF0; --menu-rule: rgba(238,244,250,.16); --menu-rule-strong: rgba(238,244,250,.9); --menu-dots: rgba(238,244,250,.35); }
+  :root { --menu-ink: #EEF4FA; --menu-muted: #9FB0C8; --menu-accent: var(--accent-text); --menu-rule: rgba(238,244,250,.16); --menu-rule-strong: rgba(238,244,250,.9); --menu-dots: rgba(238,244,250,.35); }
   .menu-section { --scallop-fill: var(--menu-board); padding: var(--section-y) var(--gutter); background: var(--menu-board); color: var(--ink); }
   .menu-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0 1rem; padding-bottom: .5rem; border-bottom: 2px solid var(--ink); }
   .menu-h2 { font-size: clamp(3rem, 14vw, 14rem); line-height: .95; white-space: nowrap; }
@@ -133,7 +134,7 @@
   .feed-head { display: flex; flex-direction: column; gap: 1.5rem; padding-inline: var(--gutter); }
   .feed-title { display: flex; flex-direction: column; gap: .75rem; }
   .feed-h2 { font-size: clamp(2.75rem, 8vw, 7.5rem); }
-  .feed-h2-quote { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--ink-accent); }
+  .feed-h2-quote { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--accent-text); }
   .feed-head .btn { align-self: flex-start; }
   /* The feed drifts by itself (useFeedDrift moves scrollLeft) and is moved by dragging it (useDragScroll)
      or swiping, so it has no scrollbar. No scroll snapping: it would pull against the drift. */

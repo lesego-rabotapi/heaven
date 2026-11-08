@@ -28,6 +28,12 @@
   --action-ink: #FFFFFF;
   --action-block: #3B6FE8;
 
+  /* accent: Heaven Social's brick, the one hot colour against the blue. Fill with a white label; the
+     lighter step is for small text on the night. Never on the blue block, where the two blur. */
+  --accent: #B34E36;
+  --accent-ink: #FFFFFF;
+  --accent-text: #E07A5F;
+
   /* rules and tracks */
   --rule: rgba(238, 244, 250, .16);
   --rule-strong: rgba(238, 244, 250, .8);
