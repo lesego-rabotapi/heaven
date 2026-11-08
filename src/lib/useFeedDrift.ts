@@ -5,8 +5,9 @@ const RESUME_AFTER_MS = 2250;
 
 // The feed drifts sideways by itself and stays an ordinary scrolling row, so a hand can take over at any
 // time. Drifting moves scrollLeft, not a transform, which is what lets the two share the row. It holds
-// still under a pointer, a finger or keyboard focus, off screen and in a hidden tab, picks up 2.25 s after a
-// hand scroll, and never starts under reduced motion. Returns whether the tiles should be doubled for the
+// still under a pointer or keyboard focus, off screen and in a hidden tab, and never starts under reduced
+// motion. On a phone only a touch that actually scrolls the row pauses it, for 2.25 s after the row stops
+// moving; a tap leaves it drifting. Returns whether the tiles should be doubled for the
 // loop: not in the prerendered HTML, so without script the row is simply ten photos to scroll.
 export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
   const [looped, setLooped] = useState(false);
@@ -23,6 +24,7 @@ export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
     const tiles = track.children;
     let pos = row.scrollLeft;
     let held = false;
+    let touching = false;
     let resumeAt = 0;
     let last = 0;
     let frame = 0;
@@ -31,7 +33,8 @@ export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
       frame = requestAnimationFrame(tick);
       const ms = Math.min(now - last, 100);
       last = now;
-      if (held || document.hidden || reduce.matches || now < resumeAt) { pos = row.scrollLeft; return; }
+      // While a finger is down the drift does not write, so it never fights a swipe that is starting.
+      if (held || touching || document.hidden || reduce.matches || now < resumeAt) { pos = row.scrollLeft; return; }
       const first = tiles[0] as HTMLElement | undefined;
       const copy = tiles[tiles.length / 2] as HTMLElement | undefined;
       if (!first || !copy) return;
@@ -43,9 +46,14 @@ export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
     // Phones fire mouseenter on a tap with no mouseleave after it, which would leave the row stopped.
     const canHover = window.matchMedia('(hover: hover)');
     const hover = () => { if (canHover.matches) held = true; };
-    const hold = () => { held = true; };
-    const release = () => { held = false; resumeAt = performance.now() + RESUME_AFTER_MS; };
-    // A scroll that is not where drifting left the row came from a hand: wheel, swipe, keys or scrollbar.
+    // Keyboard focus holds the row; a tap also focuses it, and must not.
+    const focus = (e: FocusEvent) => { if ((e.target as Element).matches(':focus-visible')) held = true; };
+    const touchDown = () => { touching = true; };
+    // Lifting the finger adds no pause of its own: a swipe already set one through onScroll, a tap set none.
+    const touchUp = () => { touching = false; };
+    const release = () => { if (!held) return; held = false; resumeAt = performance.now() + RESUME_AFTER_MS; };
+    // A scroll that is not where drifting left the row came from a hand: wheel, swipe, drag or keys. Momentum
+    // keeps firing these after the finger lifts, so the pause runs from when the row actually stops.
     const onScroll = () => {
       if (Math.abs(row.scrollLeft - pos) > 2) { pos = row.scrollLeft; resumeAt = performance.now() + RESUME_AFTER_MS; }
     };
@@ -57,11 +65,11 @@ export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
     seen.observe(row);
     row.addEventListener('mouseenter', hover);
     row.addEventListener('mouseleave', release);
-    row.addEventListener('focusin', hold);
+    row.addEventListener('focusin', focus);
     row.addEventListener('focusout', release);
-    row.addEventListener('touchstart', hold, { passive: true });
-    row.addEventListener('touchend', release);
-    row.addEventListener('touchcancel', release);
+    row.addEventListener('touchstart', touchDown, { passive: true });
+    row.addEventListener('touchend', touchUp);
+    row.addEventListener('touchcancel', touchUp);
     row.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
@@ -69,11 +77,11 @@ export function useFeedDrift(rowRef: RefObject<HTMLElement | null>) {
       seen.disconnect();
       row.removeEventListener('mouseenter', hover);
       row.removeEventListener('mouseleave', release);
-      row.removeEventListener('focusin', hold);
+      row.removeEventListener('focusin', focus);
       row.removeEventListener('focusout', release);
-      row.removeEventListener('touchstart', hold);
-      row.removeEventListener('touchend', release);
-      row.removeEventListener('touchcancel', release);
+      row.removeEventListener('touchstart', touchDown);
+      row.removeEventListener('touchend', touchUp);
+      row.removeEventListener('touchcancel', touchUp);
       row.removeEventListener('scroll', onScroll);
     };
   }, [rowRef, looped]);
