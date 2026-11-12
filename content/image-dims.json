@@ -1,0 +1,158 @@
+{
+  "mondli-coco-doorway": {
+    "w": 2000,
+    "h": 2667
+  },
+  "door-guest-smiling": {
+    "w": 1440,
+    "h": 1800
+  },
+  "door-mondli-espresso": {
+    "w": 1440,
+    "h": 1920
+  },
+  "facade-street": {
+    "w": 720,
+    "h": 1280
+  },
+  "nave-four-friends": {
+    "w": 1440,
+    "h": 1800
+  },
+  "nave-backpackers": {
+    "w": 1440,
+    "h": 1800
+  },
+  "nave-round-table": {
+    "w": 1440,
+    "h": 1800
+  },
+  "doorway-sip": {
+    "w": 1440,
+    "h": 1800
+  },
+  "arch-three-friends": {
+    "w": 810,
+    "h": 1014
+  },
+  "foyer-two-friends": {
+    "w": 1440,
+    "h": 1800
+  },
+  "pavement-reading": {
+    "w": 1440,
+    "h": 1920
+  },
+  "umbrella-espresso": {
+    "w": 1440,
+    "h": 1920
+  },
+  "pavement-book": {
+    "w": 1440,
+    "h": 1800
+  },
+  "coco-puppy-door": {
+    "w": 1440,
+    "h": 1920
+  },
+  "coco-pavement": {
+    "w": 1440,
+    "h": 1920
+  },
+  "counter-wall": {
+    "w": 1440,
+    "h": 1920
+  },
+  "counter-guests": {
+    "w": 1440,
+    "h": 1800
+  },
+  "latte-art": {
+    "w": 1440,
+    "h": 1800
+  },
+  "sign-in-love": {
+    "w": 1440,
+    "h": 1800
+  },
+  "umbrella-two-friends": {
+    "w": 1440,
+    "h": 1800
+  },
+  "chalkboard-stairway": {
+    "w": 1440,
+    "h": 1800
+  },
+  "mondli-cup-portrait": {
+    "w": 1440,
+    "h": 1800
+  },
+  "mondli-laughing": {
+    "w": 1440,
+    "h": 1801
+  },
+  "door-takeaway": {
+    "w": 1440,
+    "h": 1800
+  },
+  "pastry-sun": {
+    "w": 1352,
+    "h": 1691
+  },
+  "foyer-stairs-mondli": {
+    "w": 1080,
+    "h": 1920
+  },
+  "pavement-trio": {
+    "w": 1080,
+    "h": 1920
+  },
+  "nave-students": {
+    "w": 1080,
+    "h": 1920
+  },
+  "courtyard": {
+    "w": 720,
+    "h": 1280
+  },
+  "counter-busy": {
+    "w": 720,
+    "h": 1280
+  },
+  "bakes": {
+    "w": 640,
+    "h": 1136
+  },
+  "umbrellas-row": {
+    "w": 540,
+    "h": 960
+  },
+  "door-couple": {
+    "w": 640,
+    "h": 1136
+  },
+  "steps-style": {
+    "w": 540,
+    "h": 960
+  },
+  "sanctuary-pews": {
+    "w": 720,
+    "h": 1280
+  },
+  "barista-smile": {
+    "w": 720,
+    "h": 1280
+  },
+  "nave-solo": {
+    "w": 640,
+    "h": 1136
+  },
+  "nave-pomeranian": {
+    "w": 662,
+    "h": 823
+  },
+  "cup-handover": {
+    "w": 446,
+    "h": 448
+  }
+}
