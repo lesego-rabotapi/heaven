@@ -1,0 +1,166 @@
+{
+ "pavement-reader": {
+  "w": 1440,
+  "h": 1800
+ },
+ "chalkboard": {
+  "w": 1440,
+  "h": 1800
+ },
+ "door-sip": {
+  "w": 1440,
+  "h": 1800
+ },
+ "mondli-portrait": {
+  "w": 1440,
+  "h": 1800
+ },
+ "latte": {
+  "w": 1440,
+  "h": 1800
+ },
+ "umbrella-pair": {
+  "w": 1440,
+  "h": 1800
+ },
+ "nave-croissants": {
+  "w": 1440,
+  "h": 1800
+ },
+ "mondli-laugh": {
+  "w": 1440,
+  "h": 1801
+ },
+ "glass-door": {
+  "w": 1440,
+  "h": 1800
+ },
+ "nave-travellers": {
+  "w": 1440,
+  "h": 1800
+ },
+ "nave-table": {
+  "w": 1440,
+  "h": 1800
+ },
+ "pavement-row": {
+  "w": 1440,
+  "h": 1920
+ },
+ "railings-trio": {
+  "w": 1440,
+  "h": 1800
+ },
+ "foyer-pair": {
+  "w": 1440,
+  "h": 1800
+ },
+ "counter-chat": {
+  "w": 1440,
+  "h": 1800
+ },
+ "arch-trio": {
+  "w": 810,
+  "h": 1014
+ },
+ "door-sign": {
+  "w": 1440,
+  "h": 1800
+ },
+ "counter-wall": {
+  "w": 1440,
+  "h": 1920
+ },
+ "steps-espresso": {
+  "w": 1440,
+  "h": 1920
+ },
+ "espresso-cheers": {
+  "w": 1440,
+  "h": 1920
+ },
+ "collie-puppy": {
+  "w": 1440,
+  "h": 1920
+ },
+ "collie-pavement": {
+  "w": 1440,
+  "h": 1920
+ },
+ "pastry-sun": {
+  "w": 1352,
+  "h": 1691
+ },
+ "bakes": {
+  "w": 640,
+  "h": 1136
+ },
+ "umbrellas-street": {
+  "w": 540,
+  "h": 960
+ },
+ "railing-aloe": {
+  "w": 640,
+  "h": 1136
+ },
+ "steps-style": {
+  "w": 540,
+  "h": 960
+ },
+ "counter-above": {
+  "w": 720,
+  "h": 1280
+ },
+ "sanctuary": {
+  "w": 720,
+  "h": 1280
+ },
+ "foyer-stairs": {
+  "w": 1206,
+  "h": 2144
+ },
+ "pavement-prints": {
+  "w": 1206,
+  "h": 2144
+ },
+ "market-smile": {
+  "w": 720,
+  "h": 1280
+ },
+ "nave-aisle": {
+  "w": 1206,
+  "h": 2144
+ },
+ "nave-solo": {
+  "w": 640,
+  "h": 1136
+ },
+ "doorway-cheer": {
+  "w": 640,
+  "h": 1136
+ },
+ "facade-umbrella": {
+  "w": 640,
+  "h": 1136
+ },
+ "collie-carried": {
+  "w": 640,
+  "h": 1136
+ },
+ "facade": {
+  "w": 720,
+  "h": 1280
+ },
+ "steps-crew": {
+  "w": 640,
+  "h": 1136
+ },
+ "collie-hug": {
+  "w": 640,
+  "h": 1136
+ },
+ "mondli-collie": {
+  "w": 1800,
+  "h": 2400
+ }
+}
