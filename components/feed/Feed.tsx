@@ -218,6 +218,10 @@ export function Feed() {
 
   return (
     <section className="feed" id="feed" ref={root} aria-labelledby="feed-title">
+      {/* Outside the stage on purpose: the stage clips its children and is pinned, and a skip link has to stay reachable. */}
+      <a className="skip-link" href="#after-feed">
+        Skip the posts
+      </a>
       <div className="feed__stage" ref={stage}>
         <div className="feed__head">
           <div>
@@ -250,10 +254,6 @@ export function Feed() {
             </FlowButton>
           </div>
         </div>
-
-        <a className="skip-link skip-link--inline" href="#after-feed">
-          Skip the posts
-        </a>
 
         <ol className="feed__track" ref={track} aria-label="Posts">
           {POSTS.map((post) => (

@@ -130,11 +130,6 @@ address {
 .skip-link:focus {
   transform: none;
 }
-.skip-link--inline {
-  position: absolute;
-  top: auto;
-  left: var(--gutter);
-}
 
 /* ----- shared pieces ----------------------------------------------------- */
 
@@ -1254,8 +1249,12 @@ html:not(.js-motion) .ticker__set[aria-hidden] {
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: var(--gutter);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(11, 23, 48, 0.3) transparent;
+  /* The cards peeking past the edge are the cue to scroll; no bar needed. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.feed__track::-webkit-scrollbar {
+  display: none;
 }
 .post-slot {
   flex: none;

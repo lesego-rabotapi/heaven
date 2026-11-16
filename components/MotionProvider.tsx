@@ -38,8 +38,14 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
     if (!motionOK()) return;
 
     const lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.9, smoothWheel: true });
-    scroller.lenis = lenis;
-    lenis.on("scroll", ScrollTrigger.update);
+    scroller.lenis = lenis;    lenis.on("scroll", ScrollTrigger.update);
+    // Pinned sections add height (their spacers). ScrollTrigger removes and
+    // re-adds that height while it measures, and Lenis can catch the short
+    // moment: its scroll limit then stays too small, so anything that scrolls
+    // by script is clamped part-way down the page. Re-measure once each
+    // refresh has settled.
+    const remeasure = () => lenis.resize();
+    ScrollTrigger.addEventListener("refresh", remeasure);
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
@@ -58,6 +64,7 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener("heaven:lock", lock);
       window.removeEventListener("heaven:unlock", unlock);
       window.removeEventListener("load", refresh);
+      ScrollTrigger.removeEventListener("refresh", remeasure);
       gsap.ticker.remove(tick);
       lenis.destroy();
       scroller.lenis = null;
@@ -82,7 +89,19 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
         e.preventDefault();
         window.dispatchEvent(new Event("heaven:navigate"));
         lenis.start();
-        lenis.scrollTo(target ?? 0, { duration: 1.3 });
+        if (target && a.classList.contains("skip-link")) {
+          // A skip link jumps and hands focus over. Gliding would play every
+          // scrubbed scene on the way past, which looks like the page thrashing.
+          if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+          // A number, not the element: Lenis resolves an element against its own
+          // idea of the current scroll, which lands short when the page has
+          // pinned sections above the target.
+          const top = target.getBoundingClientRect().top + window.scrollY;
+          lenis.scrollTo(top, { immediate: true, force: true });
+          target.focus({ preventScroll: true });
+        } else {
+          lenis.scrollTo(target ?? 0, { duration: 1.3 });
+        }
         window.history.replaceState(null, "", url.hash || url.pathname);
         return;
       }
