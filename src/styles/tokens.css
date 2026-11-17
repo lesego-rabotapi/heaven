@@ -54,7 +54,8 @@
   --rule-faint: rgba(238, 244, 250, .18);
   --accent-deep: #1E3A8A;
 
-  --surface-light: rgba(251, 252, 253, .94);
+  /* the menu board's blue, for the surfaces that sit on the night page (header pill, hours pill, story card) */
+  --surface-board: rgba(19, 33, 58, .94);
 }
 
 @media (min-width: 1024px) {
@@ -68,10 +69,8 @@ html { background: var(--ground); }
 body { margin: 0; background: var(--ground); color: var(--ink); overscroll-behavior: none; font-optical-sizing: auto; }
 :focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
 
-/* A light surface inside the night page (the header pill, the hours pill, the story card): the same
-   token names, light values, so the components inside need no special cases. */
-.on-light {
-  --ink: #0F1B2D; --ink-soft: #26344A; --ink-muted: #3E4C63; --ink-accent: #1E3A8A;
-  --action: #1D4ED8; --card: #FBFCFD;
-  --rule: rgba(15, 27, 45, .16); --rule-faint: rgba(15, 27, 45, .18);
+/* A raised surface inside the night page (the header pill, the hours pill, the story card). It is the
+   menu board's blue, never a light colour: the ink tokens stay as they are, only the card colour changes. */
+.on-board {
+  --card: var(--menu-board);
 }

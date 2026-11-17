@@ -63,9 +63,10 @@ test('component styles name tokens, not colours (the few exceptions are listed)'
   }
 });
 
-test('light surfaces inside the night page are scoped with .on-light, not special-cased', () => {
-  assert.match(read('src/styles/tokens.css'), /\.on-light \{[^}]*--ink: #0F1B2D/);
-  for (const f of ['Header', 'Story']) assert.match(read(`src/components/${f}.tsx`), /on-light/, f);
+test('raised surfaces inside the night page use the menu board blue (.on-board), never a light colour', () => {
+  assert.match(read('src/styles/tokens.css'), /\.on-board \{[^}]*--card: var\(--menu-board\)/);
+  assert.doesNotMatch(read('src/styles/tokens.css'), /on-light|surface-light/);
+  for (const f of ['Header', 'Story', 'HoursCard']) assert.match(read(`src/components/${f}.tsx`), /on-board/, f);
 });
 
 test('the feed has no play/pause button', () => {

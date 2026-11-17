@@ -6,7 +6,7 @@ import { Roll } from './Roll';
 export function HoursCard() {
   const group = hours.groups[0];
   return (
-    <div data-intro className="hours-card on-light">
+    <div data-intro className="hours-card on-board">
       <span className="t-label hours-card-label">Open daily</span>
       {group && <span className="hours-card-time">{group.open} — {group.close}</span>}
       <span className="hours-card-address">38 Burg Street, Cape Town</span>

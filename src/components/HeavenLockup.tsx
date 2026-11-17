@@ -3,7 +3,7 @@ import type { ElementType } from 'react';
 // The Heaven Coffee logo as it appears on the sign, the cup and the awning: "heaven" light and widely
 // spaced, a thin swoosh under it, and a small "coffee" centred below. Set in type, because no vector logo
 // has been supplied; a client SVG would replace the inside of this one component. The header shows the
-// two words on one line, and the footer "heaven" and the swoosh alone.
+// two words on one line. Every "heaven" carries its "coffee", the footer included.
 type Size = 'header' | 'hero' | 'footer';
 
 export function HeavenLockup({ as: Tag = 'div', size }: { as?: ElementType; size: Size }) {
@@ -16,7 +16,7 @@ export function HeavenLockup({ as: Tag = 'div', size }: { as?: ElementType; size
         </svg>
       )}
       {' '}
-      {size !== 'footer' && <span className="lockup-coffee">coffee</span>}
+      <span className="lockup-coffee">coffee</span>
     </Tag>
   );
 }
