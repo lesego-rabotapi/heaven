@@ -60,7 +60,7 @@
   /* Header: a fixed floating pill. scroll-padding-top keeps anchor jumps and keyboard
      focus from landing underneath it. */
   html { scroll-padding-top: 90px; }
-  .site-header { top: 16px; left: 16px; right: 16px; padding: 6px 6px 6px 20px; background: var(--surface-light); color: var(--ink); }
+  .site-header { top: 16px; left: 16px; right: 16px; padding: 6px 6px 6px 20px; background: var(--surface-board); color: var(--ink); }
   .site-header > a:first-child { padding-block: 6px; margin-block: -6px; min-height: 44px; align-items: center; }
   .site-header nav { gap: 2.25rem; font-size: .875rem; font-weight: 500; letter-spacing: .03em; text-transform: lowercase; }
   .site-header nav a { padding: 12px 8px; margin: -12px -8px; min-height: 44px; }

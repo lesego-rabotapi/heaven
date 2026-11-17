@@ -4,7 +4,7 @@ import { HeavenLockup } from './HeavenLockup';
 import { Roll } from './Roll';
 export function Header({ drawer }: { drawer: Drawer }) {
   return (
-    <header className="site-header on-light fixed z-50 flex items-center justify-between gap-3 rounded-full" style={{ background: "var(--surface-light)", border: "1px solid rgba(255,255,255,.9)", WebkitBackdropFilter: "blur(14px)", backdropFilter: "blur(14px)" }}>
+    <header className="site-header on-board fixed z-50 flex items-center justify-between gap-3 rounded-full" style={{ background: "var(--surface-board)", border: "1px solid var(--rule)", WebkitBackdropFilter: "blur(14px)", backdropFilter: "blur(14px)" }}>
       <a href="#top" onClick={() => drawer.close(false)} className="inline-flex" aria-label="Heaven Coffee, back to top">
         <HeavenLockup size="header" />
       </a>

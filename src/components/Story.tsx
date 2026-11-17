@@ -14,7 +14,7 @@ export function Story() {
             <img src="images/mondli-coco-480.jpg" srcSet="images/mondli-coco-480.jpg 480w, images/mondli-coco-800.jpg 800w" sizes="(min-width: 1024px) 40vw, 100vw" alt="Mondli Mahamba, smiling, holding his brown and white collie, Coco, in the doorway of the café with the church nave behind" width="480" height="628" className="w-full h-full object-cover block" style={{ objectPosition: "50% 30%" }} loading="lazy" decoding="async" />
           </picture>
         </div>
-        <div className="story-caption on-light">
+        <div className="story-caption on-board">
           <div className="story-caption-name">Mondli and his dog, Coco.</div>
           <div className="story-caption-role">Mondli Mahamba, founder since April 2017</div>
         </div>
